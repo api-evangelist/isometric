@@ -1,0 +1,262 @@
+aid: isometric
+name: Isometric
+description: >-
+  Isometric is a London- and New York-based certifier of climate solutions
+  building an AI-native, science-led registry and verification platform for
+  the industrial economy. Founded in 2022 by Eamon Jubbawy (Onfido), Isometric
+  certifies durable carbon dioxide removal (CDR), superpollutant abatement,
+  and related environmental attributes against the public Isometric Standard,
+  a library of peer-reviewed protocols spanning biochar, enhanced weathering,
+  mineralization, direct air capture, marine CDR, biosphere pathways (such as
+  reforestation, mangroves, agroforestry, and improved forest management),
+  and superpollutant abatement (HFC/ODS recovery, landfill methane, rice
+  methane). Buyers, suppliers, and integrators interact with Isometric
+  through three primary platforms — Certify (project design, MRV data
+  ingestion, LCA, GHG statements, validation), Registry (issuances, credit
+  batches, deliveries, transfers, retirements, buffer pools), and Protocols
+  (operationalized scientific methodology) — exposed via the Registry API
+  and the Certify (MRV) Data Ingestion API. Both APIs are versioned at /v0,
+  share a unified two-credential model (X-Client-Secret + Bearer JWT), run
+  on sandbox and production hosts, and are accompanied by a hosted MCP
+  server at api.isometric.com/mcp that exposes the Isometric Standard,
+  protocols, modules, and platform documentation to AI clients such as
+  Claude, ChatGPT, Gemini, Cursor, Windsurf, and VS Code Copilot. Customers
+  include Google, Microsoft, Shopify, Frontier-aligned buyers, and Anglo
+  American, and the registry powers credit lifecycle operations for
+  marketplaces, intermediaries, and carbon intelligence platforms.
+tags:
+  - Carbon Removal
+  - Carbon Registry
+  - Climate
+  - Climate Tech
+  - CDR
+  - MRV
+  - Measurement Reporting Verification
+  - Certification
+  - Superpollutants
+  - Biochar
+  - Direct Air Capture
+  - Enhanced Weathering
+  - Mineralization
+  - Reforestation
+  - Mangrove Restoration
+  - Agroforestry
+  - Methane
+  - HFC
+  - Sustainability
+  - ESG
+  - Net Zero
+  - LCA
+  - Greenhouse Gas
+  - Protocols
+  - AI
+  - MCP
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+kind: contract
+position: Provider
+access: 3rd-Party
+url: https://raw.githubusercontent.com/api-evangelist/isometric/refs/heads/main/apis.yml
+created: '2026-05-24'
+modified: '2026-05-24'
+specificationVersion: '0.20'
+apis:
+  - aid: isometric:isometric-registry-api
+    name: Isometric Registry API
+    description: >-
+      The Isometric Registry API provides programmatic access to the public
+      record of carbon removal credits certified to the Isometric Standard.
+      Versioned at /v0, it exposes resources for suppliers, organisations,
+      beneficiaries, transferees, projects, issuances, credit batches, orders,
+      deliveries, transfers, retirements, refunds, and buffer pools, plus
+      Stripe-backed checkout for self-service payments. Authentication
+      requires both an X-Client-Secret header tied to a sandbox or production
+      environment and a JWT bearer access token scoped to a single
+      organisation. Pagination follows the Relay cursor specification, dates
+      are ISO 8601 UTC, and countries use ISO 3166-1 Alpha-3. Third-party
+      integrators including marketplaces, intermediaries, and carbon
+      intelligence platforms can request Registry API access.
+    humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+    baseURL: https://api.isometric.com/registry/v0
+    tags:
+      - Carbon Removal
+      - Carbon Registry
+      - Credits
+      - Issuances
+      - Deliveries
+      - Transfers
+      - Retirements
+      - MRV
+      - Climate
+    properties:
+      - type: Documentation
+        url: https://docs.isometric.com/api-reference/registry/registry-introduction
+      - type: Documentation
+        url: https://docs.isometric.com/api-reference/registry/api-changelog
+      - type: Documentation
+        url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+      - type: Authentication
+        url: https://docs.isometric.com/api-reference/authentication
+      - type: OpenAPI
+        url: openapi/isometric-registry-api-openapi.json
+      - type: ChangeLog
+        url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - aid: isometric:isometric-certify-api
+    name: Isometric Certify Data Ingestion API
+    description: >-
+      The Isometric Certify (MRV) Data Ingestion API automates the syncing
+      of project Measurement, Reporting, and Verification (MRV) data and
+      GHG statement submissions into the Certify platform. Versioned at /v0
+      under api.isometric.com/mrv/v0, it covers projects, removals and
+      removal templates, components and component blueprints, datapoints,
+      attribution, feedstock types and batches, production batches, storage
+      locations and units, measurement locations and samples, monitoring
+      submissions and requirements, GHG statements, sources and signed
+      upload URLs, sensors, time-series data upload submissions, and signed
+      file uploads. Suppliers using their own field equipment, LIMS, ERP, or
+      lab systems can stream MRV evidence directly into Isometric's
+      verification pipeline. Same dual-header auth model as the Registry
+      API (X-Client-Secret + Bearer JWT), with sandbox and production
+      environments.
+    humanURL: https://docs.isometric.com/api-reference/certify/certify-introduction
+    baseURL: https://api.isometric.com/mrv/v0
+    tags:
+      - Carbon Removal
+      - MRV
+      - Certification
+      - Ingestion
+      - LCA
+      - GHG Statements
+      - Sensors
+      - Climate
+    properties:
+      - type: Documentation
+        url: https://docs.isometric.com/api-reference/certify/certify-introduction
+      - type: Documentation
+        url: https://docs.isometric.com/api-reference/certify/your-first-removal
+      - type: Documentation
+        url: https://docs.isometric.com/api-reference/certify/api-changelog
+      - type: Authentication
+        url: https://docs.isometric.com/api-reference/authentication
+      - type: OpenAPI
+        url: openapi/isometric-certify-api-openapi.json
+      - type: ChangeLog
+        url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - aid: isometric:isometric-mcp-server
+    name: Isometric MCP Server
+    description: >-
+      Isometric ships a hosted Model Context Protocol (MCP) server that
+      makes the Isometric Standard, proprietary protocols (biochar, DAC,
+      enhanced weathering, marine CDR, biosphere, superpollutants),
+      protocol modules, Certify and Registry user guides, and the full
+      API documentation queryable by MCP-compatible AI clients. Pre-approved
+      clients include Claude (Claude.ai and Claude Desktop), ChatGPT
+      Developer mode, Google Gemini, VS Code with Copilot, Cursor,
+      Windsurf, and Block Goose. Other clients may connect provided they
+      support Streamable HTTP transport, OAuth Authorization, and one of
+      two registration mechanisms (Client ID Metadata Documents preferred,
+      or preregistration). Sandbox and production endpoints are exposed
+      under api.sandbox.isometric.com/mcp and api.isometric.com/mcp.
+    humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+    baseURL: https://api.isometric.com/mcp
+    tags:
+      - MCP
+      - Model Context Protocol
+      - AI
+      - Agents
+      - Documentation
+      - Carbon Removal
+    properties:
+      - type: Documentation
+        url: https://docs.isometric.com/user-guides/ai/mcp-server
+      - type: ModelContextProtocol
+        url: https://api.isometric.com/mcp
+      - type: Sandbox
+        url: https://api.sandbox.isometric.com/mcp
+common:
+  - type: Portal
+    url: https://isometric.com
+  - type: Website
+    url: https://isometric.com
+  - type: Registry
+    url: https://registry.isometric.com
+  - type: Documentation
+    url: https://docs.isometric.com
+  - type: GettingStarted
+    url: https://docs.isometric.com/getting-started
+  - type: Standard
+    url: https://registry.isometric.com/standard
+    name: Isometric Standard
+  - type: Documentation
+    url: https://registry.isometric.com/protocols
+    name: Protocols Library
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/introduction
+    name: Registry User Guide
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/certify/introduction
+    name: Certify User Guide
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/certify/key-certify-concepts
+    name: Key Certify Concepts
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+    name: Key Registry Concepts
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/ai/mcp-server
+    name: MCP Server
+  - type: ChangeLog
+    url: https://isometric.com/changelog
+  - type: Blog
+    url: https://isometric.com/writing
+  - type: About
+    url: https://isometric.com/about
+  - type: Careers
+    url: https://isometric.com/careers
+  - type: Contact
+    url: mailto:contact@isometric.com
+  - type: Press
+    url: mailto:press@isometric.com
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/isometric-tech
+  - type: GitHubOrganization
+    url: https://github.com/isometric
+  - type: Product
+    url: https://isometric.com/carbon
+    name: Carbon
+  - type: Product
+    url: https://isometric.com/superpollutants
+    name: Superpollutants
+  - type: Product
+    url: https://isometric.com/registry
+    name: Registry
+  - type: Product
+    url: https://isometric.com/certify
+    name: Certify
+  - type: Features
+    data:
+      - AI-native certification platform for the industrial economy
+      - Public Isometric Standard with peer-reviewed scientific protocols
+      - Durable carbon removal pathways — biochar, DAC, enhanced weathering, mineralization, marine CDR, biosphere
+      - Superpollutant abatement protocols — HFC/ODS recovery, landfill methane, rice methane reduction
+      - Monthly credit issuance with real-time public registry updates
+      - Full credit lifecycle — issuance, delivery, transfer, retirement, refund, buffer pool
+      - Certify API for automated MRV data ingestion and GHG statement submission
+      - Registry API for programmatic credit operations (read + write)
+      - Hosted MCP server exposing Standard, protocols, and docs to AI agents
+      - Sandbox + production environments with X-Client-Secret + Bearer JWT auth
+      - Stripe-backed self-service checkout for buyers
+      - Sensor and time-series data ingestion with signed-URL file uploads
+      - LCA tooling, component blueprint library, sensitivity analysis
+      - Geospatial data standards (LiDAR, rasters, shapefiles) for biosphere protocols
+      - Customers include Google, Microsoft, Shopify, Anglo American
+    sources:
+      - https://isometric.com
+      - https://docs.isometric.com
+      - https://registry.isometric.com
+      - https://registry.isometric.com/protocols
+      - https://docs.isometric.com/api-reference/authentication
+      - https://docs.isometric.com/user-guides/ai/mcp-server
+    updated: '2026-05-24'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
