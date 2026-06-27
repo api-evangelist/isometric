@@ -183,7 +183,7 @@ common:
     url: https://docs.isometric.com
   - type: GettingStarted
     url: https://docs.isometric.com/getting-started
-  - type: Standard
+  - type: Standards
     url: https://registry.isometric.com/standard
     name: Isometric Standard
   - type: Documentation

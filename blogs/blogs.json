@@ -3,19 +3,12 @@
   "feeds": [
     {
       "source": "https://isometric.com/writing",
-      "feed_url": "https://isometric.com/writing",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://isometric.com/changelog",
-      "feed_url": "https://isometric.com/changelog",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 3,
+  "fetched": "2026-06-27T12:51:03Z",
+  "agent_pulled": "2026-06-27"
 }
