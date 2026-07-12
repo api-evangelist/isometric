@@ -173,6 +173,10 @@ apis:
       - type: Sandbox
         url: https://api.sandbox.isometric.com/mcp
 common:
+  - type: DomainSecurity
+    url: security/isometric-domain-security.yml
+  - type: Authentication
+    url: authentication/isometric-authentication.yml
   - type: Portal
     url: https://isometric.com
   - type: Website
