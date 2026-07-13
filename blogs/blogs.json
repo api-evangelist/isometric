@@ -2,13 +2,14 @@
   "repo": "isometric",
   "feeds": [
     {
-      "source": "https://isometric.com/writing",
-      "feed_url": "",
+      "source": "https://isometric.com/changelog",
+      "feed_url": "https://isometric.com/changelog",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     }
   ],
-  "post_count": 3,
-  "fetched": "2026-06-27T12:51:03Z",
-  "agent_pulled": "2026-06-27"
+  "post_count": 5,
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
