@@ -173,6 +173,8 @@ apis:
       - type: Sandbox
         url: https://api.sandbox.isometric.com/mcp
 common:
+  - type: AgenticAccess
+    url: agentic-access/isometric-agentic-access.yml
   - type: DomainSecurity
     url: security/isometric-domain-security.yml
   - type: Authentication
