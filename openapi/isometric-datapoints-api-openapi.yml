@@ -1,0 +1,1286 @@
+openapi: 3.1.0
+info:
+  description: "# Standards\n\n## Versioning\n\nThis API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`.\n\n### Compatibility\n\nWe won't make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we'll release a new major version.\nWe may deprecate APIs that have been replaced by a newer version. When doing so, we will expect\nintegrated partners to manage a transition to new resources within the deprecation timeline of old ones.\n\nWe will make the following sort of changes we do not consider to be breaking:\n\n- Adding new endpoints\n- Adding optional query parameters to API endpoints\n- Adding new properties to existing API responses\n- Reordering properties in existing API responses\n\nIt is important that clients are built to be robust to these changes.\n\n## Pagination\n\nOur API is based on the [Relay](https://relay.dev/docs/tutorial/connections-pagination/) pagination spec. Paginated endpoints\nwill return a `PaginatedListResource` which contains:\n\n- `page_info` - Containing information regarding pagination cursors and the total number of entities.\n- `nodes` - Each node is a paginated entity.\n- `total_count` - The total size of the list across all pages.\n\n### Pagination Parameters\n\nPaginated endpoints also accepted a standard set of query parameters:\n\n- `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50.\n- `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page's `start_cursor` here when paginated backwards.\n- `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50.\n- `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page's `end_cursor` here when paginated forwards.\n\nFor example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:\n\n```json\n{\n    \"page_info\": {\n        \"has_previous_page\": false,\n        \"start_cursor\": ...,\n        \"has_next_page\": true,\n        \"end_cursor\": \"mpG5kcuoFBYtlH\",\n    },\n    \"nodes\": [{\n        \"id\": \"org_12345iso678\",\n        \"name\": \"My Org\",\n        ...\n    }],\n    \"total_count\": 100\n}\n```\n\nThen querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items.\n\n## Dates\n\nDatetime fields in the APIs conform to the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`.\n\n## Country Codes\n\nCountries are identified in the APIs via [ISO 3166-1 Alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) codes. For example: `GBR` and `USA`.\n# Authentication\n\nMost API requests will need to authenticate against the Isometric API in two ways simultaneously:\n\n- By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API.\n- By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data.\n\n### Client Authentication\n\nEvery API call to Isometric must include a **client secret** identifying the client application.\n\nThis client secret is tied to a particular environment - sandbox or production.\n\nThe client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`.\n\n### Organization Authentication\n\nIn addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization.\n\nTo authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.\nIf you are going to be acting on behalf of other Organizations, they will need to generate the access token and pass it securely to you.\nAccess tokens should be treated as highly sensitive, kept secret and stored accordingly.\n\nAccess tokens are scoped to a single Organization - so if you are acting on behalf of multiple particular organizations, you will need to submit the appropriate access token on each request.\n\n### Managing Credentials\n\nCredentials can be managed through Certify UI in the [Team settings](https://registry.isometric.com/account/team-settings) section. Access tokens will expire after 1 year from generation. When you are approaching expiry, a new token will need to be generated.\n\nBoth client secrets and access tokens can be created and invalidated through UI.\nClient secrets do not expire and do not need to be rotated.\nIf either secret becomes compromised, it should be invalidated through the UI.\n# Key Certify Concepts\n\nThis page defines concepts used in Certify, and the [Certify API](/api-reference/certify/certify-introduction), which are helpful to understand when submitting information for verification via Certify. For a broader understanding of Isometric's verification processes on the Isometric Registry, please refer to the [Isometric Standard](https://isometric.com/standard).\n\n## Resource visibility\n\n- Until resources are submitted as part of a GHG statement, they are visible only to members of your organization.\n- After statement submission, they are visible to the verifier assigned to the GHG statement.\n- Once credits have been issued, removals are added to the [public registry](https://registry.isometric.com), and associated resources are visible publicly, with the exception of source documents.\n- Sources uploaded in the Certify platform are kept private by default once published on the Isometric registry (file names will be displayed). Contact Isometric to update public source visibility. Sources [added via the API](/api-reference/certify/post-source) can be set `public` on submission.\n\n## Resources\n\nThe main resources used in Certify are sources, datapoints, components and removals.\n\n### Sources\n\n- Sources represent a piece of evidence for a particular datapoint used in carbon accounting calculations.\n- Source documents are private, and only shared with the verifier assigned to a related removal.\n- Other information associated with a source, such as its display name, is visible publicly once the removal is on the public registry.\n- Verifiers are not notified when new sources are added to datapoints in a submitted removal, but they will immediately have access to the source documentation. Please notify the Isometric Registry Operations team when sources are added on a verifier's request so that we can ensure that the verifier is aware.\n\n### Datapoints\n\n- Datapoints represent any value used in carbon accounting calculations.\n- When creating datapoints, sources should be referenced to provide evidence for the value used.\n- A standard deviation should be provided if the datapoint is to be included in the variance propagation method of uncertainty analysis.\n- All datapoints are considered statistically independent for the purpose of variance propagation, although if a datapoint is used twice within a removal calculation, this dependence is captured.\n\n### Components\n\n- Components represent physical activities whose CO₂e flux needs to be accounted for.\n- Components are created from [component blueprints](/user-guides/certify/component-blueprint-library) that contain sets of equations used to calculate a transfer of CO₂e into or out of the atmosphere.\n- A blueprint defines a set of inputs that are the datapoints to be used in the calculation. For instance, a transport emissions blueprints would ask for datapoints representing a distance, mass and carbon intensity.\n- When creating a component from a blueprint, the blueprint must be specified, as well as a list of datapoints for the expected blueprint inputs. Learn more about components in [Identifying Components](/user-guides/certify/identifying-components).\n\n### Removals\n\n- Removals represent a series of activities that result in CO₂e being removed from the atmosphere.\n- The carbon accounting of a removal typically contains sequestrations, counterfactuals and activities (emissions).\n- Removals are structured using a template, [defined in your LCA](/user-guides/certify/lca).\n- Templates are divided into component groups. For instance, a biochar template may contain a `Feedstock sourcing` group.\n- Groups can contain multiple components.\n- Components can also be partially attributed to removals, if the activity the component represents contributed to multiple removals.\n- The final uncertainty discounting is done on the removal level - the API will return the CO₂e removed with and without discounting.\n- See the [Create a removal](/user-guides/certify/removal) guide for more details.\n\n### Feedstock types\n\n- Many carbon removal methods involve a feedstock, for instance biomass feedstock in BiCRS or silicate rock in enhanced weathering.\n- Feedstock types are used to describe the feedstock used in a removal.\n- When creating a removal, a feedstock type can be optionally specified so that Isometric and verifiers can see which removals use which feedstocks.\n- This is important if different feedstocks are used in a single GHG statement.\n- See the [Add feedstock](/user-guides/certify/add-feedstock) guide for more details.\n"
+  title: Isometric Certify Data Ingestion Beneficiaries Datapoints API
+  version: v0
+servers:
+- description: Sandbox Isometric MRV API
+  url: https://api.sandbox.isometric.com/mrv/v0
+- description: Production Isometric MRV API
+  url: https://api.isometric.com/mrv/v0
+tags:
+- name: Datapoints
+paths:
+  /datapoints:
+    get:
+      description: Lists datapoints in the Isometric system
+      operationId: get_datapoints_datapoints_get
+      parameters:
+      - in: query
+        name: supplier_reference_id
+        required: false
+        schema:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+      - in: query
+        name: display_name_contains
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name Contains
+      - in: query
+        name: project_id
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/IsometricIDQueryParam_Project_'
+          - type: 'null'
+          title: Project Id
+      - in: query
+        name: quantity_kind
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/QuantityKindType'
+          - type: 'null'
+          title: Quantity Kind
+      - in: query
+        name: measurement_sample_id
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/IsometricIDQueryParam_MeasurementSample_'
+          - type: 'null'
+          title: Measurement Sample Id
+      - in: query
+        name: used_in_removal
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/IsometricIDQueryParam_GhgEntry_'
+          - type: 'null'
+          title: Used In Removal
+      - in: query
+        name: used_in_ghg_statement
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/IsometricIDQueryParam_GhgStatement_'
+          - type: 'null'
+          title: Used In Ghg Statement
+      - in: query
+        name: used_in_removal_template
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/IsometricIDQueryParam_GhgEntryTemplate_'
+          - type: 'null'
+          title: Used In Removal Template
+      - in: query
+        name: used_in_scope
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/ComponentScope'
+          - type: 'null'
+          title: Used In Scope
+      - in: query
+        name: last
+        required: false
+        schema:
+          default: 10
+          description: An integer number of items to retrieve before the item represented by the cursor passed in the before parameter. Defaults to 10 with a maximum value of 50.
+          exclusiveMinimum: 0
+          maximum: 50
+          title: Last
+          type: integer
+      - in: query
+        name: before
+        required: false
+        schema:
+          anyOf:
+          - minLength: 1
+            type: string
+          - type: 'null'
+          description: An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page’s start_cursor here when paginated backwards.
+          title: Before
+      - in: query
+        name: first
+        required: false
+        schema:
+          default: 10
+          description: An integer number of items to retrieve after the item represented by the cursor passed in the after parameter. Defaults to 10 with a maximum value of 50.
+          exclusiveMinimum: 0
+          maximum: 50
+          title: First
+          type: integer
+      - in: query
+        name: after
+        required: false
+        schema:
+          anyOf:
+          - minLength: 1
+            type: string
+          - type: 'null'
+          description: An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page’s end_cursor here when paginated forwards.
+          title: After
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedListResource_Datapoint_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Get Datapoints
+      tags:
+      - Datapoints
+    post:
+      description: Creates a datapoint in the Isometric system
+      operationId: post_datapoint_datapoints_post
+      parameters:
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDatapointRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Datapoint'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Post Datapoint
+      tags:
+      - Datapoints
+  /datapoints/{id}:
+    delete:
+      description: Delete a datapoint resource. Will fail if the datapoint is in use by a component.
+      operationId: delete_datapoint_datapoints__id__delete
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          $ref: '#/components/schemas/IsometricIDPathParam_Datapoint_'
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Delete Datapoint
+      tags:
+      - Datapoints
+    get:
+      description: Returns a single datapoint in the Isometric system
+      operationId: get_datapoint_datapoints__id__get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          $ref: '#/components/schemas/IsometricIDPathParam_Datapoint_'
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Datapoint'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Get Datapoint
+      tags:
+      - Datapoints
+    patch:
+      description: Updates a datapoint in the Isometric system. Associated components and removals will be recalculated, if they are not in an immutable state.
+      operationId: patch_datapoint_datapoints__id__patch
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          $ref: '#/components/schemas/IsometricIDPathParam_Datapoint_'
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchDatapointRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Datapoint'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Patch Datapoint
+      tags:
+      - Datapoints
+  /datapoints/{id}/components:
+    get:
+      description: Lists components associated with a datapoint in the Isometric system
+      operationId: get_datapoint_components_datapoints__id__components_get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          $ref: '#/components/schemas/IsometricIDPathParam_Datapoint_'
+      - in: query
+        name: last
+        required: false
+        schema:
+          default: 10
+          description: An integer number of items to retrieve before the item represented by the cursor passed in the before parameter. Defaults to 10 with a maximum value of 50.
+          exclusiveMinimum: 0
+          maximum: 50
+          title: Last
+          type: integer
+      - in: query
+        name: before
+        required: false
+        schema:
+          anyOf:
+          - minLength: 1
+            type: string
+          - type: 'null'
+          description: An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page’s start_cursor here when paginated backwards.
+          title: Before
+      - in: query
+        name: first
+        required: false
+        schema:
+          default: 10
+          description: An integer number of items to retrieve after the item represented by the cursor passed in the after parameter. Defaults to 10 with a maximum value of 50.
+          exclusiveMinimum: 0
+          maximum: 50
+          title: First
+          type: integer
+      - in: query
+        name: after
+        required: false
+        schema:
+          anyOf:
+          - minLength: 1
+            type: string
+          - type: 'null'
+          description: An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page’s end_cursor here when paginated forwards.
+          title: After
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedListResource_Component_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Get Datapoint Components
+      tags:
+      - Datapoints
+  /datapoints/{id}/removal_template_components:
+    get:
+      description: Lists removal template components that use this datapoint
+      operationId: get_datapoint_removal_template_components_datapoints__id__removal_template_components_get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          $ref: '#/components/schemas/IsometricIDPathParam_Datapoint_'
+      - in: query
+        name: last
+        required: false
+        schema:
+          default: 10
+          description: An integer number of items to retrieve before the item represented by the cursor passed in the before parameter. Defaults to 10 with a maximum value of 50.
+          exclusiveMinimum: 0
+          maximum: 50
+          title: Last
+          type: integer
+      - in: query
+        name: before
+        required: false
+        schema:
+          anyOf:
+          - minLength: 1
+            type: string
+          - type: 'null'
+          description: An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page’s start_cursor here when paginated backwards.
+          title: Before
+      - in: query
+        name: first
+        required: false
+        schema:
+          default: 10
+          description: An integer number of items to retrieve after the item represented by the cursor passed in the after parameter. Defaults to 10 with a maximum value of 50.
+          exclusiveMinimum: 0
+          maximum: 50
+          title: First
+          type: integer
+      - in: query
+        name: after
+        required: false
+        schema:
+          anyOf:
+          - minLength: 1
+            type: string
+          - type: 'null'
+          description: An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page’s end_cursor here when paginated forwards.
+          title: After
+      - description: A secret token identifying the client connecting to the API
+        in: header
+        name: x-client-secret
+        required: true
+        schema:
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+          title: Client secret
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedListResource_RemovalTemplateComponent_'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Get Datapoint Removal Template Components
+      tags:
+      - Datapoints
+components:
+  schemas:
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
+    PatchDatapointRequest:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Description
+        display_name:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Display Name
+        quantity:
+          anyOf:
+          - $ref: '#/components/schemas/DatapointQuantityInput'
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Quantity
+        source_ids:
+          anyOf:
+          - items:
+              example: src_1EBBF4M7X1S06G1Y
+              examples:
+              - src_1EBBF4M7X1S06G1Y
+              - src_1DW1B17VNSBX37N0
+              maxLength: 37
+              minLength: 20
+              type: string
+            type: array
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: Overwrite existing source IDs
+          title: Source Ids
+        type:
+          anyOf:
+          - $ref: '#/components/schemas/DatapointType'
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Type
+        uncertainty_justification:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: '
+
+            Provide an uncertainty justification where required for inputs identified as sensitive in sensitivity analysis.
+
+            '
+          title: Uncertainty Justification
+      title: PatchDatapointRequest
+      type: object
+    ComponentType:
+      enum:
+      - ACTIVITY
+      - REMOVAL_COUNTERFACTUAL
+      - SEQUESTRATION
+      - LOSS
+      - ADJUSTMENT
+      - UNCERTAINTY_DISCOUNT
+      title: ComponentType
+      type: string
+    ComponentListInput:
+      properties:
+        __typename:
+          const: ComponentListInput
+          default: ComponentListInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_ids:
+          description: The Isometric ID of the datapoints assigned to this input
+          items:
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
+          type: array
+        input_key:
+          description: Will match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_ids
+      title: ComponentListInput
+      type: object
+    Datapoint:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        display_name:
+          title: Display Name
+          type: string
+        id:
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        locked_status:
+          $ref: '#/components/schemas/DatapointLockedStatus'
+        measured_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Measured At
+        project_id:
+          anyOf:
+          - example: prj_1CTWZQGKE1S0VAXA
+            examples:
+            - prj_1CTWZQGKE1S0VAXA
+            - prj_1E0QTWB22SBX34D1
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Project Id
+        quantity:
+          $ref: '#/components/schemas/ScalarQuantity'
+        source_ids:
+          items:
+            example: src_1EBBF4M7X1S06G1Y
+            examples:
+            - src_1EBBF4M7X1S06G1Y
+            - src_1DW1B17VNSBX37N0
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Source Ids
+          type: array
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+        type:
+          $ref: '#/components/schemas/DatapointType'
+        uncertainty_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: '
+
+            Provide an uncertainty justification where required for inputs identified as sensitive in sensitivity analysis.
+
+            '
+          title: Uncertainty Justification
+      required:
+      - id
+      - supplier_reference_id
+      - display_name
+      - type
+      - quantity
+      - description
+      - source_ids
+      - measured_at
+      - project_id
+      - locked_status
+      title: Datapoint
+      type: object
+    IsometricIDQueryParam_GhgStatement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
+    ComponentScalarInput:
+      properties:
+        __typename:
+          const: ComponentScalarInput
+          default: ComponentScalarInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_id:
+          description: The Isometric ID of the datapoint assigned to this input
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
+        input_key:
+          description: Will match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_id
+      title: ComponentScalarInput
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    PaginatedListResource_RemovalTemplateComponent_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/RemovalTemplateComponent'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[RemovalTemplateComponent]
+      type: object
+    ScalarQuantity:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Standard Deviation
+        unit:
+          minLength: 1
+          title: Unit
+          type: string
+      required:
+      - magnitude
+      - unit
+      title: ScalarQuantity
+      type: object
+    IsometricIDPathParam_Datapoint_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Datapoint_'
+    CreateDatapointRequest:
+      properties:
+        description:
+          title: Description
+          type: string
+        display_name:
+          maxLength: 100
+          minLength: 1
+          title: Display Name
+          type: string
+        measured_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Measured At
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        quantity:
+          $ref: '#/components/schemas/DatapointQuantityInput'
+        source_ids:
+          items:
+            example: src_1EBBF4M7X1S06G1Y
+            examples:
+            - src_1EBBF4M7X1S06G1Y
+            - src_1DW1B17VNSBX37N0
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Source Ids
+          type: array
+        supplier_reference_id:
+          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+          maxLength: 100
+          minLength: 1
+          title: Supplier Reference Id
+          type: string
+        type:
+          $ref: '#/components/schemas/DatapointType'
+        uncertainty_justification:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: '
+
+            Provide an uncertainty justification where required for inputs identified as sensitive in sensitivity analysis.
+
+            '
+          title: Uncertainty Justification
+      required:
+      - supplier_reference_id
+      - display_name
+      - type
+      - quantity
+      - description
+      - source_ids
+      - project_id
+      title: CreateDatapointRequest
+      type: object
+    ComponentInputType:
+      enum:
+      - fixed
+      - monitored
+      title: ComponentInputType
+      type: string
+    IsometricIDRequestParam_GhgStatement_:
+      example: ggs_1GDQJ99Z51S0DYW9
+      examples:
+      - ggs_1GDQJ99Z51S0DYW9
+      - ggs_1FWVEQRWSSBXK3NB
+      maxLength: 37
+      minLength: 20
+      type: string
+    QuantityKindType:
+      enum:
+      - acidity
+      - activity_concentration
+      - amount_of_substance
+      - amount_of_substance_concentration
+      - amount_of_substance_per_mass
+      - area
+      - area_carbon_emission_factor
+      - buffer_ph
+      - bulk_density
+      - count
+      - currency
+      - currency_carbon_emission_factor
+      - depth
+      - diameter
+      - diameter_at_breast_height
+      - dimensionless
+      - dimensionless_ratio
+      - distance
+      - distance_carbon_emission_factor
+      - dose_equivalent_rate
+      - electric_current
+      - elevation
+      - energy
+      - energy_carbon_emission_factor
+      - energy_density
+      - exchangeable_amount_of_substance_per_mass
+      - fuel_economy
+      - height
+      - ionic_strength
+      - latitude
+      - longitude
+      - mass
+      - mass_carbon
+      - mass_carbon_emission_factor
+      - mass_cdr_potential
+      - mass_concentration
+      - mass_density
+      - mass_distance
+      - mass_distance_carbon_emission_factor
+      - mass_energy_density
+      - mass_flow_rate
+      - mass_fraction
+      - mass_fraction_dry_basis
+      - mass_fraction_wet_basis
+      - mass_per_area
+      - mass_ratio
+      - molality_of_solute
+      - molar_mass
+      - mole_fraction
+      - partial_pressure
+      - particle_diameter
+      - particle_mass_density
+      - power
+      - pressure
+      - specific_surface_area
+      - specific_volume
+      - temperature
+      - time
+      - time_emission_factor
+      - voltage
+      - volume
+      - volume_carbon_emission_factor
+      - volume_distance_carbon_emission_factor
+      - volume_flow_rate
+      - volume_fraction
+      - volume_per_area
+      title: QuantityKindType
+      type: string
+    IsometricIDQueryParam_GhgEntryTemplate_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntryTemplate_'
+    RemovalTemplateComponentInput:
+      properties:
+        datapoint_id:
+          anyOf:
+          - example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Datapoint Id
+        display_name:
+          title: Display Name
+          type: string
+        input_key:
+          description: The key which identifies an specific input to the component blueprint.
+          title: Input Key
+          type: string
+        quantity_kind:
+          $ref: '#/components/schemas/QuantityKindType'
+          description: The type of datapoint value that the input requires. Units compatible with this type can be found in the component blueprint library.
+        type:
+          $ref: '#/components/schemas/ComponentInputType'
+      required:
+      - input_key
+      - datapoint_id
+      - display_name
+      - type
+      - quantity_kind
+      title: RemovalTemplateComponentInput
+      type: object
+    IsometricIDQueryParam_MeasurementSample_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_MeasurementSample_'
+    ProjectComponentAmortizationStrategy:
+      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
+
+
+        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
+
+
+        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
+
+
+        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
+
+
+        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
+      enum:
+      - ESTIMATED_PROJECT_TONNAGE
+      - MANUAL
+      - CUSTOM_TIME_PERIOD
+      - ESTIMATED_PROJECT_LIFETIME
+      title: ProjectComponentAmortizationStrategy
+      type: string
+    DatapointQuantityInput:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: The standard deviation of the datapoint in the same units as the magnitude. Leave null if the datapoint is not to be included in the uncertainty analysis for the removal.
+          title: Standard Deviation
+        unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit
+      required:
+      - magnitude
+      - unit
+      title: DatapointQuantityInput
+      type: object
+    RemovalTemplateComponent:
+      properties:
+        blueprint_key:
+          title: Blueprint Key
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        display_name:
+          title: Display Name
+          type: string
+        id:
+          example: rtc_1DAA58EDM1S0AMPN
+          examples:
+          - rtc_1DAA58EDM1S0AMPN
+          - rtc_1CQAKRCVQSBXKKTM
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        inputs:
+          description: Inputs for this removal template component based on its component blueprint, including any customized display names and fixed input datapoints.
+          items:
+            $ref: '#/components/schemas/RemovalTemplateComponentInput'
+          title: Inputs
+          type: array
+        removal_template_component_group_id:
+          example: rtg_1EGQ9DZXZ1S05S28
+          examples:
+          - rtg_1EGQ9DZXZ1S05S28
+          - rtg_1CWEFDQ7GSBX1X5C
+          maxLength: 37
+          minLength: 20
+          title: Removal Template Component Group Id
+          type: string
+        removal_template_id:
+          example: rvt_1EVC8RZFE1S0BAT6
+          examples:
+          - rvt_1EVC8RZFE1S0BAT6
+          - rvt_1ECDZGE2DSBX88EX
+          maxLength: 37
+          minLength: 20
+          title: Removal Template Id
+          type: string
+      required:
+      - id
+      - display_name
+      - description
+      - blueprint_key
+      - removal_template_id
+      - removal_template_component_group_id
+      - inputs
+      title: RemovalTemplateComponent
+      type: object
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    DatapointType:
+      enum:
+      - CONSTANT
+      - STANDARD_PUBLISHED_VALUE
+      - REPORTED
+      - ASSUMPTION
+      - DERIVED
+      title: DatapointType
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    ComponentScope:
+      enum:
+      - REMOVAL
+      - GHG_STATEMENT
+      - PROJECT
+      - NET_NEGATIVITY
+      title: ComponentScope
+      type: string
+    PaginatedListResource_Datapoint_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Datapoint'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Datapoint]
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    DatapointLockedStatus:
+      description: 'Represents the locked status of a Datapoint. Locked Datapoints cannot be updated: if an updated version of a data input is required then a new Datapoint must be created.'
+      enum:
+      - not_locked
+      - locked_library_datapoint
+      - locked_time_series_datapoint
+      - locked_measurement_sample_datapoint
+      - locked_forestry_field_measurement_datapoint
+      - locked_model_output_datapoint
+      - locked_model_input_datapoint
+      - locked_material_datapoint
+      - locked_activity_datapoint
+      - locked_used_in_verified_removal
+      title: DatapointLockedStatus
+      type: string
+    IsometricIDRequestParam_Datapoint_:
+      example: dtp_1DVKHKS101S0Q61Q
+      examples:
+      - dtp_1DVKHKS101S0Q61Q
+      - dtp_1DJN8P57VSBXASFX
+      maxLength: 37
+      minLength: 20
+      type: string
+    PaginatedListResource_Component_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Component'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Component]
+      type: object
+    IsometricIDRequestParam_GhgEntryTemplate_:
+      example: rvt_1EVC8RZFE1S0BAT6
+      examples:
+      - rvt_1EVC8RZFE1S0BAT6
+      - rvt_1ECDZGE2DSBX88EX
+      maxLength: 37
+      minLength: 20
+      type: string
+    IsometricIDQueryParam_GhgEntry_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
+    IsometricIDRequestParam_GhgEntry_:
+      example: rmv_1EEM6NJXX1S0EXKD
+      examples:
+      - rmv_1EEM6NJXX1S0EXKD
+      - rmv_1E3V4J2EWSBX5E82
+      maxLength: 37
+      minLength: 20
+      type: string
+    IsometricIDRequestParam_MeasurementSample_:
+      example: mts_1D7HS15KD1S03M0Z
+      examples:
+      - mts_1D7HS15KD1S03M0Z
+      - mts_1FN0MEX2ZSBX40DT
+      maxLength: 37
+      minLength: 20
+      type: string
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
+      examples:
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
+      maxLength: 37
+      minLength: 20
+      type: string
+    Component:
+      properties:
+        activity_completed_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Activity Completed At
+        activity_started_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Activity Started At
+        allocation_strategy:
+          anyOf:
+          - $ref: '#/components/schemas/ProjectComponentAmortizationStrategy'
+          - type: 'null'
+          description: Attribution strategy, manages how project-scoped components are distributed across GHG statements; value will be Null if scope is not of scope project
+        blueprint_key:
+          title: Blueprint Key
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        display_name:
+          title: Display Name
+          type: string
+        id:
+          example: cmp_1EP2SB7MZ1S036PY
+          examples:
+          - cmp_1EP2SB7MZ1S036PY
+          - cmp_1EHK4R6QJSBXFC5N
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        inputs:
+          description: A list of component inputs. The inputs can be either scalars or list inputs.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ComponentListInput'
+            - $ref: '#/components/schemas/ComponentScalarInput'
+          title: Inputs
+          type: array
+        removal_template_component_id:
+          anyOf:
+          - example: rtc_1DAA58EDM1S0AMPN
+            examples:
+            - rtc_1DAA58EDM1S0AMPN
+            - rtc_1CQAKRCVQSBXKKTM
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: The ID of the removal template component, if this component was created via a template. May be null if the component was created directly, or if the template has been deleted.
+          title: Removal Template Component Id
+        scope:
+          $ref: '#/components/schemas/ComponentScope'
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+        type:
+          $ref: '#/components/schemas/ComponentType'
+      required:
+      - id
+      - supplier_reference_id
+      - type
+      - scope
+      - display_name
+      - description
+      - activity_completed_at
+      - activity_started_at
+      - blueprint_key
+      - removal_template_component_id
+      - inputs
+      title: Component
+      type: object
+  securitySchemes:
+    HTTPBearer:
+      bearerFormat: JWT
+      description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
+      scheme: bearer
+      type: http
