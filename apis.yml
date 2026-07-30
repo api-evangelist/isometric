@@ -51,7 +51,19 @@ tags:
   - Protocols
   - AI
   - MCP
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/isometric.png
 kind: contract
 position: Provider
 access: 3rd-Party
@@ -60,118 +72,1015 @@ created: '2026-05-24'
 modified: '2026-05-24'
 specificationVersion: '0.20'
 apis:
-  - aid: isometric:isometric-registry-api
-    name: Isometric Registry API
-    description: >-
-      The Isometric Registry API provides programmatic access to the public
-      record of carbon removal credits certified to the Isometric Standard.
-      Versioned at /v0, it exposes resources for suppliers, organisations,
-      beneficiaries, transferees, projects, issuances, credit batches, orders,
-      deliveries, transfers, retirements, refunds, and buffer pools, plus
-      Stripe-backed checkout for self-service payments. Authentication
-      requires both an X-Client-Secret header tied to a sandbox or production
-      environment and a JWT bearer access token scoped to a single
-      organisation. Pagination follows the Relay cursor specification, dates
-      are ISO 8601 UTC, and countries use ISO 3166-1 Alpha-3. Third-party
-      integrators including marketplaces, intermediaries, and carbon
-      intelligence platforms can request Registry API access.
-    humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
-    baseURL: https://api.isometric.com/registry/v0
-    tags:
-      - Carbon Removal
-      - Carbon Registry
-      - Credits
-      - Issuances
-      - Deliveries
-      - Transfers
-      - Retirements
-      - MRV
-      - Climate
-    properties:
-      - type: Documentation
-        url: https://docs.isometric.com/api-reference/registry/registry-introduction
-      - type: Documentation
-        url: https://docs.isometric.com/api-reference/registry/api-changelog
-      - type: Documentation
-        url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
-      - type: Authentication
-        url: https://docs.isometric.com/api-reference/authentication
-      - type: OpenAPI
-        url: openapi/isometric-registry-api-openapi.json
-      - type: ChangeLog
-        url: https://docs.isometric.com/api-reference/registry/api-changelog
-  - aid: isometric:isometric-certify-api
-    name: Isometric Certify Data Ingestion API
-    description: >-
-      The Isometric Certify (MRV) Data Ingestion API automates the syncing
-      of project Measurement, Reporting, and Verification (MRV) data and
-      GHG statement submissions into the Certify platform. Versioned at /v0
-      under api.isometric.com/mrv/v0, it covers projects, removals and
-      removal templates, components and component blueprints, datapoints,
-      attribution, feedstock types and batches, production batches, storage
-      locations and units, measurement locations and samples, monitoring
-      submissions and requirements, GHG statements, sources and signed
-      upload URLs, sensors, time-series data upload submissions, and signed
-      file uploads. Suppliers using their own field equipment, LIMS, ERP, or
-      lab systems can stream MRV evidence directly into Isometric's
-      verification pipeline. Same dual-header auth model as the Registry
-      API (X-Client-Secret + Bearer JWT), with sandbox and production
-      environments.
-    humanURL: https://docs.isometric.com/api-reference/certify/certify-introduction
-    baseURL: https://api.isometric.com/mrv/v0
-    tags:
-      - Carbon Removal
-      - MRV
-      - Certification
-      - Ingestion
-      - LCA
-      - GHG Statements
-      - Sensors
-      - Climate
-    properties:
-      - type: Documentation
-        url: https://docs.isometric.com/api-reference/certify/certify-introduction
-      - type: Documentation
-        url: https://docs.isometric.com/api-reference/certify/your-first-removal
-      - type: Documentation
-        url: https://docs.isometric.com/api-reference/certify/api-changelog
-      - type: Authentication
-        url: https://docs.isometric.com/api-reference/authentication
-      - type: OpenAPI
-        url: openapi/isometric-certify-api-openapi.json
-      - type: ChangeLog
-        url: https://docs.isometric.com/api-reference/certify/api-changelog
-  - aid: isometric:isometric-mcp-server
-    name: Isometric MCP Server
-    description: >-
-      Isometric ships a hosted Model Context Protocol (MCP) server that
-      makes the Isometric Standard, proprietary protocols (biochar, DAC,
-      enhanced weathering, marine CDR, biosphere, superpollutants),
-      protocol modules, Certify and Registry user guides, and the full
-      API documentation queryable by MCP-compatible AI clients. Pre-approved
-      clients include Claude (Claude.ai and Claude Desktop), ChatGPT
-      Developer mode, Google Gemini, VS Code with Copilot, Cursor,
-      Windsurf, and Block Goose. Other clients may connect provided they
-      support Streamable HTTP transport, OAuth Authorization, and one of
-      two registration mechanisms (Client ID Metadata Documents preferred,
-      or preregistration). Sandbox and production endpoints are exposed
-      under api.sandbox.isometric.com/mcp and api.isometric.com/mcp.
-    humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
-    baseURL: https://api.isometric.com/mcp
-    tags:
-      - MCP
-      - Model Context Protocol
-      - AI
-      - Agents
-      - Documentation
-      - Carbon Removal
-    properties:
-      - type: Documentation
-        url: https://docs.isometric.com/user-guides/ai/mcp-server
-      - type: ModelContextProtocol
-        url: https://api.isometric.com/mcp
-      - type: Sandbox
-        url: https://api.sandbox.isometric.com/mcp
+- aid: isometric:isometric-mcp-server
+  name: Isometric MCP Server
+  description: >-
+    Isometric ships a hosted Model Context Protocol (MCP) server that makes the Isometric Standard, proprietary
+    protocols (biochar, DAC, enhanced weathering, marine CDR, biosphere, superpollutants), protocol modules,
+    Certify and Registry user guides, and the full API documentation queryable by MCP-compatible AI clients.
+    Pre-approved clients include Claude (Claude.ai and Claude Desktop), ChatGPT Developer mode, Google
+    Gemini, VS Code with Copilot, Cursor, Windsurf, and Block Goose. Other clients may connect provided
+    they support Streamable HTTP transport, OAuth Authorization, and one of two registration mechanisms
+    (Client ID Metadata Documents preferred, or preregistration). Sandbox and production endpoints are
+    exposed under api.sandbox.isometric.com/mcp and api.isometric.com/mcp.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - MCP
+  - Model Context Protocol
+  - AI
+  - Agents
+  - Documentation
+  - Carbon Removal
+  properties:
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/ai/mcp-server
+  - type: ModelContextProtocol
+    url: https://api.isometric.com/mcp
+  - type: Sandbox
+    url: https://api.sandbox.isometric.com/mcp
+- aid: isometric:isometric-beneficiaries-api
+  name: Isometric Beneficiaries API
+  description: The Beneficiaries API from Isometric — 1 operation(s) for beneficiaries.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Beneficiaries
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-beneficiaries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-beneficiary-api
+  name: Isometric Beneficiary API
+  description: The Beneficiary API from Isometric — 1 operation(s) for beneficiary.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Beneficiary
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-beneficiary-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-biochar-applications-api
+  name: Isometric Biochar Applications API
+  description: The Biochar Applications API from Isometric — 2 operation(s) for biochar applications.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Biochar Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-biochar-applications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-component-blueprints-api
+  name: Isometric Component Blueprints API
+  description: The Component Blueprints API from Isometric — 2 operation(s) for component blueprints.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Component Blueprints
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-component-blueprints-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-components-api
+  name: Isometric Components API
+  description: The Components API from Isometric — 2 operation(s) for components.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Components
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-components-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-credit-batches-api
+  name: Isometric Credit Batches API
+  description: The Credit Batches API from Isometric — 1 operation(s) for credit batches.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Credit Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-credit-batches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-data-upload-submissions-api
+  name: Isometric Data Upload Submissions API
+  description: >-
+    The Data Upload Submissions API from Isometric — 2 operation(s) for data upload submissions.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Data Upload Submissions
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-data-upload-submissions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-datapoints-api
+  name: Isometric Datapoints API
+  description: The Datapoints API from Isometric — 4 operation(s) for datapoints.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Datapoints
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-datapoints-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-deliveries-api
+  name: Isometric Deliveries API
+  description: The Deliveries API from Isometric — 3 operation(s) for deliveries.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Deliveries
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-deliveries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-feedstock-batches-api
+  name: Isometric Feedstock Batches API
+  description: The Feedstock Batches API from Isometric — 2 operation(s) for feedstock batches.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Feedstock Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-feedstock-batches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-feedstock-types-api
+  name: Isometric Feedstock Types API
+  description: The Feedstock Types API from Isometric — 3 operation(s) for feedstock types.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Feedstock Types
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-feedstock-types-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-file-uploads-api
+  name: Isometric File Uploads API
+  description: The File Uploads API from Isometric — 1 operation(s) for file uploads.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - File Uploads
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-file-uploads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-ghg-statement-components-api
+  name: Isometric Ghg Statement Components API
+  description: >-
+    The Ghg Statement Components API from Isometric — 1 operation(s) for ghg statement components.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Ghg Statement Components
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-ghg-statement-components-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-ghg-statements-api
+  name: Isometric Ghg Statements API
+  description: The Ghg Statements API from Isometric — 3 operation(s) for ghg statements.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Ghg Statements
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-ghg-statements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-issuances-api
+  name: Isometric Issuances API
+  description: The Issuances API from Isometric — 3 operation(s) for issuances.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Issuances
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-issuances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-measurement-locations-api
+  name: Isometric Measurement Locations API
+  description: The Measurement Locations API from Isometric — 2 operation(s) for measurement locations.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Measurement Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-measurement-locations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-measurement-samples-api
+  name: Isometric Measurement Samples API
+  description: The Measurement Samples API from Isometric — 1 operation(s) for measurement samples.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Measurement Samples
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-measurement-samples-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-orders-api
+  name: Isometric Orders API
+  description: The Orders API from Isometric — 2 operation(s) for orders.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-organisation-api
+  name: Isometric Organisation API
+  description: The Organisation API from Isometric — 1 operation(s) for organisation.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Organisation
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-organisation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-organisations-api
+  name: Isometric Organisations API
+  description: The Organisations API from Isometric — 4 operation(s) for organisations.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Organisations
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-organisations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-processes-api
+  name: Isometric Processes API
+  description: The Processes API from Isometric — 1 operation(s) for processes.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Processes
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-processes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-production-batches-api
+  name: Isometric Production Batches API
+  description: The Production Batches API from Isometric — 2 operation(s) for production batches.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Production Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-production-batches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-project-components-api
+  name: Isometric Project Components API
+  description: The Project Components API from Isometric — 3 operation(s) for project components.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Project Components
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-project-components-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-projects-api
+  name: Isometric Projects API
+  description: The Projects API from Isometric — 12 operation(s) for projects.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-refunds-api
+  name: Isometric Refunds API
+  description: The Refunds API from Isometric — 2 operation(s) for refunds.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-removals-api
+  name: Isometric Removals API
+  description: The Removals API from Isometric — 3 operation(s) for removals.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Removals
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-removals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-retirements-api
+  name: Isometric Retirements API
+  description: The Retirements API from Isometric — 4 operation(s) for retirements.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Retirements
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-retirements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-sensors-api
+  name: Isometric Sensors API
+  description: The Sensors API from Isometric — 2 operation(s) for sensors.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Sensors
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-sensors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-sources-api
+  name: Isometric Sources API
+  description: The Sources API from Isometric — 4 operation(s) for sources.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-storage-units-api
+  name: Isometric Storage Units API
+  description: The Storage Units API from Isometric — 2 operation(s) for storage units.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Storage Units
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-storage-units-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-stripe-api
+  name: Isometric Stripe API
+  description: The Stripe API from Isometric — 2 operation(s) for stripe.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Stripe
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-stripe-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-supplier-api
+  name: Isometric Supplier API
+  description: The Supplier API from Isometric — 1 operation(s) for supplier.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Supplier
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-supplier-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-suppliers-api
+  name: Isometric Suppliers API
+  description: The Suppliers API from Isometric — 6 operation(s) for suppliers.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Suppliers
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-suppliers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-transferees-api
+  name: Isometric Transferees API
+  description: The Transferees API from Isometric — 1 operation(s) for transferees.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Transferees
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-transferees-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-transfers-api
+  name: Isometric Transfers API
+  description: The Transfers API from Isometric — 3 operation(s) for transfers.
+  humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
+  baseURL: https://api.isometric.com/registry/v0
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/registry-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/user-guides/registry/key-registry-concepts
+  - type: Authentication
+    url: https://docs.isometric.com/api-reference/authentication
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/registry/api-changelog
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/certify-introduction
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/your-first-removal
+  - type: Documentation
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
+  - type: ChangeLog
+    url: https://docs.isometric.com/api-reference/certify/api-changelog
 common:
   - type: AgenticAccess
     url: agentic-access/isometric-agentic-access.yml
