@@ -1,0 +1,244 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Sources API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "supplier_reference_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists sources in the Isometric system"
+        },
+        {
+          "info": {
+            "name": "Post Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a source in the Isometric system. The client is provided with a presigned\nupload URL which must be used to upload the document associated with this source.\nSource documents are private, but other fields will be visible publicly once\ncredits are issued for an associated removal, moving it to the public registry."
+        },
+        {
+          "info": {
+            "name": "Get Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get single source"
+        },
+        {
+          "info": {
+            "name": "Patch Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Patches metadata associated with a source in the Isometric system."
+        },
+        {
+          "info": {
+            "name": "Delete Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a source in the Isometric system. This is irreversible and the source cannot be recovered."
+        },
+        {
+          "info": {
+            "name": "Get Source Private Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources/:id/private_url",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a short-lived signed URL to download a source document from. This query will fail if\nthe source does not have a private URL or if the authenticated user does not have\naccess to it. That's why you need to first check the `urlInfo` field on the source\nobject, to ensure that you can safely use this query."
+        },
+        {
+          "info": {
+            "name": "Post Signed Upload Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/sources/:id/signed_upload_url",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Recreates a presigned upload URL, which must be used to upload the documentation\nassociated with this source. If the document is already uploaded, this endpoint will\nresponse with a 409 error."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

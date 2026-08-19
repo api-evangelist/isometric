@@ -1,0 +1,1336 @@
+{
+  "item": [
+    {
+      "id": "86c6172b-5d36-45b7-9c49-96c09b10aa05",
+      "name": "Suppliers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9813f773-e757-4f4b-af6e-e6d637f9dbb4",
+          "name": "Suppliers",
+          "request": {
+            "name": "Suppliers",
+            "description": {
+              "content": "Information about a specific supplier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "suppliers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2ade4db6-90d7-450d-831e-cce3b0033f5d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"spl_1CC712KFS1S0YKPS\",\n      \"short_description\": \"string\",\n      \"long_description\": \"string\",\n      \"organisation\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"location\": {\n        \"country_code\": \"string\",\n        \"country_name\": \"string\",\n        \"latitude\": -36.951049497749146,\n        \"longitude\": 22.765796652181734,\n        \"description\": \"string\"\n      }\n    },\n    {\n      \"id\": \"spl_1CC712KFS1S0YKPS\",\n      \"short_description\": \"string\",\n      \"long_description\": \"string\",\n      \"organisation\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"location\": {\n        \"country_code\": \"string\",\n        \"country_name\": \"string\",\n        \"latitude\": -16.55951520182755,\n        \"longitude\": -175.26414136363513,\n        \"description\": \"string\"\n      }\n    }\n  ],\n  \"total_count\": 1712,\n  \"page_info\": {\n    \"has_previous_page\": true,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": false,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f8105a5-0cb9-4cb5-8669-d4e5abccf3ee",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99464010-80b5-4763-aea9-3010a324ea47",
+          "name": "Supplier",
+          "request": {
+            "name": "Supplier",
+            "description": {
+              "content": "The organisation currently authenticated.\n\nUse this endpoint to get your organisation_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "suppliers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b37e8adb-4760-47fa-925b-0ae0f26f9aef",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"spl_1CC712KFS1S0YKPS\",\n  \"short_description\": \"string\",\n  \"long_description\": \"string\",\n  \"organisation\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"location\": {\n    \"country_code\": \"string\",\n    \"country_name\": \"string\",\n    \"latitude\": -23.844649152947213,\n    \"longitude\": -107.44994335821619,\n    \"description\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccc2dddf-b59b-4fd3-9a3a-af0ae00e6f64",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cf37a4a-ba44-4675-bdfc-482e286d75d9",
+          "name": "Supplier Deliveries",
+          "request": {
+            "name": "Supplier Deliveries",
+            "description": {
+              "content": "List of deliveries for a given supplier.\n\nDeliveries are sorted by most recently delivered first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "suppliers",
+                ":id",
+                "deliveries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3eb6983-a529-4530-8d06-d368a9dbd4db",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"dlv_1C454ZXA61S03Z9T\",\n      \"delivered_at\": \"1950-08-18T10:10:25.360Z\",\n      \"order_id\": \"ord_1FAN3S3WV1S0B842\",\n      \"from_supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": -51.099883591561245,\n          \"longitude\": -125.92996629967615,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"to_organisation\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"url\": \"string\",\n      \"notes\": \"string\"\n    },\n    {\n      \"id\": \"dlv_1C454ZXA61S03Z9T\",\n      \"delivered_at\": \"2024-09-21T14:04:39.643Z\",\n      \"order_id\": \"ord_1FAN3S3WV1S0B842\",\n      \"from_supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": 64.03031136457642,\n          \"longitude\": -84.34853200970826,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"to_organisation\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"url\": \"string\",\n      \"notes\": \"string\"\n    }\n  ],\n  \"total_count\": 316,\n  \"page_info\": {\n    \"has_previous_page\": false,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": false,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfc684dc-6591-4aec-b45a-80f636f947f4",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7ca1bfa-febe-4ff8-adf3-80ad0409dfda",
+          "name": "Supplier Issuances",
+          "request": {
+            "name": "Supplier Issuances",
+            "description": {
+              "content": "List of issuances for a given supplier.\n\nIssuances are sorted by most recently created first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "suppliers",
+                ":id",
+                "issuances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c9d84ebf-5b5f-47a0-88d5-a75b396732bd",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "issuances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"iss_1EWT8R5FY1S0GFCY\",\n      \"issued_at\": \"1971-02-26T02:40:50.006Z\",\n      \"supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": 27.57366839518926,\n          \"longitude\": 137.908736671888,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"project_id\": \"prj_1CTWZQGKE1S0VAXA\",\n      \"reporting_period_start_at\": \"1960-02-17\",\n      \"reporting_period_end_at\": \"1987-11-12\",\n      \"supplier_credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"buffer_pool_credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      }\n    },\n    {\n      \"id\": \"iss_1EWT8R5FY1S0GFCY\",\n      \"issued_at\": \"1986-05-16T07:06:24.449Z\",\n      \"supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": -21.042587459707022,\n          \"longitude\": -156.48190718365862,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"project_id\": \"prj_1CTWZQGKE1S0VAXA\",\n      \"reporting_period_start_at\": \"2015-09-25\",\n      \"reporting_period_end_at\": \"1981-02-20\",\n      \"supplier_credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"buffer_pool_credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      }\n    }\n  ],\n  \"total_count\": 7796,\n  \"page_info\": {\n    \"has_previous_page\": false,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": true,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29f15f3f-a5b2-413a-9de9-05e46ff27f69",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "issuances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f4c8f72-2697-4863-b876-851317eeeb30",
+          "name": "Supplier Orders",
+          "request": {
+            "name": "Supplier Orders",
+            "description": {
+              "content": "List of orders for a given supplier.\n\nOrders are sorted by most recently placed first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "suppliers",
+                ":id",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "715a3ea2-254c-4c36-8fdd-4718cb1bf970",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"ord_1FAN3S3WV1S0B842\",\n      \"effective_contract_date\": \"2004-09-05\",\n      \"fulfilled_at\": \"1949-01-28T00:24:53.468Z\",\n      \"buyer_organisation\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": -75.87193416419734,\n          \"longitude\": 95.46838012121134,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"status\": \"in_progress\",\n      \"credits_ordered\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"credits_delivered\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      }\n    },\n    {\n      \"id\": \"ord_1FAN3S3WV1S0B842\",\n      \"effective_contract_date\": \"2019-10-27\",\n      \"fulfilled_at\": \"2023-03-14T20:53:40.935Z\",\n      \"buyer_organisation\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": 45.46133245346124,\n          \"longitude\": 133.4008964716724,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"status\": \"completed\",\n      \"credits_ordered\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"credits_delivered\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      }\n    }\n  ],\n  \"total_count\": 714,\n  \"page_info\": {\n    \"has_previous_page\": false,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": false,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8e5e3bc-4141-41c4-bb26-ce91c8290479",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff866ada-7bbb-42c3-b190-a38ece2f8f20",
+          "name": "Supplier Projects",
+          "request": {
+            "name": "Supplier Projects",
+            "description": {
+              "content": "List of projects for a given supplier.\n\nProjects are sorted by most recently created first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "suppliers",
+                ":id",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1554e074-0201-4dcb-86ad-9b969b2b25a0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"prj_1CTWZQGKE1S0VAXA\",\n      \"name\": \"string\",\n      \"supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": -59.37732057005874,\n          \"longitude\": 120.80246696678194,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"status\": \"preview\",\n      \"short_code\": \"F5X7\",\n      \"url\": \"string\",\n      \"process_key\": \"string\",\n      \"pathway\": \"biomass_carbon_removal_and_storage\",\n      \"protocol_slug\": \"string\",\n      \"country_code\": \"GBR\",\n      \"validator_name\": \"string\",\n      \"current_verifier_name\": \"string\",\n      \"crediting_period_start\": \"1961-06-22\",\n      \"crediting_period_end\": \"1975-04-13\",\n      \"issued_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"retired_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"issued_buffer_pool_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"retired_buffer_pool_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"location\": {\n        \"country_code\": \"string\",\n        \"country_name\": \"string\",\n        \"latitude\": -9.04229145552516,\n        \"longitude\": -93.60199155089201,\n        \"description\": \"string\"\n      }\n    },\n    {\n      \"id\": \"prj_1CTWZQGKE1S0VAXA\",\n      \"name\": \"string\",\n      \"supplier\": {\n        \"id\": \"spl_1CC712KFS1S0YKPS\",\n        \"short_description\": \"string\",\n        \"long_description\": \"string\",\n        \"organisation\": {\n          \"id\": \"org_1GB56M1ST1S0GVNA\",\n          \"name\": \"Isometric\",\n          \"domain\": \"string\"\n        },\n        \"location\": {\n          \"country_code\": \"string\",\n          \"country_name\": \"string\",\n          \"latitude\": -69.6531250244042,\n          \"longitude\": 84.48122174818843,\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"status\": \"preview\",\n      \"short_code\": \"F5X7\",\n      \"url\": \"string\",\n      \"process_key\": \"string\",\n      \"pathway\": \"biomass_carbon_removal_and_storage\",\n      \"protocol_slug\": \"string\",\n      \"country_code\": \"GBR\",\n      \"validator_name\": \"string\",\n      \"current_verifier_name\": \"string\",\n      \"crediting_period_start\": \"1962-05-07\",\n      \"crediting_period_end\": \"1960-05-20\",\n      \"issued_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"retired_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"issued_buffer_pool_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"retired_buffer_pool_credits_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"location\": {\n        \"country_code\": \"string\",\n        \"country_name\": \"string\",\n        \"latitude\": 89.16971672019397,\n        \"longitude\": 69.05407612428579,\n        \"description\": \"string\"\n      }\n    }\n  ],\n  \"total_count\": 6736,\n  \"page_info\": {\n    \"has_previous_page\": false,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": false,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "277c4d07-f141-48d4-84ee-1516fddd370e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "suppliers",
+                    ":id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.isometric.com/mrv/v0",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ae83d1c5-2751-46e2-9503-936617cbff98",
+    "name": "Isometric Certify Data Ingestion Beneficiaries Suppliers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Standards\n\n## Versioning\n\nThis API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`.\n\n### Compatibility\n\nWe won't make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we'll release a new major version.\nWe may deprecate APIs that have been replaced by a newer version. When doing so, we will expect\nintegrated partners to manage a transition to new resources within the deprecation timeline of old ones.\n\nWe will make the following sort of changes we do not consider to be breaking:\n\n- Adding new endpoints\n- Adding optional query parameters to API endpoints\n- Adding new properties to existing API responses\n- Reordering properties in existing API responses\n\nIt is important that clients are built to be robust to these changes.\n\n## Pagination\n\nOur API is based on the [Relay](https://relay.dev/docs/tutorial/connections-pagination/) pagination spec. Paginated endpoints\nwill return a `PaginatedListResource` which contains:\n\n- `page_info` - Containing information regarding pagination cursors and the total number of entities.\n- `nodes` - Each node is a paginated entity.\n- `total_count` - The total size of the list across all pages.\n\n### Pagination Parameters\n\nPaginated endpoints also accepted a standard set of query parameters:\n\n- `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50.\n- `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page's `start_cursor` here when paginated backwards.\n- `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50.\n- `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page's `end_cursor` here when paginated forwards.\n\nFor example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:\n\n```json\n{\n    \"page_info\": {\n        \"has_previous_page\": false,\n        \"start_cursor\": ...,\n        \"has_next_page\": true,\n        \"end_cursor\": \"mpG5kcuoFBYtlH\",\n    },\n    \"nodes\": [{\n        \"id\": \"org_12345iso678\",\n        \"name\": \"My Org\",\n        ...\n    }],\n    \"total_count\": 100\n}\n```\n\nThen querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items.\n\n## Dates\n\nDatetime fields in the APIs conform to the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`.\n\n## Country Codes\n\nCountries are identified in the APIs via [ISO 3166-1 Alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) codes. For example: `GBR` and `USA`.\n# Authentication\n\nMost API requests will need to authenticate against the Isometric API in two ways simultaneously:\n\n- By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API.\n- By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data.\n\n### Client Authentication\n\nEvery API call to Isometric must include a **client secret** identifying the client application.\n\nThis client secret is tied to a particular environment - sandbox or production.\n\nThe client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`.\n\n### Organization Authentication\n\nIn addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization.\n\nTo authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.\nIf you are going to be acting on behalf of other Organizations, they will need to generate the access token and pass it securely to you.\nAccess tokens should be treated as highly sensitive, kept secret and stored accordingly.\n\nAccess tokens are scoped to a single Organization - so if you are acting on behalf of multiple particular organizations, you will need to submit the appropriate access token on each request.\n\n### Managing Credentials\n\nCredentials can be managed through Certify UI in the [Team settings](https://registry.isometric.com/account/team-settings) section. Access tokens will expire after 1 year from generation. When you are approaching expiry, a new token will need to be generated.\n\nBoth client secrets and access tokens can be created and invalidated through UI.\nClient secrets do not expire and do not need to be rotated.\nIf either secret becomes compromised, it should be invalidated through the UI.\n# Key Certify Concepts\n\nThis page defines concepts used in Certify, and the [Certify API](/api-reference/certify/certify-introduction), which are helpful to understand when submitting information for verification via Certify. For a broader understanding of Isometric's verification processes on the Isometric Registry, please refer to the [Isometric Standard](https://isometric.com/standard).\n\n## Resource visibility\n\n- Until resources are submitted as part of a GHG statement, they are visible only to members of your organization.\n- After statement submission, they are visible to the verifier assigned to the GHG statement.\n- Once credits have been issued, removals are added to the [public registry](https://registry.isometric.com), and associated resources are visible publicly, with the exception of source documents.\n- Sources uploaded in the Certify platform are kept private by default once published on the Isometric registry (file names will be displayed). Contact Isometric to update public source visibility. Sources [added via the API](/api-reference/certify/post-source) can be set `public` on submission.\n\n## Resources\n\nThe main resources used in Certify are sources, datapoints, components and removals.\n\n### Sources\n\n- Sources represent a piece of evidence for a particular datapoint used in carbon accounting calculations.\n- Source documents are private, and only shared with the verifier assigned to a related removal.\n- Other information associated with a source, such as its display name, is visible publicly once the removal is on the public registry.\n- Verifiers are not notified when new sources are added to datapoints in a submitted removal, but they will immediately have access to the source documentation. Please notify the Isometric Registry Operations team when sources are added on a verifier's request so that we can ensure that the verifier is aware.\n\n### Datapoints\n\n- Datapoints represent any value used in carbon accounting calculations.\n- When creating datapoints, sources should be referenced to provide evidence for the value used.\n- A standard deviation should be provided if the datapoint is to be included in the variance propagation method of uncertainty analysis.\n- All datapoints are considered statistically independent for the purpose of variance propagation, although if a datapoint is used twice within a removal calculation, this dependence is captured.\n\n### Components\n\n- Components represent physical activities whose CO₂e flux needs to be accounted for.\n- Components are created from [component blueprints](/user-guides/certify/component-blueprint-library) that contain sets of equations used to calculate a transfer of CO₂e into or out of the atmosphere.\n- A blueprint defines a set of inputs that are the datapoints to be used in the calculation. For instance, a transport emissions blueprints would ask for datapoints representing a distance, mass and carbon intensity.\n- When creating a component from a blueprint, the blueprint must be specified, as well as a list of datapoints for the expected blueprint inputs. Learn more about components in [Identifying Components](/user-guides/certify/identifying-components).\n\n### Removals\n\n- Removals represent a series of activities that result in CO₂e being removed from the atmosphere.\n- The carbon accounting of a removal typically contains sequestrations, counterfactuals and activities (emissions).\n- Removals are structured using a template, [defined in your LCA](/user-guides/certify/lca).\n- Templates are divided into component groups. For instance, a biochar template may contain a `Feedstock sourcing` group.\n- Groups can contain multiple components.\n- Components can also be partially attributed to removals, if the activity the component represents contributed to multiple removals.\n- The final uncertainty discounting is done on the removal level - the API will return the CO₂e removed with and without discounting.\n- See the [Create a removal](/user-guides/certify/removal) guide for more details.\n\n### Feedstock types\n\n- Many carbon removal methods involve a feedstock, for instance biomass feedstock in BiCRS or silicate rock in enhanced weathering.\n- Feedstock types are used to describe the feedstock used in a removal.\n- When creating a removal, a feedstock type can be optionally specified so that Isometric and verifiers can see which removals use which feedstocks.\n- This is important if different feedstocks are used in a single GHG statement.\n- See the [Add feedstock](/user-guides/certify/add-feedstock) guide for more details.\n",
+      "type": "text/plain"
+    }
+  }
+}

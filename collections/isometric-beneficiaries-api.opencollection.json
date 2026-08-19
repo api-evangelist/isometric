@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Beneficiaries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Beneficiaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/beneficiaries",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "A paginated list of Organisations which the currently authenticated organisation can retire credits on the behalf of, using the `POST /retirements` endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

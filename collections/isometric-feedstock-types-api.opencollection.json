@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Feedstock Types API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feedstock Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Feedstock Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/feedstock_types",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "supplier_reference_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists feedstock types in the Isometric system. Feedstock types can only be created via the Certify UI."
+        },
+        {
+          "info": {
+            "name": "Get Feedstock Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/feedstock_types/:feedstock_type_id/feedstock_batches",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feedstock_type_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists feedstock batches in the Isometric system."
+        },
+        {
+          "info": {
+            "name": "Get Feedstock Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/feedstock_types/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single feedstock type in the Isometric system. Feedstock types can only be created via the Certify UI."
+        },
+        {
+          "info": {
+            "name": "Patch Feedstock Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/feedstock_types/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a feedstock type in the Isometric system. Feedstock types can only be created via the Certify UI."
+        },
+        {
+          "info": {
+            "name": "Delete Feedstock Type",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/feedstock_types/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a feedstock type in the Isometric system. Feedstock types can only be created via the Certify UI."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

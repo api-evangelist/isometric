@@ -1,0 +1,1396 @@
+{
+  "item": [
+    {
+      "id": "a8e7f1d2-544f-459c-be1b-2e1e2674b849",
+      "name": "Removals",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8ef362e4-c58c-4a35-9eb8-a10507143a12",
+          "name": "Get Removals",
+          "request": {
+            "name": "Get Removals",
+            "description": {},
+            "url": {
+              "path": [
+                "removals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "supplier_reference_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c5ea7b4d-dc38-40c1-a604-e6b6c749db43",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "supplier_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"rmv_1EEM6NJXX1S0EXKD\",\n      \"supplier_reference_id\": \"string\",\n      \"started_on\": \"1990-05-06\",\n      \"completed_on\": \"1953-12-29\",\n      \"co2e_net_removed_kg\": 8932.279352429958,\n      \"co2e_net_removed_without_discount_kg\": 9124.039412505957,\n      \"co2e_net_removed_standard_deviation_kg\": 4155.442729448586,\n      \"ghg_statement_id\": \"ggs_1GDQJ99Z51S0DYW9\",\n      \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\"\n    },\n    {\n      \"id\": \"rmv_1EEM6NJXX1S0EXKD\",\n      \"supplier_reference_id\": \"string\",\n      \"started_on\": \"1948-08-27\",\n      \"completed_on\": \"1995-11-24\",\n      \"co2e_net_removed_kg\": 5707.318537288351,\n      \"co2e_net_removed_without_discount_kg\": 3699.012248135315,\n      \"co2e_net_removed_standard_deviation_kg\": 4629.154842515422,\n      \"ghg_statement_id\": \"ggs_1GDQJ99Z51S0DYW9\",\n      \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\"\n    }\n  ],\n  \"total_count\": 7836,\n  \"page_info\": {\n    \"has_previous_page\": false,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": false,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ece9108b-e485-48fc-807a-00cf6ee78102",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "supplier_reference_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20ff2102-1ea7-49ad-80a9-f14b6a9b2173",
+          "name": "Post Removal",
+          "request": {
+            "name": "Post Removal",
+            "description": {},
+            "url": {
+              "path": [
+                "removals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"supplier_reference_id\": \"<string>\",\n  \"started_on\": \"<date>\",\n  \"completed_on\": \"<date>\",\n  \"project_id\": \"<string>\",\n  \"feedstock_type_id\": \"<string>\",\n  \"process_key\": \"<string>\",\n  \"removal_template_components\": [\n    {\n      \"removal_template_component_id\": \"<string>\",\n      \"inputs\": [\n        {\n          \"input_key\": \"<string>\",\n          \"datapoint_ids\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        },\n        {\n          \"input_key\": \"<string>\",\n          \"datapoint_ids\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        }\n      ]\n    },\n    {\n      \"removal_template_component_id\": \"<string>\",\n      \"inputs\": [\n        {\n          \"input_key\": \"<string>\",\n          \"datapoint_ids\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        },\n        {\n          \"input_key\": \"<string>\",\n          \"datapoint_ids\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        }\n      ]\n    }\n  ],\n  \"removal_template_id\": \"<string>\",\n  \"steps\": [\n    {\n      \"process_step_key\": \"<string>\",\n      \"components\": [\n        {\n          \"component_id\": \"<string>\",\n          \"attribution_factor_datapoint_id\": \"<string>\"\n        },\n        {\n          \"component_id\": \"<string>\",\n          \"attribution_factor_datapoint_id\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"process_step_key\": \"<string>\",\n      \"components\": [\n        {\n          \"component_id\": \"<string>\",\n          \"attribution_factor_datapoint_id\": \"<string>\"\n        },\n        {\n          \"component_id\": \"<string>\",\n          \"attribution_factor_datapoint_id\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2785c130-7150-4609-96a6-d3dd7c9b341c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"supplier_reference_id\": \"<string>\",\n  \"started_on\": \"<date>\",\n  \"completed_on\": \"<date>\",\n  \"project_id\": \"prj_1CTWZQGKE1S0VAXA\",\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\",\n  \"process_key\": \"<string>\",\n  \"removal_template_components\": [\n    {\n      \"removal_template_component_id\": \"rtc_1DAA58EDM1S0AMPN\",\n      \"inputs\": [\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        },\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        }\n      ]\n    },\n    {\n      \"removal_template_component_id\": \"rtc_1DAA58EDM1S0AMPN\",\n      \"inputs\": [\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        },\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        }\n      ]\n    }\n  ],\n  \"removal_template_id\": \"rvt_1EVC8RZFE1S0BAT6\",\n  \"steps\": [\n    {\n      \"process_step_key\": \"string\",\n      \"components\": [\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        },\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        }\n      ]\n    },\n    {\n      \"process_step_key\": \"string\",\n      \"components\": [\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        },\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rmv_1EEM6NJXX1S0EXKD\",\n  \"supplier_reference_id\": \"string\",\n  \"started_on\": \"1986-07-26\",\n  \"completed_on\": \"1974-02-15\",\n  \"co2e_net_removed_kg\": 7836.297676419102,\n  \"co2e_net_removed_without_discount_kg\": 2509.223502819856,\n  \"co2e_net_removed_standard_deviation_kg\": 135.66329217635564,\n  \"ghg_statement_id\": \"ggs_1GDQJ99Z51S0DYW9\",\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5a6ebee-41de-41a2-a738-56412d641f15",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"supplier_reference_id\": \"<string>\",\n  \"started_on\": \"<date>\",\n  \"completed_on\": \"<date>\",\n  \"project_id\": \"prj_1CTWZQGKE1S0VAXA\",\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\",\n  \"process_key\": \"<string>\",\n  \"removal_template_components\": [\n    {\n      \"removal_template_component_id\": \"rtc_1DAA58EDM1S0AMPN\",\n      \"inputs\": [\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        },\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        }\n      ]\n    },\n    {\n      \"removal_template_component_id\": \"rtc_1DAA58EDM1S0AMPN\",\n      \"inputs\": [\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        },\n        {\n          \"input_key\": \"string\",\n          \"datapoint_ids\": [\n            \"dtp_1DVKHKS101S0Q61Q\",\n            \"dtp_1DVKHKS101S0Q61Q\"\n          ],\n          \"__typename\": \"CreateComponentListInput\"\n        }\n      ]\n    }\n  ],\n  \"removal_template_id\": \"rvt_1EVC8RZFE1S0BAT6\",\n  \"steps\": [\n    {\n      \"process_step_key\": \"string\",\n      \"components\": [\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        },\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        }\n      ]\n    },\n    {\n      \"process_step_key\": \"string\",\n      \"components\": [\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        },\n        {\n          \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n          \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1068a64a-39a4-4342-90b2-07da760c8c2f",
+          "name": "Delete Removal",
+          "request": {
+            "name": "Delete Removal",
+            "description": {
+              "content": "This endpoint deletes a removal - this is irreversible and the removal cannot be recovered.\n\nIt will return an error if the removal is not in DRAFT status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "removals",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d524e8cd-3a70-4afc-9152-adf92102a1e9",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8fc281b2-661e-4847-b0fe-4d2c6ff09e13",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f62993f-c6bc-4106-b630-16bf5d271367",
+          "name": "Get Removal",
+          "request": {
+            "name": "Get Removal",
+            "description": {},
+            "url": {
+              "path": [
+                "removals",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6c3f5b13-f0b3-44a3-95f6-eb842c114195",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rmv_1EEM6NJXX1S0EXKD\",\n  \"supplier_reference_id\": \"string\",\n  \"started_on\": \"1986-07-26\",\n  \"completed_on\": \"1974-02-15\",\n  \"co2e_net_removed_kg\": 7836.297676419102,\n  \"co2e_net_removed_without_discount_kg\": 2509.223502819856,\n  \"co2e_net_removed_standard_deviation_kg\": 135.66329217635564,\n  \"ghg_statement_id\": \"ggs_1GDQJ99Z51S0DYW9\",\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b529801-e312-4d44-88f6-9f7575a07e12",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb1f99e4-efa2-4e35-81c2-02f31d797f8c",
+          "name": "Patch Removal",
+          "request": {
+            "name": "Patch Removal",
+            "description": {
+              "content": "Updates a removal in the Isometric system. The removal will be recalculated, if it is are not in an immutable state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "removals",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"add_components\": [\n    {\n      \"component_id\": \"<string>\",\n      \"attribution_factor_datapoint_id\": \"<string>\",\n      \"process_step_key\": \"<string>\",\n      \"removal_template_group_id\": \"<string>\"\n    },\n    {\n      \"component_id\": \"<string>\",\n      \"attribution_factor_datapoint_id\": \"<string>\",\n      \"process_step_key\": \"<string>\",\n      \"removal_template_group_id\": \"<string>\"\n    }\n  ],\n  \"completed_on\": \"<date>\",\n  \"delete_component_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"feedstock_type_id\": \"<string>\",\n  \"started_on\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d40913ab-b62d-4fc9-9735-879562892674",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add_components\": [\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\",\n      \"process_step_key\": \"string\",\n      \"removal_template_group_id\": \"rtg_1EGQ9DZXZ1S05S28\"\n    },\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\",\n      \"process_step_key\": \"string\",\n      \"removal_template_group_id\": \"rtg_1EGQ9DZXZ1S05S28\"\n    }\n  ],\n  \"completed_on\": \"<date>\",\n  \"delete_component_ids\": [\n    \"cmp_1EP2SB7MZ1S036PY\",\n    \"cmp_1EP2SB7MZ1S036PY\"\n  ],\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\",\n  \"started_on\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rmv_1EEM6NJXX1S0EXKD\",\n  \"supplier_reference_id\": \"string\",\n  \"started_on\": \"1986-07-26\",\n  \"completed_on\": \"1974-02-15\",\n  \"co2e_net_removed_kg\": 7836.297676419102,\n  \"co2e_net_removed_without_discount_kg\": 2509.223502819856,\n  \"co2e_net_removed_standard_deviation_kg\": 135.66329217635564,\n  \"ghg_statement_id\": \"ggs_1GDQJ99Z51S0DYW9\",\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11af82e6-735d-424e-b944-c3c47b2f7dfd",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"add_components\": [\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\",\n      \"process_step_key\": \"string\",\n      \"removal_template_group_id\": \"rtg_1EGQ9DZXZ1S05S28\"\n    },\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"attribution_factor_datapoint_id\": \"dtp_1DVKHKS101S0Q61Q\",\n      \"process_step_key\": \"string\",\n      \"removal_template_group_id\": \"rtg_1EGQ9DZXZ1S05S28\"\n    }\n  ],\n  \"completed_on\": \"<date>\",\n  \"delete_component_ids\": [\n    \"cmp_1EP2SB7MZ1S036PY\",\n    \"cmp_1EP2SB7MZ1S036PY\"\n  ],\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\",\n  \"started_on\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dab2d841-48ae-4441-861b-ee4e7156b927",
+          "name": "Get Removal Components",
+          "request": {
+            "name": "Get Removal Components",
+            "description": {},
+            "url": {
+              "path": [
+                "removals",
+                ":id",
+                "component_attributions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "357eabe6-0967-4ce1-9649-7c80eea0602c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id",
+                    "component_attributions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"rvc_1EADHFQHM1S0TVMN\",\n      \"removal_id\": \"rmv_1EEM6NJXX1S0EXKD\",\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"component_group_key\": \"string\",\n      \"removal_template_component_id\": \"rtc_1DAA58EDM1S0AMPN\",\n      \"attribution_factor\": 1\n    },\n    {\n      \"id\": \"rvc_1EADHFQHM1S0TVMN\",\n      \"removal_id\": \"rmv_1EEM6NJXX1S0EXKD\",\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"component_group_key\": \"string\",\n      \"removal_template_component_id\": \"rtc_1DAA58EDM1S0AMPN\",\n      \"attribution_factor\": 1\n    }\n  ],\n  \"total_count\": 5678,\n  \"page_info\": {\n    \"has_previous_page\": true,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": true,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3072e4fa-3de8-4dd2-a79a-eddee57a1ac5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id",
+                    "component_attributions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a64d5bc-2043-4072-8d37-50cac7e296a8",
+          "name": "Patch Removal Components",
+          "request": {
+            "name": "Patch Removal Components",
+            "description": {
+              "content": "Change component attributions for the removal.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "removals",
+                ":id",
+                "component_attributions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"components_to_add\": [\n    {\n      \"component_id\": \"<string>\",\n      \"component_group_key\": \"<string>\",\n      \"attribution_factor\": 1\n    },\n    {\n      \"component_id\": \"<string>\",\n      \"component_group_key\": \"<string>\",\n      \"attribution_factor\": 1\n    }\n  ],\n  \"components_to_remove\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ca3ab55-2f6e-4894-aa60-3e209514534d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id",
+                    "component_attributions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"components_to_add\": [\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"component_group_key\": \"bio-oil-storage\",\n      \"attribution_factor\": 1\n    },\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"component_group_key\": \"bio-oil-storage\",\n      \"attribution_factor\": 1\n    }\n  ],\n  \"components_to_remove\": [\n    \"cmp_1EP2SB7MZ1S036PY\",\n    \"cmp_1EP2SB7MZ1S036PY\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"rmv_1EEM6NJXX1S0EXKD\",\n  \"supplier_reference_id\": \"string\",\n  \"started_on\": \"1986-07-26\",\n  \"completed_on\": \"1974-02-15\",\n  \"co2e_net_removed_kg\": 7836.297676419102,\n  \"co2e_net_removed_without_discount_kg\": 2509.223502819856,\n  \"co2e_net_removed_standard_deviation_kg\": 135.66329217635564,\n  \"ghg_statement_id\": \"ggs_1GDQJ99Z51S0DYW9\",\n  \"feedstock_type_id\": \"ftt_1D7KZ1P761S0G7BN\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6139b1cb-c1af-4fa5-8862-cb0911d6824c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "removals",
+                    ":id",
+                    "component_attributions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"components_to_add\": [\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"component_group_key\": \"bio-oil-storage\",\n      \"attribution_factor\": 1\n    },\n    {\n      \"component_id\": \"cmp_1EP2SB7MZ1S036PY\",\n      \"component_group_key\": \"bio-oil-storage\",\n      \"attribution_factor\": 1\n    }\n  ],\n  \"components_to_remove\": [\n    \"cmp_1EP2SB7MZ1S036PY\",\n    \"cmp_1EP2SB7MZ1S036PY\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.isometric.com/mrv/v0",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d49ed897-7d57-4eea-a63e-8d65498a18ce",
+    "name": "Isometric Certify Data Ingestion Beneficiaries Removals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Standards\n\n## Versioning\n\nThis API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`.\n\n### Compatibility\n\nWe won't make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we'll release a new major version.\nWe may deprecate APIs that have been replaced by a newer version. When doing so, we will expect\nintegrated partners to manage a transition to new resources within the deprecation timeline of old ones.\n\nWe will make the following sort of changes we do not consider to be breaking:\n\n- Adding new endpoints\n- Adding optional query parameters to API endpoints\n- Adding new properties to existing API responses\n- Reordering properties in existing API responses\n\nIt is important that clients are built to be robust to these changes.\n\n## Pagination\n\nOur API is based on the [Relay](https://relay.dev/docs/tutorial/connections-pagination/) pagination spec. Paginated endpoints\nwill return a `PaginatedListResource` which contains:\n\n- `page_info` - Containing information regarding pagination cursors and the total number of entities.\n- `nodes` - Each node is a paginated entity.\n- `total_count` - The total size of the list across all pages.\n\n### Pagination Parameters\n\nPaginated endpoints also accepted a standard set of query parameters:\n\n- `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50.\n- `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page's `start_cursor` here when paginated backwards.\n- `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50.\n- `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page's `end_cursor` here when paginated forwards.\n\nFor example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:\n\n```json\n{\n    \"page_info\": {\n        \"has_previous_page\": false,\n        \"start_cursor\": ...,\n        \"has_next_page\": true,\n        \"end_cursor\": \"mpG5kcuoFBYtlH\",\n    },\n    \"nodes\": [{\n        \"id\": \"org_12345iso678\",\n        \"name\": \"My Org\",\n        ...\n    }],\n    \"total_count\": 100\n}\n```\n\nThen querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items.\n\n## Dates\n\nDatetime fields in the APIs conform to the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`.\n\n## Country Codes\n\nCountries are identified in the APIs via [ISO 3166-1 Alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) codes. For example: `GBR` and `USA`.\n# Authentication\n\nMost API requests will need to authenticate against the Isometric API in two ways simultaneously:\n\n- By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API.\n- By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data.\n\n### Client Authentication\n\nEvery API call to Isometric must include a **client secret** identifying the client application.\n\nThis client secret is tied to a particular environment - sandbox or production.\n\nThe client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`.\n\n### Organization Authentication\n\nIn addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization.\n\nTo authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.\nIf you are going to be acting on behalf of other Organizations, they will need to generate the access token and pass it securely to you.\nAccess tokens should be treated as highly sensitive, kept secret and stored accordingly.\n\nAccess tokens are scoped to a single Organization - so if you are acting on behalf of multiple particular organizations, you will need to submit the appropriate access token on each request.\n\n### Managing Credentials\n\nCredentials can be managed through Certify UI in the [Team settings](https://registry.isometric.com/account/team-settings) section. Access tokens will expire after 1 year from generation. When you are approaching expiry, a new token will need to be generated.\n\nBoth client secrets and access tokens can be created and invalidated through UI.\nClient secrets do not expire and do not need to be rotated.\nIf either secret becomes compromised, it should be invalidated through the UI.\n# Key Certify Concepts\n\nThis page defines concepts used in Certify, and the [Certify API](/api-reference/certify/certify-introduction), which are helpful to understand when submitting information for verification via Certify. For a broader understanding of Isometric's verification processes on the Isometric Registry, please refer to the [Isometric Standard](https://isometric.com/standard).\n\n## Resource visibility\n\n- Until resources are submitted as part of a GHG statement, they are visible only to members of your organization.\n- After statement submission, they are visible to the verifier assigned to the GHG statement.\n- Once credits have been issued, removals are added to the [public registry](https://registry.isometric.com), and associated resources are visible publicly, with the exception of source documents.\n- Sources uploaded in the Certify platform are kept private by default once published on the Isometric registry (file names will be displayed). Contact Isometric to update public source visibility. Sources [added via the API](/api-reference/certify/post-source) can be set `public` on submission.\n\n## Resources\n\nThe main resources used in Certify are sources, datapoints, components and removals.\n\n### Sources\n\n- Sources represent a piece of evidence for a particular datapoint used in carbon accounting calculations.\n- Source documents are private, and only shared with the verifier assigned to a related removal.\n- Other information associated with a source, such as its display name, is visible publicly once the removal is on the public registry.\n- Verifiers are not notified when new sources are added to datapoints in a submitted removal, but they will immediately have access to the source documentation. Please notify the Isometric Registry Operations team when sources are added on a verifier's request so that we can ensure that the verifier is aware.\n\n### Datapoints\n\n- Datapoints represent any value used in carbon accounting calculations.\n- When creating datapoints, sources should be referenced to provide evidence for the value used.\n- A standard deviation should be provided if the datapoint is to be included in the variance propagation method of uncertainty analysis.\n- All datapoints are considered statistically independent for the purpose of variance propagation, although if a datapoint is used twice within a removal calculation, this dependence is captured.\n\n### Components\n\n- Components represent physical activities whose CO₂e flux needs to be accounted for.\n- Components are created from [component blueprints](/user-guides/certify/component-blueprint-library) that contain sets of equations used to calculate a transfer of CO₂e into or out of the atmosphere.\n- A blueprint defines a set of inputs that are the datapoints to be used in the calculation. For instance, a transport emissions blueprints would ask for datapoints representing a distance, mass and carbon intensity.\n- When creating a component from a blueprint, the blueprint must be specified, as well as a list of datapoints for the expected blueprint inputs. Learn more about components in [Identifying Components](/user-guides/certify/identifying-components).\n\n### Removals\n\n- Removals represent a series of activities that result in CO₂e being removed from the atmosphere.\n- The carbon accounting of a removal typically contains sequestrations, counterfactuals and activities (emissions).\n- Removals are structured using a template, [defined in your LCA](/user-guides/certify/lca).\n- Templates are divided into component groups. For instance, a biochar template may contain a `Feedstock sourcing` group.\n- Groups can contain multiple components.\n- Components can also be partially attributed to removals, if the activity the component represents contributed to multiple removals.\n- The final uncertainty discounting is done on the removal level - the API will return the CO₂e removed with and without discounting.\n- See the [Create a removal](/user-guides/certify/removal) guide for more details.\n\n### Feedstock types\n\n- Many carbon removal methods involve a feedstock, for instance biomass feedstock in BiCRS or silicate rock in enhanced weathering.\n- Feedstock types are used to describe the feedstock used in a removal.\n- When creating a removal, a feedstock type can be optionally specified so that Isometric and verifiers can see which removals use which feedstocks.\n- This is important if different feedstocks are used in a single GHG statement.\n- See the [Add feedstock](/user-guides/certify/add-feedstock) guide for more details.\n",
+      "type": "text/plain"
+    }
+  }
+}

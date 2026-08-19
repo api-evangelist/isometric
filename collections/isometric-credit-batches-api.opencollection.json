@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Credit Batches API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Credit Batches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Credit Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/credit_batches/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Information about a specific credit batch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

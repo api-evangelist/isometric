@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Issuances API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issuances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Issuances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/issuances",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "A paginated list of all issuances in Isometric's registry.\n\nReturned list of issuances will be sorted by most recently issued first."
+        },
+        {
+          "info": {
+            "name": "Issuance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/issuances/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Information about a specific issuance."
+        },
+        {
+          "info": {
+            "name": "Issuance Credit Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/issuances/:id/credit_batches",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List of credit batches for a given issuance.\n\nCredit batches are divided between those allocated to the buffer pool and those allocated to the supplier. Note these are the original batches in the issuance, so some credit batches might be in status SPLIT if they had to be split for a delivery/transfer/retirement."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

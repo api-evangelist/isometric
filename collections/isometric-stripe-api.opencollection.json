@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Stripe API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stripe",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Stripe Checkout Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/stripe/checkout",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a Stripe Checkout Session for purchasing credits with Isometric verification.\nThis endpoint returns a Stripe Checkout URL to redirect the user to for completing the payment."
+        },
+        {
+          "info": {
+            "name": "Get Stripe Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/stripe/configuration",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Stripe configuration for the current organisation.\nThis will return 404 if the current organisation is not set up for Stripe Connect."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

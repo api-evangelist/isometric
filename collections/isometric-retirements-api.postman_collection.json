@@ -1,0 +1,966 @@
+{
+  "item": [
+    {
+      "id": "02ef0e3b-4456-4ffd-94ff-c3764392a13b",
+      "name": "Retirements",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a22575d-5132-4685-be99-9e26dff84f87",
+          "name": "Retirements",
+          "request": {
+            "name": "Retirements",
+            "description": {
+              "content": "A paginated list of all retirements on Isometric's registry.\n\nReturned list of retirements will be sorted by most recently delivered first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "retirements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "beneficiary_org_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_org_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "last",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "first",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ff7f0de0-f2bc-452e-9874-8b6d4969ed35",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beneficiary_org_id",
+                      "value": "org_1GB56M1ST1S0GVNA"
+                    },
+                    {
+                      "key": "owner_org_id",
+                      "value": "org_1GB56M1ST1S0GVNA"
+                    },
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"ret_1FYBH4QDT1S0SVKF\",\n      \"retired_at\": \"1979-02-03T02:10:59.300Z\",\n      \"purposes\": [\n        \"regulatory_requirement\",\n        \"other\"\n      ],\n      \"beneficiary\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"owner\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"url\": \"string\",\n      \"notes\": \"string\"\n    },\n    {\n      \"id\": \"ret_1FYBH4QDT1S0SVKF\",\n      \"retired_at\": \"2000-03-23T14:04:54.280Z\",\n      \"purposes\": [\n        \"insetting\",\n        \"corporate_targets\"\n      ],\n      \"beneficiary\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"owner\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"credit_batch_size_total\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"url\": \"string\",\n      \"notes\": \"string\"\n    }\n  ],\n  \"total_count\": 1271,\n  \"page_info\": {\n    \"has_previous_page\": false,\n    \"start_cursor\": \"string\",\n    \"has_next_page\": false,\n    \"end_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16878ee3-8b4a-48bb-b773-6b6f729c5ea3",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beneficiary_org_id",
+                      "value": "org_1GB56M1ST1S0GVNA"
+                    },
+                    {
+                      "key": "owner_org_id",
+                      "value": "org_1GB56M1ST1S0GVNA"
+                    },
+                    {
+                      "key": "last",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "036872e3-708a-4453-afd5-2dfaf5b6759a",
+          "name": "Create Retirement",
+          "request": {
+            "name": "Create Retirement",
+            "description": {
+              "content": "Retire credits from specific batches, in whole or with splits. All credit batches must originate from the same supplier and be owned by the current organisation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "retirements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_organisation_id\": \"<string>\",\n  \"beneficiary_organisation_id\": \"<string>\",\n  \"supplier_id\": \"<string>\",\n  \"retirement_purposes\": [\n    \"<string>\"\n  ],\n  \"notes\": \"<string>\",\n  \"credit_batch_quantities\": [\n    {\n      \"credit_batch_id\": \"<string>\",\n      \"credit_quantity_kg\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "800396c3-033d-40b7-b313-fe1b87fe4f64",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"beneficiary_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"supplier_id\": \"spl_1CC712KFS1S0YKPS\",\n  \"retirement_purposes\": [\n    \"public_environmental_claims\"\n  ],\n  \"notes\": \"<string>\",\n  \"credit_batch_quantities\": [\n    {\n      \"credit_batch_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"credit_quantity_kg\": 1000\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ret_1FYBH4QDT1S0SVKF\",\n  \"retired_at\": \"1966-04-06T07:58:47.816Z\",\n  \"purposes\": [\n    \"public_environmental_claims\",\n    \"public_environmental_claims\"\n  ],\n  \"beneficiary\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"owner\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"credit_batch_size_total\": {\n    \"credits\": 125.632,\n    \"credit_kgs\": 125632\n  },\n  \"url\": \"string\",\n  \"notes\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4efe810-18a5-4386-b8de-8f4e7c49eaa5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"beneficiary_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"supplier_id\": \"spl_1CC712KFS1S0YKPS\",\n  \"retirement_purposes\": [\n    \"public_environmental_claims\"\n  ],\n  \"notes\": \"<string>\",\n  \"credit_batch_quantities\": [\n    {\n      \"credit_batch_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"credit_quantity_kg\": 1000\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef741545-460c-441d-b8f9-32427281ec7e",
+          "name": "Create Retirement From Oldest Credits",
+          "request": {
+            "name": "Create Retirement From Oldest Credits",
+            "description": {
+              "content": "Retire oldest available credits from a given supplier. If vintage is specified, this will retire the oldest credits from that vintage only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "retirements",
+                "from_oldest_credits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner_organisation_id\": \"<string>\",\n  \"beneficiary_organisation_id\": \"<string>\",\n  \"supplier_id\": \"<string>\",\n  \"retirement_purposes\": [\n    \"<string>\"\n  ],\n  \"notes\": \"<string>\",\n  \"credit_quantity_kg\": \"<integer>\",\n  \"order_id\": \"<string>\",\n  \"vintage\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cb1ecc1-efe4-4cb7-bdd3-b9e5376fadae",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements",
+                    "from_oldest_credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"beneficiary_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"supplier_id\": \"spl_1CC712KFS1S0YKPS\",\n  \"retirement_purposes\": [\n    \"corporate_targets\"\n  ],\n  \"notes\": \"<string>\",\n  \"credit_quantity_kg\": 1000,\n  \"order_id\": \"ord_1FAN3S3WV1S0B842\",\n  \"vintage\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ret_1FYBH4QDT1S0SVKF\",\n  \"retired_at\": \"1966-04-06T07:58:47.816Z\",\n  \"purposes\": [\n    \"public_environmental_claims\",\n    \"public_environmental_claims\"\n  ],\n  \"beneficiary\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"owner\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"credit_batch_size_total\": {\n    \"credits\": 125.632,\n    \"credit_kgs\": 125632\n  },\n  \"url\": \"string\",\n  \"notes\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0ddf803-10ca-447e-ba6c-b19cec14214e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements",
+                    "from_oldest_credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"beneficiary_organisation_id\": \"org_1GB56M1ST1S0GVNA\",\n  \"supplier_id\": \"spl_1CC712KFS1S0YKPS\",\n  \"retirement_purposes\": [\n    \"corporate_targets\"\n  ],\n  \"notes\": \"<string>\",\n  \"credit_quantity_kg\": 1000,\n  \"order_id\": \"ord_1FAN3S3WV1S0B842\",\n  \"vintage\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "552f6f84-a151-412a-bf1d-3ead6c40220b",
+          "name": "Retirement",
+          "request": {
+            "name": "Retirement",
+            "description": {
+              "content": "Information about a specific retirement.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "retirements",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e32d6849-557e-472f-a1e3-818cb460d0bf",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ret_1FYBH4QDT1S0SVKF\",\n  \"retired_at\": \"1966-04-06T07:58:47.816Z\",\n  \"purposes\": [\n    \"public_environmental_claims\",\n    \"public_environmental_claims\"\n  ],\n  \"beneficiary\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"owner\": {\n    \"id\": \"org_1GB56M1ST1S0GVNA\",\n    \"name\": \"Isometric\",\n    \"domain\": \"string\"\n  },\n  \"credit_batch_size_total\": {\n    \"credits\": 125.632,\n    \"credit_kgs\": 125632\n  },\n  \"url\": \"string\",\n  \"notes\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28b3e55f-a6ad-4ec7-9ae1-3b4d2f010f16",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f86e641e-27d1-47fb-86ab-d46c6607f2b4",
+          "name": "Retirement Credit Batches",
+          "request": {
+            "name": "Retirement Credit Batches",
+            "description": {
+              "content": "List of credit batches for a given retirement.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "retirements",
+                ":id",
+                "credit_batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A secret token identifying the client connecting to the API",
+                "key": "x-client-secret",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c5dd8b5-c332-4424-8292-a13842f7aef7",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements",
+                    ":id",
+                    "credit_batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nodes\": [\n    {\n      \"id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"serial_number\": \"ISO-1-BSTORE-GBR-F5X7-2024-78177-81177\",\n      \"status\": \"active\",\n      \"size\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"issued_at\": \"1976-09-15T20:12:30.726Z\",\n      \"retired_at\": \"2009-10-02T18:04:47.666Z\",\n      \"delivered_at\": \"1949-05-11T23:26:23.625Z\",\n      \"sequestered_on\": \"1955-05-03\",\n      \"country_of_issue\": \"GBR\",\n      \"supplier_id\": \"spl_1CC712KFS1S0YKPS\",\n      \"parent_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"left_child_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"right_child_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"issuance_id\": \"iss_1EWT8R5FY1S0GFCY\",\n      \"delivery_id\": \"dlv_1C454ZXA61S03Z9T\",\n      \"beneficiary\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"retirement_id\": \"ret_1FYBH4QDT1S0SVKF\",\n      \"removal_id\": \"rmv_1EEM6NJXX1S0EXKD\",\n      \"owner\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"project_id\": \"prj_1CTWZQGKE1S0VAXA\",\n      \"carbon_removal_data\": {\n        \"gross_carbon_removed_kg\": 5812,\n        \"net_carbon_removed_kg\": 3057,\n        \"emissions_kg\": 3381,\n        \"counterfactuals_kg\": 8259,\n        \"losses_kg\": 7049\n      },\n      \"ccp_approved\": true\n    },\n    {\n      \"id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"serial_number\": \"ISO-1-BSTORE-GBR-F5X7-2024-78177-81177\",\n      \"status\": \"retired\",\n      \"size\": {\n        \"credits\": 125.632,\n        \"credit_kgs\": 125632\n      },\n      \"issued_at\": \"1968-12-17T00:00:16.203Z\",\n      \"retired_at\": \"1982-03-14T02:48:57.974Z\",\n      \"delivered_at\": \"1990-10-17T03:54:57.526Z\",\n      \"sequestered_on\": \"1979-07-21\",\n      \"country_of_issue\": \"GBR\",\n      \"supplier_id\": \"spl_1CC712KFS1S0YKPS\",\n      \"parent_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"left_child_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"right_child_id\": \"ctb_1DRBTYA8Q1S07CBY\",\n      \"issuance_id\": \"iss_1EWT8R5FY1S0GFCY\",\n      \"delivery_id\": \"dlv_1C454ZXA61S03Z9T\",\n      \"beneficiary\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"retirement_id\": \"ret_1FYBH4QDT1S0SVKF\",\n      \"removal_id\": \"rmv_1EEM6NJXX1S0EXKD\",\n      \"owner\": {\n        \"id\": \"org_1GB56M1ST1S0GVNA\",\n        \"name\": \"Isometric\",\n        \"domain\": \"string\"\n      },\n      \"project_id\": \"prj_1CTWZQGKE1S0VAXA\",\n      \"carbon_removal_data\": {\n        \"gross_carbon_removed_kg\": 8618,\n        \"net_carbon_removed_kg\": 6835,\n        \"emissions_kg\": 2528,\n        \"counterfactuals_kg\": 8504,\n        \"losses_kg\": 788\n      },\n      \"ccp_approved\": true\n    }\n  ],\n  \"total_count\": 7916\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59921e30-aa95-4978-bc5b-0b583174f5d0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "retirements",
+                    ":id",
+                    "credit_batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secret token identifying the client connecting to the API",
+                    "key": "x-client-secret",
+                    "value": "Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"ctx\": {},\n      \"input\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.isometric.com/mrv/v0",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2ce56637-9d06-49dd-a70d-2861f10b0f21",
+    "name": "Isometric Certify Data Ingestion Beneficiaries Retirements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Standards\n\n## Versioning\n\nThis API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`.\n\n### Compatibility\n\nWe won't make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we'll release a new major version.\nWe may deprecate APIs that have been replaced by a newer version. When doing so, we will expect\nintegrated partners to manage a transition to new resources within the deprecation timeline of old ones.\n\nWe will make the following sort of changes we do not consider to be breaking:\n\n- Adding new endpoints\n- Adding optional query parameters to API endpoints\n- Adding new properties to existing API responses\n- Reordering properties in existing API responses\n\nIt is important that clients are built to be robust to these changes.\n\n## Pagination\n\nOur API is based on the [Relay](https://relay.dev/docs/tutorial/connections-pagination/) pagination spec. Paginated endpoints\nwill return a `PaginatedListResource` which contains:\n\n- `page_info` - Containing information regarding pagination cursors and the total number of entities.\n- `nodes` - Each node is a paginated entity.\n- `total_count` - The total size of the list across all pages.\n\n### Pagination Parameters\n\nPaginated endpoints also accepted a standard set of query parameters:\n\n- `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50.\n- `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page's `start_cursor` here when paginated backwards.\n- `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50.\n- `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page's `end_cursor` here when paginated forwards.\n\nFor example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:\n\n```json\n{\n    \"page_info\": {\n        \"has_previous_page\": false,\n        \"start_cursor\": ...,\n        \"has_next_page\": true,\n        \"end_cursor\": \"mpG5kcuoFBYtlH\",\n    },\n    \"nodes\": [{\n        \"id\": \"org_12345iso678\",\n        \"name\": \"My Org\",\n        ...\n    }],\n    \"total_count\": 100\n}\n```\n\nThen querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items.\n\n## Dates\n\nDatetime fields in the APIs conform to the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`.\n\n## Country Codes\n\nCountries are identified in the APIs via [ISO 3166-1 Alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) codes. For example: `GBR` and `USA`.\n# Authentication\n\nMost API requests will need to authenticate against the Isometric API in two ways simultaneously:\n\n- By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API.\n- By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data.\n\n### Client Authentication\n\nEvery API call to Isometric must include a **client secret** identifying the client application.\n\nThis client secret is tied to a particular environment - sandbox or production.\n\nThe client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`.\n\n### Organization Authentication\n\nIn addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization.\n\nTo authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.\nIf you are going to be acting on behalf of other Organizations, they will need to generate the access token and pass it securely to you.\nAccess tokens should be treated as highly sensitive, kept secret and stored accordingly.\n\nAccess tokens are scoped to a single Organization - so if you are acting on behalf of multiple particular organizations, you will need to submit the appropriate access token on each request.\n\n### Managing Credentials\n\nCredentials can be managed through Certify UI in the [Team settings](https://registry.isometric.com/account/team-settings) section. Access tokens will expire after 1 year from generation. When you are approaching expiry, a new token will need to be generated.\n\nBoth client secrets and access tokens can be created and invalidated through UI.\nClient secrets do not expire and do not need to be rotated.\nIf either secret becomes compromised, it should be invalidated through the UI.\n# Key Certify Concepts\n\nThis page defines concepts used in Certify, and the [Certify API](/api-reference/certify/certify-introduction), which are helpful to understand when submitting information for verification via Certify. For a broader understanding of Isometric's verification processes on the Isometric Registry, please refer to the [Isometric Standard](https://isometric.com/standard).\n\n## Resource visibility\n\n- Until resources are submitted as part of a GHG statement, they are visible only to members of your organization.\n- After statement submission, they are visible to the verifier assigned to the GHG statement.\n- Once credits have been issued, removals are added to the [public registry](https://registry.isometric.com), and associated resources are visible publicly, with the exception of source documents.\n- Sources uploaded in the Certify platform are kept private by default once published on the Isometric registry (file names will be displayed). Contact Isometric to update public source visibility. Sources [added via the API](/api-reference/certify/post-source) can be set `public` on submission.\n\n## Resources\n\nThe main resources used in Certify are sources, datapoints, components and removals.\n\n### Sources\n\n- Sources represent a piece of evidence for a particular datapoint used in carbon accounting calculations.\n- Source documents are private, and only shared with the verifier assigned to a related removal.\n- Other information associated with a source, such as its display name, is visible publicly once the removal is on the public registry.\n- Verifiers are not notified when new sources are added to datapoints in a submitted removal, but they will immediately have access to the source documentation. Please notify the Isometric Registry Operations team when sources are added on a verifier's request so that we can ensure that the verifier is aware.\n\n### Datapoints\n\n- Datapoints represent any value used in carbon accounting calculations.\n- When creating datapoints, sources should be referenced to provide evidence for the value used.\n- A standard deviation should be provided if the datapoint is to be included in the variance propagation method of uncertainty analysis.\n- All datapoints are considered statistically independent for the purpose of variance propagation, although if a datapoint is used twice within a removal calculation, this dependence is captured.\n\n### Components\n\n- Components represent physical activities whose CO₂e flux needs to be accounted for.\n- Components are created from [component blueprints](/user-guides/certify/component-blueprint-library) that contain sets of equations used to calculate a transfer of CO₂e into or out of the atmosphere.\n- A blueprint defines a set of inputs that are the datapoints to be used in the calculation. For instance, a transport emissions blueprints would ask for datapoints representing a distance, mass and carbon intensity.\n- When creating a component from a blueprint, the blueprint must be specified, as well as a list of datapoints for the expected blueprint inputs. Learn more about components in [Identifying Components](/user-guides/certify/identifying-components).\n\n### Removals\n\n- Removals represent a series of activities that result in CO₂e being removed from the atmosphere.\n- The carbon accounting of a removal typically contains sequestrations, counterfactuals and activities (emissions).\n- Removals are structured using a template, [defined in your LCA](/user-guides/certify/lca).\n- Templates are divided into component groups. For instance, a biochar template may contain a `Feedstock sourcing` group.\n- Groups can contain multiple components.\n- Components can also be partially attributed to removals, if the activity the component represents contributed to multiple removals.\n- The final uncertainty discounting is done on the removal level - the API will return the CO₂e removed with and without discounting.\n- See the [Create a removal](/user-guides/certify/removal) guide for more details.\n\n### Feedstock types\n\n- Many carbon removal methods involve a feedstock, for instance biomass feedstock in BiCRS or silicate rock in enhanced weathering.\n- Feedstock types are used to describe the feedstock used in a removal.\n- When creating a removal, a feedstock type can be optionally specified so that Isometric and verifiers can see which removals use which feedstocks.\n- This is important if different feedstocks are used in a single GHG statement.\n- See the [Add feedstock](/user-guides/certify/add-feedstock) guide for more details.\n",
+      "type": "text/plain"
+    }
+  }
+}

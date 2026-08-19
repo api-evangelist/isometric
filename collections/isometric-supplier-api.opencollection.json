@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Supplier API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Supplier",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Current Supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/supplier",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The supplier currently authenticated.\n\nUse this endpoint to get your supplier_id and organisation_id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Organisations API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organisations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/organisations/:id",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Information about a specific organisation."
+        },
+        {
+          "info": {
+            "name": "Organisation Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/organisations/:id/credit_balance",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Information about active and retired credits owned by the given organisation.\n\nIncludes total balances as well as balances split by orders, projects and suppliers."
+        },
+        {
+          "info": {
+            "name": "Organisation Credit Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/organisations/:id/credit_batches",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organisation."
+              },
+              {
+                "name": "supplier_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by the supplier that was issued the credits"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by the project that the credits were issued for"
+              },
+              {
+                "name": "issuance_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by their issuance"
+              },
+              {
+                "name": "delivery_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by the delivery that they were part of"
+              },
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by the order they have been delivered against"
+              },
+              {
+                "name": "retirement_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by the retirement they have been part of"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches by status. Note that 'split' status is excluded by default."
+              },
+              {
+                "name": "issued_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches to only return ones issued strictly after this timestamp. Format: ISO8601-like including timezone, eg. 2021-01-01T00:00:00Z"
+              },
+              {
+                "name": "issued_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter credit batches to only return ones issued strictly before this timestamp. Format: ISO8601-like including timezone, eg. 2024-01-01T00:00:00Z"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_direction",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "A paginated list of all credit batches currently owned or retired on behalf of the organisation, sorted by issuance date. By default it excludes batches with the status 'split'.\n\nNote that when combining filters, the result will be the intersection of them. For example, when filtering by `supplier_id` and `issued_after`, the result will only include credit batches from the specified supplier that have been issued after the specified date."
+        },
+        {
+          "info": {
+            "name": "Organisation Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/organisations/:id/orders",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organisation"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "first",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "A paginated list of all orders placed by the organisation, sorted by descending placement date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

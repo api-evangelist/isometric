@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Isometric Certify Data Ingestion Beneficiaries Beneficiary API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Beneficiary",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.isometric.com/mrv/v0/beneficiary",
+            "headers": [
+              {
+                "name": "x-client-secret",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new beneficiary for your organization to retire on behalf of."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
