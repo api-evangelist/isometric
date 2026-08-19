@@ -70,7 +70,7 @@ access: 3rd-Party
 url: https://raw.githubusercontent.com/api-evangelist/isometric/refs/heads/main/apis.yml
 created: '2026-05-24'
 modified: '2026-05-24'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 apis:
 - aid: isometric:isometric-mcp-server
   name: Isometric MCP Server
