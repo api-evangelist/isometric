@@ -49,6 +49,33 @@ tags:
   - LCA
   - Greenhouse Gas
   - Protocols
+  - Artificial Intelligence
+  - MCP
+tags_raw:
+  - Carbon Removal
+  - Carbon Registry
+  - Climate
+  - Climate Tech
+  - CDR
+  - MRV
+  - Measurement Reporting Verification
+  - Certification
+  - Superpollutants
+  - Biochar
+  - Direct Air Capture
+  - Enhanced Weathering
+  - Mineralization
+  - Reforestation
+  - Mangrove Restoration
+  - Agroforestry
+  - Methane
+  - HFC
+  - Sustainability
+  - ESG
+  - Net Zero
+  - LCA
+  - Greenhouse Gas
+  - Protocols
   - AI
   - MCP
 accessModel:
@@ -86,6 +113,12 @@ apis:
   humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
   baseURL: https://api.isometric.com/mcp
   tags:
+  - MCP
+  - Artificial Intelligence
+  - Agents
+  - Documentation
+  - Carbon Removal
+  tags_raw:
   - MCP
   - Model Context Protocol
   - AI
@@ -583,6 +616,8 @@ apis:
   humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
   baseURL: https://api.isometric.com/registry/v0
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -751,6 +786,8 @@ apis:
   humanURL: https://docs.isometric.com/api-reference/registry/registry-introduction
   baseURL: https://api.isometric.com/registry/v0
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
