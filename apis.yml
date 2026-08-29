@@ -78,6 +78,17 @@ tags_raw:
   - Protocols
   - AI
   - MCP
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -1119,6 +1130,9 @@ apis:
   - type: ChangeLog
     url: https://docs.isometric.com/api-reference/certify/api-changelog
 common:
+  - type: CapabilityMap
+    url: capabilities/isometric-capability-edges.yml
+    name: Isometric Business Capability Map
   - type: AgenticAccess
     url: agentic-access/isometric-agentic-access.yml
   - type: DomainSecurity
