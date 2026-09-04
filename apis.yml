@@ -91,19 +91,20 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: unknown
-  onboarding: self-serve
+  onboarding: unknown
   trial: false
   try_now: false
   public: false
-  label: Self-serve signup
-  confidence: medium
+  label: Unknown
+  confidence: low
   source:
   - authentication
-  generated: '2026-07-22'
+  - security
+  generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/isometric.png
 kind: contract
-position: Provider
+position: Producing
 access: 3rd-Party
 url: https://raw.githubusercontent.com/api-evangelist/isometric/refs/heads/main/apis.yml
 created: '2026-05-24'
