@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 11
+edge_count: 12
 edges:
 - tag: Ghg Statements
   spec_file: isometric-ghg-statements-api-openapi.yml
@@ -105,6 +105,17 @@ edges:
   reason: Ingestion of biochar spread/application event data with quantities, used to quantify durable
     carbon dioxide removal against the Isometric Standard. This is carbon removal measurement and reporting
     data, i.e. climate & carbon management, not an IT plumbing surface.
+- tag: Deliveries
+  spec_file: isometric-deliveries-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.7
+  evidence: GET /deliveries/{id}/credit_batches Delivery Credit Batches; schemas CreateDeliveryRequest,
+    CarbonRemovalData, Supplier, Organisation
+  reason: Deliveries here are deliveries of carbon credit batches from a supplier to a beneficiary organisation,
+    part of the carbon attribute registry lifecycle rather than physical logistics or order fulfilment.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: Issuances
   spec_file: isometric-issuances-api-openapi.yml
   capability_id: BC-740.20
