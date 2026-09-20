@@ -1,0 +1,128 @@
+slug: isometric
+provider: Isometric
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 11
+edges:
+- tag: Ghg Statements
+  spec_file: isometric-ghg-statements-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.85
+  evidence: POST /ghg_statements/{id}/submit  Post Ghg Statement Submit; schemas GhgStatement, GhgStatementStatus,
+    SubmitGhgStatementRequest
+  reason: Creation and submission of greenhouse-gas statements for certification — carbon footprint quantification
+    and climate disclosure, squarely Climate & Carbon Management.
+- tag: Removals
+  spec_file: isometric-removals-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.85
+  evidence: POST /removals  Post Removal; GET /removals/{id}/component_attributions; schemas Removal,
+    GhgEntry, ComponentAttribution
+  reason: Creation and management of carbon dioxide removal records with GHG entry component attributions
+    — the vendor's core carbon quantification/certification surface.
+- tag: Ghg Statement Components
+  spec_file: isometric-ghg-statement-components-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.8
+  evidence: POST /ghg_statement_components  Post Ghg Statement Component; schema CreateGhgStatementComponentRequest,
+    ComponentScope
+  reason: Creates components (scoped emission/removal items) of a greenhouse-gas statement — carbon footprint
+    accounting and disclosure, i.e. Climate & Carbon Management.
+- tag: Retirements
+  spec_file: isometric-retirements-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.8
+  evidence: POST /retirements  Create Retirement; Create Retirement From Oldest Credits; schemas Retirement,
+    RetirementPurpose, CreditBatch, CarbonRemovalData
+  reason: Retirement of carbon removal credit batches with stated retirement purpose — carbon credit retirement
+    for offsetting/climate claims, squarely Climate & Carbon Management.
+- tag: Components
+  spec_file: isometric-components-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.75
+  evidence: POST /components  Post Component; schemas ComponentScope, IsometricIDRequestParam_GhgEntry_,
+    IsometricIDRequestParam_GhgStatement_, ProjectComponentAmortizationStrategy
+  reason: Components are the emission/removal line items attached to GHG entries and GHG statements for
+    a carbon-removal project — i.e. carbon footprint accounting data, mapping to Climate & Carbon Management.
+- tag: Credit Batches
+  spec_file: isometric-credit-batches-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.75
+  evidence: GET /credit_batches/{id}  Credit Batch; schemas CreditBatch, CreditQuantity, CarbonRemovalData,
+    CreditBatchStatus
+  reason: '''Credit'' here is a carbon-removal credit batch in a CDR registry, not a financial credit
+    facility — schema CarbonRemovalData disambiguates. Registry issuance/holding of carbon credits sits
+    under Climate & Carbon Management.'
+- tag: Project Components
+  spec_file: isometric-project-components-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.75
+  evidence: POST /project_components/{id}/removal_attributions  Post Project Component Removal Attribution;
+    schemas GhgEntry, Removal, ProjectComponentAmortizationStrategy, ComponentScope
+  reason: Attribution of GHG entry components to carbon removals with scopes and amortisation — core greenhouse-gas/carbon
+    accounting for CDR certification.
+- tag: Projects
+  spec_file: isometric-projects-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.75
+  evidence: Get Project Monitoring Requirements; Post Monitoring Submission; Get Storage Locations; schemas
+    ProjectMonitoringRequirement, MonitoringPhase, RemovalTemplateComponent
+  reason: Carbon removal project monitoring requirements, submissions and CO2 storage locations — climate/carbon
+    monitoring and certification, not generic project portfolio management.
+- tag: Biochar Applications
+  spec_file: isometric-biochar-applications-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.72
+  evidence: POST /biochar_applications  "Post Biochar Application"; schemas BiocharApplication, IsometricIDPathParam_BiocharSpreadEvent_,
+    ScalarQuantity
+  reason: Ingestion of biochar spread/application event data with quantities, used to quantify durable
+    carbon dioxide removal against the Isometric Standard. This is carbon removal measurement and reporting
+    data, i.e. climate & carbon management, not an IT plumbing surface.
+- tag: Issuances
+  spec_file: isometric-issuances-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.7
+  evidence: GET /issuances/{id}/credit_batches  Issuance Credit Batches; schemas Issuance, CreditBatch,
+    CarbonRemovalData, CreditQuantity
+  reason: Issuance of carbon-removal credit batches in the registry (CarbonRemovalData confirms carbon,
+    not securities issuance). Falls under Climate & Carbon Management; not a capital-markets issuance
+    capability.
+- tag: Measurement Samples
+  spec_file: isometric-measurement-samples-api-openapi.yml
+  capability_id: BC-740.20
+  capability_id_l1: BC-740
+  capability_name: Climate & Carbon Management
+  confidence: 0.7
+  evidence: Post Measurement Samples; schemas MeasurementSample, MeasurementValue, MeasurementProperty,
+    QuantityKindType
+  reason: Ingestion of quantified measurement samples used to substantiate carbon dioxide removal quantification
+    — carbon/climate measurement and disclosure data, not a generic technical object.
