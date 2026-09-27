@@ -57,73 +57,6 @@ paths:
       - Credit Batches
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    CarbonRemovalData:
-      properties:
-        counterfactuals_kg:
-          title: Counterfactuals Kg
-          type: integer
-        emissions_kg:
-          title: Emissions Kg
-          type: integer
-        gross_carbon_removed_kg:
-          title: Gross Carbon Removed Kg
-          type: integer
-        losses_kg:
-          title: Losses Kg
-          type: integer
-        net_carbon_removed_kg:
-          title: Net Carbon Removed Kg
-          type: integer
-      required:
-      - gross_carbon_removed_kg
-      - net_carbon_removed_kg
-      - emissions_kg
-      - counterfactuals_kg
-      - losses_kg
-      title: CarbonRemovalData
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    CreditBatchStatus:
-      enum:
-      - active
-      - split
-      - retired
-      title: CreditBatchStatus
-      type: string
     CreditBatch:
       properties:
         beneficiary:
@@ -305,14 +238,34 @@ components:
       - ccp_approved
       title: CreditBatch
       type: object
-    IsometricIDRequestParam_CreditBatch_:
-      example: ctb_1DRBTYA8Q1S07CBY
-      examples:
-      - ctb_1DRBTYA8Q1S07CBY
-      - ctb_1CA2D3S73SBXYN70
-      maxLength: 37
-      minLength: 20
-      type: string
+    IsometricIDPathParam_CreditBatch_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_CreditBatch_'
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     Organisation:
       properties:
         domain:
@@ -342,8 +295,6 @@ components:
       - domain
       title: Organisation
       type: object
-    IsometricIDPathParam_CreditBatch_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_CreditBatch_'
     CreditQuantity:
       properties:
         credit_kgs:
@@ -362,6 +313,55 @@ components:
       - credits
       - credit_kgs
       title: CreditQuantity
+      type: object
+    CarbonRemovalData:
+      properties:
+        counterfactuals_kg:
+          title: Counterfactuals Kg
+          type: integer
+        emissions_kg:
+          title: Emissions Kg
+          type: integer
+        gross_carbon_removed_kg:
+          title: Gross Carbon Removed Kg
+          type: integer
+        losses_kg:
+          title: Losses Kg
+          type: integer
+        net_carbon_removed_kg:
+          title: Net Carbon Removed Kg
+          type: integer
+      required:
+      - gross_carbon_removed_kg
+      - net_carbon_removed_kg
+      - emissions_kg
+      - counterfactuals_kg
+      - losses_kg
+      title: CarbonRemovalData
+      type: object
+    CreditBatchStatus:
+      enum:
+      - active
+      - split
+      - retired
+      title: CreditBatchStatus
+      type: string
+    IsometricIDRequestParam_CreditBatch_:
+      example: ctb_1DRBTYA8Q1S07CBY
+      examples:
+      - ctb_1DRBTYA8Q1S07CBY
+      - ctb_1CA2D3S73SBXYN70
+      maxLength: 37
+      minLength: 20
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

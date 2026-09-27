@@ -61,42 +61,6 @@ paths:
       - Beneficiary
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    CreateOrganizationBeneficiary:
-      properties:
-        __typename:
-          const: CreateOrganizationBeneficiary
-          default: CreateOrganizationBeneficiary
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        beneficiary_domain:
-          description: Unique organization domain name for corporate beneficiaries. The domain is not displayed on the registry.
-          examples:
-          - acme.com
-          maxLength: 256
-          title: Beneficiary Domain
-          type: string
-        beneficiary_name:
-          description: A publicly visible name shown on the retirement certificate and registry
-          examples:
-          - Acme Corporation
-          maxLength: 256
-          title: Beneficiary Name
-          type: string
-      required:
-      - beneficiary_name
-      - beneficiary_domain
-      title: CreateOrganizationBeneficiary
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -122,33 +86,6 @@ components:
       - msg
       - type
       title: ValidationError
-      type: object
-    CreateIndividualBeneficiary:
-      properties:
-        __typename:
-          const: CreateIndividualBeneficiary
-          default: CreateIndividualBeneficiary
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        beneficiary_email:
-          description: Unique email address for individual beneficiaries. The email is not displayed on the registry.
-          examples:
-          - john.smith@example.com
-          format: email
-          title: Beneficiary Email
-          type: string
-        beneficiary_name:
-          description: A publicly visible name shown on the retirement certificate and registry
-          examples:
-          - John Smith
-          maxLength: 256
-          title: Beneficiary Name
-          type: string
-      required:
-      - beneficiary_name
-      - beneficiary_email
-      title: CreateIndividualBeneficiary
       type: object
     Organisation:
       properties:
@@ -178,6 +115,69 @@ components:
       - name
       - domain
       title: Organisation
+      type: object
+    CreateIndividualBeneficiary:
+      properties:
+        __typename:
+          const: CreateIndividualBeneficiary
+          default: CreateIndividualBeneficiary
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        beneficiary_email:
+          description: Unique email address for individual beneficiaries. The email is not displayed on the registry.
+          examples:
+          - john.smith@example.com
+          format: email
+          title: Beneficiary Email
+          type: string
+        beneficiary_name:
+          description: A publicly visible name shown on the retirement certificate and registry
+          examples:
+          - John Smith
+          maxLength: 256
+          title: Beneficiary Name
+          type: string
+      required:
+      - beneficiary_name
+      - beneficiary_email
+      title: CreateIndividualBeneficiary
+      type: object
+    CreateOrganizationBeneficiary:
+      properties:
+        __typename:
+          const: CreateOrganizationBeneficiary
+          default: CreateOrganizationBeneficiary
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        beneficiary_domain:
+          description: Unique organization domain name for corporate beneficiaries. The domain is not displayed on the registry.
+          examples:
+          - acme.com
+          maxLength: 256
+          title: Beneficiary Domain
+          type: string
+        beneficiary_name:
+          description: A publicly visible name shown on the retirement certificate and registry
+          examples:
+          - Acme Corporation
+          maxLength: 256
+          title: Beneficiary Name
+          type: string
+      required:
+      - beneficiary_name
+      - beneficiary_domain
+      title: CreateOrganizationBeneficiary
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

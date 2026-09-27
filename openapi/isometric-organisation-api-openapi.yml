@@ -55,15 +55,6 @@ paths:
       url: https://api.isometric.com/mrv/v0
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
     Organisation:
       properties:
         id:
@@ -108,6 +99,15 @@ components:
       - msg
       - type
       title: ValidationError
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
     Organisation_2:
       properties:

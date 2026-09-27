@@ -174,275 +174,6 @@ paths:
       - Issuances
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    IssuanceCreditBatches:
-      properties:
-        buffer_pool_credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        buffer_pool_credit_batches:
-          items:
-            $ref: '#/components/schemas/CreditBatch'
-          title: Buffer Pool Credit Batches
-          type: array
-        credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        issuance_id:
-          example: iss_1EWT8R5FY1S0GFCY
-          examples:
-          - iss_1EWT8R5FY1S0GFCY
-          - iss_1CSVDDHH3SBXRP6K
-          maxLength: 37
-          minLength: 20
-          title: Issuance Id
-          type: string
-        supplier_credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        supplier_credit_batches:
-          items:
-            $ref: '#/components/schemas/CreditBatch'
-          title: Supplier Credit Batches
-          type: array
-      required:
-      - issuance_id
-      - supplier_credit_batches
-      - supplier_credit_batch_size_total
-      - buffer_pool_credit_batches
-      - buffer_pool_credit_batch_size_total
-      - credit_batch_size_total
-      title: IssuanceCreditBatches
-      type: object
-    CarbonRemovalData:
-      properties:
-        counterfactuals_kg:
-          title: Counterfactuals Kg
-          type: integer
-        emissions_kg:
-          title: Emissions Kg
-          type: integer
-        gross_carbon_removed_kg:
-          title: Gross Carbon Removed Kg
-          type: integer
-        losses_kg:
-          title: Losses Kg
-          type: integer
-        net_carbon_removed_kg:
-          title: Net Carbon Removed Kg
-          type: integer
-      required:
-      - gross_carbon_removed_kg
-      - net_carbon_removed_kg
-      - emissions_kg
-      - counterfactuals_kg
-      - losses_kg
-      title: CarbonRemovalData
-      type: object
-    Supplier:
-      properties:
-        id:
-          example: spl_1CC712KFS1S0YKPS
-          examples:
-          - spl_1CC712KFS1S0YKPS
-          - spl_1FJBMMGR3SBXKDME
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-        long_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Long Description
-        organisation:
-          $ref: '#/components/schemas/Organisation'
-        short_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Short Description
-      required:
-      - id
-      - short_description
-      - long_description
-      - organisation
-      - location
-      title: Supplier
-      type: object
-    IsometricIDPathParam_Issuance_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Issuance_'
-    Issuance:
-      properties:
-        buffer_pool_credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        id:
-          example: iss_1EWT8R5FY1S0GFCY
-          examples:
-          - iss_1EWT8R5FY1S0GFCY
-          - iss_1CSVDDHH3SBXRP6K
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        issued_at:
-          format: date-time
-          title: Issued At
-          type: string
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        reporting_period_end_at:
-          description: End date of the reporting period (inclusive)
-          format: date
-          title: Reporting Period End At
-          type: string
-        reporting_period_start_at:
-          description: Start date of the reporting period (inclusive)
-          format: date
-          title: Reporting Period Start At
-          type: string
-        supplier:
-          $ref: '#/components/schemas/Supplier'
-        supplier_credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-      required:
-      - id
-      - issued_at
-      - supplier
-      - project_id
-      - reporting_period_start_at
-      - reporting_period_end_at
-      - supplier_credit_batch_size_total
-      - buffer_pool_credit_batch_size_total
-      - credit_batch_size_total
-      title: Issuance
-      type: object
-    Location:
-      properties:
-        country_code:
-          title: Country Code
-          type: string
-        country_name:
-          title: Country Name
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        latitude:
-          maximum: 90
-          minimum: -90
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180
-          minimum: -180
-          title: Longitude
-          type: number
-      required:
-      - country_code
-      - country_name
-      - latitude
-      - longitude
-      title: Location
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    IsometricIDRequestParam_Issuance_:
-      example: iss_1EWT8R5FY1S0GFCY
-      examples:
-      - iss_1EWT8R5FY1S0GFCY
-      - iss_1CSVDDHH3SBXRP6K
-      maxLength: 37
-      minLength: 20
-      type: string
     CreditBatch:
       properties:
         beneficiary:
@@ -624,13 +355,185 @@ components:
       - ccp_approved
       title: CreditBatch
       type: object
-    CreditBatchStatus:
-      enum:
-      - active
-      - split
-      - retired
-      title: CreditBatchStatus
+    IsometricIDRequestParam_Issuance_:
+      example: iss_1EWT8R5FY1S0GFCY
+      examples:
+      - iss_1EWT8R5FY1S0GFCY
+      - iss_1CSVDDHH3SBXRP6K
+      maxLength: 37
+      minLength: 20
       type: string
+    PaginatedListResource_Issuance_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Issuance'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Issuance]
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    IsometricIDPathParam_Issuance_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Issuance_'
+    Supplier:
+      properties:
+        id:
+          example: spl_1CC712KFS1S0YKPS
+          examples:
+          - spl_1CC712KFS1S0YKPS
+          - spl_1FJBMMGR3SBXKDME
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+        long_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Long Description
+        organisation:
+          $ref: '#/components/schemas/Organisation'
+        short_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Description
+      required:
+      - id
+      - short_description
+      - long_description
+      - organisation
+      - location
+      title: Supplier
+      type: object
+    Issuance:
+      properties:
+        buffer_pool_credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        id:
+          example: iss_1EWT8R5FY1S0GFCY
+          examples:
+          - iss_1EWT8R5FY1S0GFCY
+          - iss_1CSVDDHH3SBXRP6K
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        issued_at:
+          format: date-time
+          title: Issued At
+          type: string
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        reporting_period_end_at:
+          description: End date of the reporting period (inclusive)
+          format: date
+          title: Reporting Period End At
+          type: string
+        reporting_period_start_at:
+          description: Start date of the reporting period (inclusive)
+          format: date
+          title: Reporting Period Start At
+          type: string
+        supplier:
+          $ref: '#/components/schemas/Supplier'
+        supplier_credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+      required:
+      - id
+      - issued_at
+      - supplier
+      - project_id
+      - reporting_period_start_at
+      - reporting_period_end_at
+      - supplier_credit_batch_size_total
+      - buffer_pool_credit_batch_size_total
+      - credit_batch_size_total
+      title: Issuance
+      type: object
+    IssuanceCreditBatches:
+      properties:
+        buffer_pool_credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        buffer_pool_credit_batches:
+          items:
+            $ref: '#/components/schemas/CreditBatch'
+          title: Buffer Pool Credit Batches
+          type: array
+        credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        issuance_id:
+          example: iss_1EWT8R5FY1S0GFCY
+          examples:
+          - iss_1EWT8R5FY1S0GFCY
+          - iss_1CSVDDHH3SBXRP6K
+          maxLength: 37
+          minLength: 20
+          title: Issuance Id
+          type: string
+        supplier_credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        supplier_credit_batches:
+          items:
+            $ref: '#/components/schemas/CreditBatch'
+          title: Supplier Credit Batches
+          type: array
+      required:
+      - issuance_id
+      - supplier_credit_batches
+      - supplier_credit_batch_size_total
+      - buffer_pool_credit_batches
+      - buffer_pool_credit_batch_size_total
+      - credit_batch_size_total
+      title: IssuanceCreditBatches
+      type: object
     Organisation:
       properties:
         domain:
@@ -660,23 +563,120 @@ components:
       - domain
       title: Organisation
       type: object
-    PaginatedListResource_Issuance_:
+    CreditQuantity:
       properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Issuance'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
+          examples:
+          - 125632
+          title: Credit Kgs
+          type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
+      required:
+      - credits
+      - credit_kgs
+      title: CreditQuantity
+      type: object
+    CarbonRemovalData:
+      properties:
+        counterfactuals_kg:
+          title: Counterfactuals Kg
+          type: integer
+        emissions_kg:
+          title: Emissions Kg
+          type: integer
+        gross_carbon_removed_kg:
+          title: Gross Carbon Removed Kg
+          type: integer
+        losses_kg:
+          title: Losses Kg
+          type: integer
+        net_carbon_removed_kg:
+          title: Net Carbon Removed Kg
           type: integer
       required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Issuance]
+      - gross_carbon_removed_kg
+      - net_carbon_removed_kg
+      - emissions_kg
+      - counterfactuals_kg
+      - losses_kg
+      title: CarbonRemovalData
+      type: object
+    CreditBatchStatus:
+      enum:
+      - active
+      - split
+      - retired
+      title: CreditBatchStatus
+      type: string
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    Location:
+      properties:
+        country_code:
+          title: Country Code
+          type: string
+        country_name:
+          title: Country Name
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        latitude:
+          maximum: 90
+          minimum: -90
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180
+          minimum: -180
+          title: Longitude
+          type: number
+      required:
+      - country_code
+      - country_name
+      - latitude
+      - longitude
+      title: Location
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

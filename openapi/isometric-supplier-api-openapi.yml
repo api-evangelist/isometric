@@ -55,14 +55,31 @@ paths:
       - Supplier
 components:
   schemas:
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-      title: HTTPValidationError
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
     Supplier:
       properties:
@@ -98,32 +115,6 @@ components:
       - organisation
       - location
       title: Supplier
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
       type: object
     Organisation:
       properties:
@@ -183,6 +174,15 @@ components:
       - latitude
       - longitude
       title: Location
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

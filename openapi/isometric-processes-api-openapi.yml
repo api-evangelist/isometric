@@ -96,52 +96,6 @@ paths:
       - Processes
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    Process:
-      properties:
-        display_name:
-          title: Display Name
-          type: string
-        key:
-          title: Key
-          type: string
-        steps:
-          items:
-            $ref: '#/components/schemas/ProcessStep'
-          title: Steps
-          type: array
-      required:
-      - key
-      - display_name
-      - steps
-      title: Process
-      type: object
-    PaginatedListResource_Process_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Process'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Process]
-      type: object
     ProcessStep:
       properties:
         description:
@@ -185,6 +139,43 @@ components:
       - type
       title: ValidationError
       type: object
+    Process:
+      properties:
+        display_name:
+          title: Display Name
+          type: string
+        key:
+          title: Key
+          type: string
+        steps:
+          items:
+            $ref: '#/components/schemas/ProcessStep'
+          title: Steps
+          type: array
+      required:
+      - key
+      - display_name
+      - steps
+      title: Process
+      type: object
+    PaginatedListResource_Process_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Process'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Process]
+      type: object
     PageInfo:
       properties:
         end_cursor:
@@ -209,6 +200,15 @@ components:
       - has_next_page
       - end_cursor
       title: PageInfo
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

@@ -214,36 +214,6 @@ paths:
       - Ghg Statements
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    CreateGhgStatementRequest:
-      properties:
-        end_on:
-          description: The inclusive end date of the GHG Statement
-          format: date
-          title: End On
-          type: string
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-      required:
-      - end_on
-      - project_id
-      title: CreateGhgStatementRequest
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -270,6 +240,59 @@ components:
       - type
       title: ValidationError
       type: object
+    IsometricIDRequestParam_GhgStatement_:
+      example: ggs_1GDQJ99Z51S0DYW9
+      examples:
+      - ggs_1GDQJ99Z51S0DYW9
+      - ggs_1FWVEQRWSSBXK3NB
+      maxLength: 37
+      minLength: 20
+      type: string
+    ResubmitGhgStatementRequest:
+      properties:
+        ghg_statement_report_url:
+          description: The URL of the GHG statement report. This should be accessible to the verifier.
+          title: Ghg Statement Report Url
+          type: string
+        summary_of_changes:
+          description: A high-level summary of what's changed since the previous submission of this GHG statement.
+          title: Summary Of Changes
+          type: string
+      required:
+      - ghg_statement_report_url
+      - summary_of_changes
+      title: ResubmitGhgStatementRequest
+      type: object
+    PaginatedListResource_GhgStatement_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/GhgStatement'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[GhgStatement]
+      type: object
+    SubmitGhgStatementRequest:
+      properties:
+        ghg_statement_report_url:
+          description: The URL of the GHG statement report. This should be accessible to the verifier.
+          title: Ghg Statement Report Url
+          type: string
+      required:
+      - ghg_statement_report_url
+      title: SubmitGhgStatementRequest
+      type: object
+    IsometricIDPathParam_GhgStatement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
     GhgStatement:
       properties:
         credits_issued_at:
@@ -356,24 +379,15 @@ components:
       - pending_total_co2e_removed_kg
       title: GhgStatement
       type: object
-    PaginatedListResource_GhgStatement_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/GhgStatement'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[GhgStatement]
-      type: object
+    GhgStatementStatus:
+      enum:
+      - DRAFT
+      - AWAITING_VERIFICATION
+      - VERIFIED
+      - CREDITS_ISSUED
+      - FAILED_VERIFICATION
+      title: GhgStatementStatus
+      type: string
     PageInfo:
       properties:
         end_cursor:
@@ -399,50 +413,36 @@ components:
       - end_cursor
       title: PageInfo
       type: object
-    IsometricIDPathParam_GhgStatement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
-    SubmitGhgStatementRequest:
+    CreateGhgStatementRequest:
       properties:
-        ghg_statement_report_url:
-          description: The URL of the GHG statement report. This should be accessible to the verifier.
-          title: Ghg Statement Report Url
+        end_on:
+          description: The inclusive end date of the GHG Statement
+          format: date
+          title: End On
+          type: string
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
           type: string
       required:
-      - ghg_statement_report_url
-      title: SubmitGhgStatementRequest
+      - end_on
+      - project_id
+      title: CreateGhgStatementRequest
       type: object
-    ResubmitGhgStatementRequest:
+    HTTPValidationError:
       properties:
-        ghg_statement_report_url:
-          description: The URL of the GHG statement report. This should be accessible to the verifier.
-          title: Ghg Statement Report Url
-          type: string
-        summary_of_changes:
-          description: A high-level summary of what's changed since the previous submission of this GHG statement.
-          title: Summary Of Changes
-          type: string
-      required:
-      - ghg_statement_report_url
-      - summary_of_changes
-      title: ResubmitGhgStatementRequest
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
-    GhgStatementStatus:
-      enum:
-      - DRAFT
-      - AWAITING_VERIFICATION
-      - VERIFIED
-      - CREDITS_ISSUED
-      - FAILED_VERIFICATION
-      title: GhgStatementStatus
-      type: string
-    IsometricIDRequestParam_GhgStatement_:
-      example: ggs_1GDQJ99Z51S0DYW9
-      examples:
-      - ggs_1GDQJ99Z51S0DYW9
-      - ggs_1FWVEQRWSSBXK3NB
-      maxLength: 37
-      minLength: 20
-      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

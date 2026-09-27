@@ -92,15 +92,6 @@ paths:
       - Transferees
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -126,6 +117,35 @@ components:
       - msg
       - type
       title: ValidationError
+      type: object
+    Organisation:
+      properties:
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          examples:
+          - isometric.com
+          title: Domain
+        id:
+          example: org_1GB56M1ST1S0GVNA
+          examples:
+          - org_1GB56M1ST1S0GVNA
+          - org_1CP8EQDNQSBXTMR2
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        name:
+          examples:
+          - Isometric
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      - domain
+      title: Organisation
       type: object
     PaginatedListResource_Organisation_:
       properties:
@@ -170,34 +190,14 @@ components:
       - end_cursor
       title: PageInfo
       type: object
-    Organisation:
+    HTTPValidationError:
       properties:
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          examples:
-          - isometric.com
-          title: Domain
-        id:
-          example: org_1GB56M1ST1S0GVNA
-          examples:
-          - org_1GB56M1ST1S0GVNA
-          - org_1CP8EQDNQSBXTMR2
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          examples:
-          - Isometric
-          title: Name
-          type: string
-      required:
-      - id
-      - name
-      - domain
-      title: Organisation
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

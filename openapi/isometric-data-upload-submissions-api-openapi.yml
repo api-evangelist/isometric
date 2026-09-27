@@ -175,15 +175,84 @@ paths:
       - Data Upload Submissions
 components:
   schemas:
-    HTTPValidationError:
+    IsometricIDPathParam_DataUploadSubmission_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_DataUploadSubmission_'
+    ValidationError:
       properties:
-        detail:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-      title: HTTPValidationError
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
+    CreateDataUploadSubmissionRequest:
+      properties:
+        facility_id:
+          anyOf:
+          - example: fcl_1G8QT5ZAB1S0XSDW
+            examples:
+            - fcl_1G8QT5ZAB1S0XSDW
+            - fcl_1E384BDCGSBXNNZZ
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: The ID of the facility the data is associated with.
+          title: Facility Id
+        file_upload_id:
+          description: The ID of the file upload that contains the data to be processed.
+          example: tfu_1DZPAW31R1S0ZESH
+          examples:
+          - tfu_1DZPAW31R1S0ZESH
+          - tfu_1CHF4YC38SBX9E20
+          maxLength: 37
+          minLength: 20
+          title: File Upload Id
+          type: string
+        storage_location_id:
+          anyOf:
+          - example: slc_1F3PMGVC91S0SBK3
+            examples:
+            - slc_1F3PMGVC91S0SBK3
+            - slc_1DCY5K78BSBX3XMZ
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: The ID of the storage location the data is associated with.
+          title: Storage Location Id
+        submission_type:
+          $ref: '#/components/schemas/DataUploadSubmissionType'
+      required:
+      - submission_type
+      - file_upload_id
+      title: CreateDataUploadSubmissionRequest
+      type: object
+    DataUploadSubmissionStatus:
+      enum:
+      - pending
+      - completed
+      - failed
+      title: DataUploadSubmissionStatus
+      type: string
     DataUploadSubmission:
       properties:
         error_message:
@@ -235,67 +304,6 @@ components:
       - facility_id
       title: DataUploadSubmission
       type: object
-    PaginatedListResource_DataUploadSubmission_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/DataUploadSubmission'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[DataUploadSubmission]
-      type: object
-    CreateDataUploadSubmissionRequest:
-      properties:
-        facility_id:
-          anyOf:
-          - example: fcl_1G8QT5ZAB1S0XSDW
-            examples:
-            - fcl_1G8QT5ZAB1S0XSDW
-            - fcl_1E384BDCGSBXNNZZ
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          description: The ID of the facility the data is associated with.
-          title: Facility Id
-        file_upload_id:
-          description: The ID of the file upload that contains the data to be processed.
-          example: tfu_1DZPAW31R1S0ZESH
-          examples:
-          - tfu_1DZPAW31R1S0ZESH
-          - tfu_1CHF4YC38SBX9E20
-          maxLength: 37
-          minLength: 20
-          title: File Upload Id
-          type: string
-        storage_location_id:
-          anyOf:
-          - example: slc_1F3PMGVC91S0SBK3
-            examples:
-            - slc_1F3PMGVC91S0SBK3
-            - slc_1DCY5K78BSBX3XMZ
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          description: The ID of the storage location the data is associated with.
-          title: Storage Location Id
-        submission_type:
-          $ref: '#/components/schemas/DataUploadSubmissionType'
-      required:
-      - submission_type
-      - file_upload_id
-      title: CreateDataUploadSubmissionRequest
-      type: object
     IsometricIDRequestParam_DataUploadSubmission_:
       example: dus_1GBBSJ6P91S0R41N
       examples:
@@ -304,32 +312,6 @@ components:
       maxLength: 37
       minLength: 20
       type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
     PageInfo:
       properties:
         end_cursor:
@@ -355,6 +337,24 @@ components:
       - end_cursor
       title: PageInfo
       type: object
+    PaginatedListResource_DataUploadSubmission_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/DataUploadSubmission'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[DataUploadSubmission]
+      type: object
     DataUploadSubmissionType:
       enum:
       - biochar_pyrolysis_reactor_facility_time_series
@@ -363,15 +363,15 @@ components:
       - wae_wastewater_treatment_plant_facility_time_series
       title: DataUploadSubmissionType
       type: string
-    IsometricIDPathParam_DataUploadSubmission_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_DataUploadSubmission_'
-    DataUploadSubmissionStatus:
-      enum:
-      - pending
-      - completed
-      - failed
-      title: DataUploadSubmissionStatus
-      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

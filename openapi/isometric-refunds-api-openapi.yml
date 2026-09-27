@@ -95,108 +95,29 @@ paths:
       - Refunds
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    CarbonRemovalData:
-      properties:
-        counterfactuals_kg:
-          title: Counterfactuals Kg
-          type: integer
-        emissions_kg:
-          title: Emissions Kg
-          type: integer
-        gross_carbon_removed_kg:
-          title: Gross Carbon Removed Kg
-          type: integer
-        losses_kg:
-          title: Losses Kg
-          type: integer
-        net_carbon_removed_kg:
-          title: Net Carbon Removed Kg
-          type: integer
-      required:
-      - gross_carbon_removed_kg
-      - net_carbon_removed_kg
-      - emissions_kg
-      - counterfactuals_kg
-      - losses_kg
-      title: CarbonRemovalData
-      type: object
-    IsometricIDPathParam_BufferPoolRefund_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_BufferPoolRefund_'
-    BufferPoolRefund:
-      properties:
-        credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        from_buffer_pool_organisation:
-          $ref: '#/components/schemas/Organisation'
-        id:
-          example: bpr_1E5BH6AG21S0SKTW
-          examples:
-          - bpr_1E5BH6AG21S0SKTW
-          - bpr_1E94SXW89SBX58PK
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        notes:
-          title: Notes
-          type: string
-        refunded_at:
-          format: date-time
-          title: Refunded At
-          type: string
-        to_organisation:
-          $ref: '#/components/schemas/Organisation'
-      required:
-      - id
-      - refunded_at
-      - from_buffer_pool_organisation
-      - to_organisation
-      - credit_batch_size_total
-      - notes
-      title: BufferPoolRefund
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    CreditBatchStatus:
-      enum:
-      - active
-      - split
-      - retired
-      title: CreditBatchStatus
+    IsometricIDRequestParam_BufferPoolRefund_:
+      example: bpr_1E5BH6AG21S0SKTW
+      examples:
+      - bpr_1E5BH6AG21S0SKTW
+      - bpr_1E94SXW89SBX58PK
+      maxLength: 37
+      minLength: 20
       type: string
+    ListResource_CreditBatch_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/CreditBatch'
+          title: Nodes
+          type: array
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      title: ListResource[CreditBatch]
+      type: object
     CreditBatch:
       properties:
         beneficiary:
@@ -378,29 +299,32 @@ components:
       - ccp_approved
       title: CreditBatch
       type: object
-    ListResource_CreditBatch_:
+    ValidationError:
       properties:
-        nodes:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
           items:
-            $ref: '#/components/schemas/CreditBatch'
-          title: Nodes
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-        total_count:
-          title: Total Count
-          type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
       required:
-      - nodes
-      - total_count
-      title: ListResource[CreditBatch]
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
-    IsometricIDRequestParam_BufferPoolRefund_:
-      example: bpr_1E5BH6AG21S0SKTW
-      examples:
-      - bpr_1E5BH6AG21S0SKTW
-      - bpr_1E94SXW89SBX58PK
-      maxLength: 37
-      minLength: 20
-      type: string
     Organisation:
       properties:
         domain:
@@ -430,6 +354,8 @@ components:
       - domain
       title: Organisation
       type: object
+    IsometricIDPathParam_BufferPoolRefund_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_BufferPoolRefund_'
     CreditQuantity:
       properties:
         credit_kgs:
@@ -448,6 +374,80 @@ components:
       - credits
       - credit_kgs
       title: CreditQuantity
+      type: object
+    CarbonRemovalData:
+      properties:
+        counterfactuals_kg:
+          title: Counterfactuals Kg
+          type: integer
+        emissions_kg:
+          title: Emissions Kg
+          type: integer
+        gross_carbon_removed_kg:
+          title: Gross Carbon Removed Kg
+          type: integer
+        losses_kg:
+          title: Losses Kg
+          type: integer
+        net_carbon_removed_kg:
+          title: Net Carbon Removed Kg
+          type: integer
+      required:
+      - gross_carbon_removed_kg
+      - net_carbon_removed_kg
+      - emissions_kg
+      - counterfactuals_kg
+      - losses_kg
+      title: CarbonRemovalData
+      type: object
+    CreditBatchStatus:
+      enum:
+      - active
+      - split
+      - retired
+      title: CreditBatchStatus
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    BufferPoolRefund:
+      properties:
+        credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        from_buffer_pool_organisation:
+          $ref: '#/components/schemas/Organisation'
+        id:
+          example: bpr_1E5BH6AG21S0SKTW
+          examples:
+          - bpr_1E5BH6AG21S0SKTW
+          - bpr_1E94SXW89SBX58PK
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        notes:
+          title: Notes
+          type: string
+        refunded_at:
+          format: date-time
+          title: Refunded At
+          type: string
+        to_organisation:
+          $ref: '#/components/schemas/Organisation'
+      required:
+      - id
+      - refunded_at
+      - from_buffer_pool_organisation
+      - to_organisation
+      - credit_batch_size_total
+      - notes
+      title: BufferPoolRefund
       type: object
   securitySchemes:
     HTTPBearer:
