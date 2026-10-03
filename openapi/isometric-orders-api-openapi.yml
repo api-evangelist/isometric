@@ -138,6 +138,25 @@ paths:
       - Orders
 components:
   schemas:
+    CreditQuantity:
+      properties:
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
+          examples:
+          - 125632
+          title: Credit Kgs
+          type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
+      required:
+      - credits
+      - credit_kgs
+      title: CreditQuantity
+      type: object
     Order:
       properties:
         buyer_organisation:
@@ -180,36 +199,6 @@ components:
       - credits_delivered
       title: Order
       type: object
-    Location:
-      properties:
-        country_code:
-          title: Country Code
-          type: string
-        country_name:
-          title: Country Name
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        latitude:
-          maximum: 90
-          minimum: -90
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180
-          minimum: -180
-          title: Longitude
-          type: number
-      required:
-      - country_code
-      - country_name
-      - latitude
-      - longitude
-      title: Location
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -236,14 +225,37 @@ components:
       - type
       title: ValidationError
       type: object
-    IsometricIDRequestParam_Order_:
-      example: ord_1FAN3S3WV1S0B842
-      examples:
-      - ord_1FAN3S3WV1S0B842
-      - ord_1DBVRQDHBSBXWBWP
-      maxLength: 37
-      minLength: 20
-      type: string
+    Organisation:
+      properties:
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          examples:
+          - isometric.com
+          title: Domain
+        id:
+          example: org_1GB56M1ST1S0GVNA
+          examples:
+          - org_1GB56M1ST1S0GVNA
+          - org_1CP8EQDNQSBXTMR2
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        name:
+          examples:
+          - Isometric
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      - domain
+      title: Organisation
+      type: object
+    IsometricIDPathParam_Order_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Order_'
     Supplier:
       properties:
         id:
@@ -279,13 +291,6 @@ components:
       - location
       title: Supplier
       type: object
-    OrderStatus:
-      enum:
-      - placed
-      - in_progress
-      - completed
-      title: OrderStatus
-      type: string
     PaginatedListResource_Delivery_:
       properties:
         nodes:
@@ -304,53 +309,39 @@ components:
       - page_info
       title: PaginatedListResource[Delivery]
       type: object
-    Organisation:
+    HTTPValidationError:
       properties:
-        domain:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
           anyOf:
           - type: string
           - type: 'null'
-          examples:
-          - isometric.com
-          title: Domain
-        id:
-          example: org_1GB56M1ST1S0GVNA
-          examples:
-          - org_1GB56M1ST1S0GVNA
-          - org_1CP8EQDNQSBXTMR2
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          examples:
-          - Isometric
-          title: Name
-          type: string
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
       required:
-      - id
-      - name
-      - domain
-      title: Organisation
-      type: object
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
     Delivery:
       properties:
@@ -405,42 +396,51 @@ components:
       - notes
       title: Delivery
       type: object
-    PageInfo:
+    IsometricIDRequestParam_Order_:
+      example: ord_1FAN3S3WV1S0B842
+      examples:
+      - ord_1FAN3S3WV1S0B842
+      - ord_1DBVRQDHBSBXWBWP
+      maxLength: 37
+      minLength: 20
+      type: string
+    Location:
       properties:
-        end_cursor:
+        country_code:
+          title: Country Code
+          type: string
+        country_name:
+          title: Country Name
+          type: string
+        description:
           anyOf:
           - type: string
           - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
+          title: Description
+        latitude:
+          maximum: 90
+          minimum: -90
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180
+          minimum: -180
+          title: Longitude
+          type: number
       required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+      - country_code
+      - country_name
+      - latitude
+      - longitude
+      title: Location
       type: object
-    IsometricIDPathParam_Order_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Order_'
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
+    OrderStatus:
+      enum:
+      - placed
+      - in_progress
+      - completed
+      title: OrderStatus
+      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

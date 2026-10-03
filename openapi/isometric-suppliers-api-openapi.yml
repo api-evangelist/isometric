@@ -460,74 +460,24 @@ paths:
       - Suppliers
 components:
   schemas:
-    ValidationError:
+    PaginatedListResource_Supplier_:
       properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
+        nodes:
           items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
+            $ref: '#/components/schemas/Supplier'
+          title: Nodes
           type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Supplier]
       type: object
-    Supplier:
-      properties:
-        id:
-          example: spl_1CC712KFS1S0YKPS
-          examples:
-          - spl_1CC712KFS1S0YKPS
-          - spl_1FJBMMGR3SBXKDME
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-        long_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Long Description
-        organisation:
-          $ref: '#/components/schemas/Organisation'
-        short_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Short Description
-      required:
-      - id
-      - short_description
-      - long_description
-      - organisation
-      - location
-      title: Supplier
-      type: object
-    OrderStatus:
-      enum:
-      - placed
-      - in_progress
-      - completed
-      title: OrderStatus
-      type: string
     ProjectStatus:
       enum:
       - draft
@@ -538,6 +488,24 @@ components:
       - cancelled
       title: ProjectStatus
       type: string
+    PaginatedListResource_Order_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Order'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Order]
+      type: object
     Delivery:
       properties:
         credit_batch_size_total:
@@ -590,6 +558,24 @@ components:
       - url
       - notes
       title: Delivery
+      type: object
+    PaginatedListResource_Issuance_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Issuance'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Issuance]
       type: object
     Project:
       properties:
@@ -701,73 +687,49 @@ components:
       - location
       title: Project
       type: object
-    IsometricIDRequestParam_Supplier_:
-      example: spl_1CC712KFS1S0YKPS
-      examples:
-      - spl_1CC712KFS1S0YKPS
-      - spl_1FJBMMGR3SBXKDME
-      maxLength: 37
-      minLength: 20
+    OrderStatus:
+      enum:
+      - placed
+      - in_progress
+      - completed
+      title: OrderStatus
       type: string
-    PaginatedListResource_Delivery_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Delivery'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Delivery]
-      type: object
     IsometricIDPathParam_Supplier_:
       $ref: '#/components/schemas/IsometricIDRequestParam_Supplier_'
-    Pathway:
-      enum:
-      - biomass_carbon_removal_and_storage
-      - direct_air_capture
-      - enhanced_weathering
-      - carbon_mineralization
-      - reforestation
-      - marine
-      - superpollutants
-      title: Pathway
-      type: string
-    Organisation:
+    Supplier:
       properties:
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          examples:
-          - isometric.com
-          title: Domain
         id:
-          example: org_1GB56M1ST1S0GVNA
+          example: spl_1CC712KFS1S0YKPS
           examples:
-          - org_1GB56M1ST1S0GVNA
-          - org_1CP8EQDNQSBXTMR2
+          - spl_1CC712KFS1S0YKPS
+          - spl_1FJBMMGR3SBXKDME
           maxLength: 37
           minLength: 20
           title: Id
           type: string
-        name:
-          examples:
-          - Isometric
-          title: Name
-          type: string
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+        long_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Long Description
+        organisation:
+          $ref: '#/components/schemas/Organisation'
+        short_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Description
       required:
       - id
-      - name
-      - domain
-      title: Organisation
+      - short_description
+      - long_description
+      - organisation
+      - location
+      title: Supplier
       type: object
     CreditQuantity:
       properties:
@@ -787,79 +749,6 @@ components:
       - credits
       - credit_kgs
       title: CreditQuantity
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    Location:
-      properties:
-        country_code:
-          title: Country Code
-          type: string
-        country_name:
-          title: Country Name
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        latitude:
-          maximum: 90
-          minimum: -90
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180
-          minimum: -180
-          title: Longitude
-          type: number
-      required:
-      - country_code
-      - country_name
-      - latitude
-      - longitude
-      title: Location
-      type: object
-    PaginatedListResource_Supplier_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Supplier'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Supplier]
       type: object
     Order:
       properties:
@@ -903,11 +792,11 @@ components:
       - credits_delivered
       title: Order
       type: object
-    PaginatedListResource_Order_:
+    PaginatedListResource_Delivery_:
       properties:
         nodes:
           items:
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/Delivery'
           title: Nodes
           type: array
         page_info:
@@ -919,26 +808,25 @@ components:
       - nodes
       - total_count
       - page_info
-      title: PaginatedListResource[Order]
+      title: PaginatedListResource[Delivery]
       type: object
-    PaginatedListResource_Issuance_:
+    HTTPValidationError:
       properties:
-        nodes:
+        detail:
           items:
-            $ref: '#/components/schemas/Issuance'
-          title: Nodes
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
           type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Issuance]
+      title: HTTPValidationError
       type: object
+    IsometricIDRequestParam_Supplier_:
+      example: spl_1CC712KFS1S0YKPS
+      examples:
+      - spl_1CC712KFS1S0YKPS
+      - spl_1FJBMMGR3SBXKDME
+      maxLength: 37
+      minLength: 20
+      type: string
     Issuance:
       properties:
         buffer_pool_credit_batch_size_total:
@@ -1011,15 +899,127 @@ components:
       - page_info
       title: PaginatedListResource[Project]
       type: object
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-      title: HTTPValidationError
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
+    Organisation:
+      properties:
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          examples:
+          - isometric.com
+          title: Domain
+        id:
+          example: org_1GB56M1ST1S0GVNA
+          examples:
+          - org_1GB56M1ST1S0GVNA
+          - org_1CP8EQDNQSBXTMR2
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        name:
+          examples:
+          - Isometric
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      - domain
+      title: Organisation
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    Location:
+      properties:
+        country_code:
+          title: Country Code
+          type: string
+        country_name:
+          title: Country Name
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        latitude:
+          maximum: 90
+          minimum: -90
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180
+          minimum: -180
+          title: Longitude
+          type: number
+      required:
+      - country_code
+      - country_name
+      - latitude
+      - longitude
+      title: Location
+      type: object
+    Pathway:
+      enum:
+      - biomass_carbon_removal_and_storage
+      - direct_air_capture
+      - enhanced_weathering
+      - carbon_mineralization
+      - reforestation
+      - marine
+      - superpollutants
+      title: Pathway
+      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

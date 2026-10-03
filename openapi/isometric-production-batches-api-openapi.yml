@@ -201,6 +201,66 @@ paths:
       - Production Batches
 components:
   schemas:
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     ProductionBatch:
       properties:
         display_name:
@@ -272,65 +332,6 @@ components:
       - mass
       title: ProductionBatch
       type: object
-    IsometricIDPathParam_ProductionBatch_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_ProductionBatch_'
-    ProductionBatchKind:
-      enum:
-      - biochar
-      title: ProductionBatchKind
-      type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    PaginatedListResource_ProductionBatch_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/ProductionBatch'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[ProductionBatch]
-      type: object
-    IsometricIDRequestParam_ProductionBatch_:
-      example: ptb_1GAFJ4C051S06E0Z
-      examples:
-      - ptb_1GAFJ4C051S06E0Z
-      - ptb_1FQVMJYTASBXSZT8
-      maxLength: 37
-      minLength: 20
-      type: string
     ScalarQuantity:
       properties:
         magnitude:
@@ -350,31 +351,13 @@ components:
       - unit
       title: ScalarQuantity
       type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
+    ProductionBatchKind:
+      enum:
+      - biochar
+      title: ProductionBatchKind
+      type: string
+    IsometricIDPathParam_ProductionBatch_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_ProductionBatch_'
     CreateProductionBatchRequest:
       properties:
         display_name:
@@ -438,14 +421,31 @@ components:
       - mass
       title: CreateProductionBatchRequest
       type: object
-    HTTPValidationError:
+    IsometricIDRequestParam_ProductionBatch_:
+      example: ptb_1GAFJ4C051S06E0Z
+      examples:
+      - ptb_1GAFJ4C051S06E0Z
+      - ptb_1FQVMJYTASBXSZT8
+      maxLength: 37
+      minLength: 20
+      type: string
+    PaginatedListResource_ProductionBatch_:
       properties:
-        detail:
+        nodes:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            $ref: '#/components/schemas/ProductionBatch'
+          title: Nodes
           type: array
-      title: HTTPValidationError
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[ProductionBatch]
       type: object
   securitySchemes:
     HTTPBearer:

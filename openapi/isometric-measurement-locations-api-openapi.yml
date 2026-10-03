@@ -211,6 +211,76 @@ paths:
       - Measurement Locations
 components:
   schemas:
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    IsometricIDPathParam_MeasurementLocation_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_MeasurementLocation_'
+    IsometricIDRequestParam_MeasurementLocation_:
+      example: mlc_1CCZASA6Q1S0V8T4
+      examples:
+      - mlc_1CCZASA6Q1S0V8T4
+      - mlc_1GF73PG90SBXKEX1
+      maxLength: 37
+      minLength: 20
+      type: string
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     PaginatedListResource_MeasurementLocation_:
       properties:
         nodes:
@@ -263,34 +333,6 @@ components:
       - project_id
       title: CreateMeasurementLocationRequest
       type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    IsometricIDPathParam_MeasurementLocation_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_MeasurementLocation_'
     MeasurementLocation:
       properties:
         id:
@@ -326,48 +368,6 @@ components:
       - longitude
       - supplier_reference_id
       title: MeasurementLocation
-      type: object
-    IsometricIDRequestParam_MeasurementLocation_:
-      example: mlc_1CCZASA6Q1S0V8T4
-      examples:
-      - mlc_1CCZASA6Q1S0V8T4
-      - mlc_1GF73PG90SBXKEX1
-      maxLength: 37
-      minLength: 20
-      type: string
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

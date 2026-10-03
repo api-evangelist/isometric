@@ -147,24 +147,6 @@ components:
       - domain
       title: Organisation
       type: object
-    PaginatedListResource_Organisation_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Organisation'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Organisation]
-      type: object
     PageInfo:
       properties:
         end_cursor:
@@ -198,6 +180,24 @@ components:
           title: Detail
           type: array
       title: HTTPValidationError
+      type: object
+    PaginatedListResource_Organisation_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Organisation'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Organisation]
       type: object
   securitySchemes:
     HTTPBearer:

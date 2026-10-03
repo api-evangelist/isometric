@@ -201,6 +201,32 @@ paths:
       - Biochar Applications
 components:
   schemas:
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     BiocharApplication:
       properties:
         application_date:
@@ -276,34 +302,77 @@ components:
       - average_application_rate
       title: BiocharApplication
       type: object
-    ValidationError:
+    PageInfo:
       properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
           type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
+      title: HTTPValidationError
+      type: object
+    ScalarQuantity:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Standard Deviation
+        unit:
+          minLength: 1
+          title: Unit
           type: string
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - magnitude
+      - unit
+      title: ScalarQuantity
       type: object
-    IsometricIDPathParam_BiocharSpreadEvent_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_BiocharSpreadEvent_'
+    PaginatedListResource_BiocharApplication_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/BiocharApplication'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[BiocharApplication]
+      type: object
     IsometricIDRequestParam_BiocharSpreadEvent_:
       example: bse_1F1FDSGPE1S0374B
       examples:
@@ -381,77 +450,8 @@ components:
       - supplier_reference_id
       title: CreateBiocharApplicationRequest
       type: object
-    PaginatedListResource_BiocharApplication_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/BiocharApplication'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[BiocharApplication]
-      type: object
-    ScalarQuantity:
-      properties:
-        magnitude:
-          title: Magnitude
-          type: number
-        standard_deviation:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Standard Deviation
-        unit:
-          minLength: 1
-          title: Unit
-          type: string
-      required:
-      - magnitude
-      - unit
-      title: ScalarQuantity
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
+    IsometricIDPathParam_BiocharSpreadEvent_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_BiocharSpreadEvent_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

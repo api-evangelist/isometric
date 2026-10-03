@@ -1055,159 +1055,16 @@ paths:
       url: https://api.isometric.com/registry/v0
 components:
   schemas:
-    IsometricIDPathParam_ProjectRequirement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_ProjectRequirement_'
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    MonitoringPhase:
-      enum:
-      - pre_op
-      - operation
-      - post_op
-      - feedstock
-      title: MonitoringPhase
-      type: string
-    RemovalTemplateComponent:
-      properties:
-        blueprint_key:
-          title: Blueprint Key
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        display_name:
-          title: Display Name
-          type: string
-        id:
-          example: rtc_1DAA58EDM1S0AMPN
-          examples:
-          - rtc_1DAA58EDM1S0AMPN
-          - rtc_1CQAKRCVQSBXKKTM
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        inputs:
-          description: Inputs for this removal template component based on its component blueprint, including any customized display names and fixed input datapoints.
-          items:
-            $ref: '#/components/schemas/RemovalTemplateComponentInput'
-          title: Inputs
-          type: array
-        removal_template_component_group_id:
-          example: rtg_1EGQ9DZXZ1S05S28
-          examples:
-          - rtg_1EGQ9DZXZ1S05S28
-          - rtg_1CWEFDQ7GSBX1X5C
-          maxLength: 37
-          minLength: 20
-          title: Removal Template Component Group Id
-          type: string
-        removal_template_id:
-          example: rvt_1EVC8RZFE1S0BAT6
-          examples:
-          - rvt_1EVC8RZFE1S0BAT6
-          - rvt_1ECDZGE2DSBX88EX
-          maxLength: 37
-          minLength: 20
-          title: Removal Template Id
-          type: string
-      required:
-      - id
-      - display_name
-      - description
-      - blueprint_key
-      - removal_template_id
-      - removal_template_component_group_id
-      - inputs
-      title: RemovalTemplateComponent
-      type: object
-    IsometricIDQueryParam_StorageUnit_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_StorageUnit_'
-    CreateStorageLocationRequest:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Description
-        latitude:
-          maximum: 90.0
-          minimum: -90.0
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180.0
-          minimum: -180.0
-          title: Longitude
-          type: number
-        name:
-          title: Name
-          type: string
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        storage_method:
-          anyOf:
-          - $ref: '#/components/schemas/StorageMethod'
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Storage Method
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Supplier Reference Id
-      required:
-      - project_id
-      - name
-      - latitude
-      - longitude
-      title: CreateStorageLocationRequest
-      type: object
-    IsometricIDPathParam_StorageLocation_:
+    IsometricIDQueryParam_StorageLocation_:
       $ref: '#/components/schemas/IsometricIDRequestParam_StorageLocation_'
-    IsometricIDPathParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    IsometricIDRequestParam_GhgEntryTemplate_:
+      example: rvt_1EVC8RZFE1S0BAT6
+      examples:
+      - rvt_1EVC8RZFE1S0BAT6
+      - rvt_1ECDZGE2DSBX88EX
+      maxLength: 37
+      minLength: 20
+      type: string
     RemovalTemplateComponentInput:
       properties:
         datapoint_id:
@@ -1241,38 +1098,197 @@ components:
       - quantity_kind
       title: RemovalTemplateComponentInput
       type: object
-    RemovalTemplateComponentGroup:
+    IsometricIDPathParam_StorageLocation_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_StorageLocation_'
+    RiskOfReversal:
+      enum:
+      - no_observable_risk
+      - very_low_v2
+      - very_low
+      - low
+      - medium
+      - high
+      - risk_assessment_driven
+      title: RiskOfReversal
+      type: string
+    PaginatedListResource_RemovalTemplate_:
       properties:
-        components:
+        nodes:
           items:
-            $ref: '#/components/schemas/RemovalTemplateComponent'
-          title: Components
+            $ref: '#/components/schemas/RemovalTemplate'
+          title: Nodes
           type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[RemovalTemplate]
+      type: object
+    Project:
+      properties:
+        country_code:
+          title: Country Code
+          type: string
         description:
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Description
-          type: string
-        display_name:
-          title: Display Name
-          type: string
         id:
-          example: rtg_1EGQ9DZXZ1S05S28
+          example: prj_1CTWZQGKE1S0VAXA
           examples:
-          - rtg_1EGQ9DZXZ1S05S28
-          - rtg_1CWEFDQ7GSBX1X5C
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
           maxLength: 37
           minLength: 20
           title: Id
           type: string
-        key:
-          title: Key
+        name:
+          title: Name
           type: string
+        process_key:
+          title: Process Key
+          type: string
+        risk_of_reversal:
+          anyOf:
+          - $ref: '#/components/schemas/RiskOfReversal'
+          - type: 'null'
+        short_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Description
       required:
       - id
-      - key
-      - display_name
+      - name
+      - country_code
+      - process_key
       - description
-      - components
-      title: RemovalTemplateComponentGroup
+      - short_description
+      - risk_of_reversal
+      title: Project
+      type: object
+    PatchStorageLocationRequest:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Description
+        latitude:
+          anyOf:
+          - maximum: 90.0
+            minimum: -90.0
+            type: number
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Latitude
+        longitude:
+          anyOf:
+          - maximum: 180.0
+            minimum: -180.0
+            type: number
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Longitude
+        name:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Name
+        storage_method:
+          anyOf:
+          - $ref: '#/components/schemas/StorageMethod'
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Storage Method
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Supplier Reference Id
+      title: PatchStorageLocationRequest
+      type: object
+    StorageMethod:
+      enum:
+      - biochar_field
+      - biochar_landfill
+      - biomass_injection_well
+      - biomass_subsurface
+      - saline_aquifer
+      - in_situ_mineralization
+      title: StorageMethod
+      type: string
+    IsometricIDPathParam_ProjectRequirement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_ProjectRequirement_'
+    IsometricIDRequestParam_StorageLocation_:
+      example: slc_1F3PMGVC91S0SBK3
+      examples:
+      - slc_1F3PMGVC91S0SBK3
+      - slc_1DCY5K78BSBX3XMZ
+      maxLength: 37
+      minLength: 20
+      type: string
+    RemovalTemplate:
+      properties:
+        display_name:
+          title: Display Name
+          type: string
+        groups:
+          items:
+            $ref: '#/components/schemas/RemovalTemplateComponentGroup'
+          title: Groups
+          type: array
+        id:
+          example: rvt_1EVC8RZFE1S0BAT6
+          examples:
+          - rvt_1EVC8RZFE1S0BAT6
+          - rvt_1ECDZGE2DSBX88EX
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+      required:
+      - id
+      - supplier_reference_id
+      - display_name
+      - project_id
+      - groups
+      title: RemovalTemplate
       type: object
     StorageLocation:
       properties:
@@ -1352,57 +1368,13 @@ components:
       - storage_method
       title: StorageLocation
       type: object
-    Project:
-      properties:
-        country_code:
-          title: Country Code
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          title: Name
-          type: string
-        process_key:
-          title: Process Key
-          type: string
-        risk_of_reversal:
-          anyOf:
-          - $ref: '#/components/schemas/RiskOfReversal'
-          - type: 'null'
-        short_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Short Description
-      required:
-      - id
-      - name
-      - country_code
-      - process_key
-      - description
-      - short_description
-      - risk_of_reversal
-      title: Project
-      type: object
-    IsometricIDQueryParam_StorageLocation_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_StorageLocation_'
-    PaginatedListResource_ProjectMonitoringRequirement_:
+    IsometricIDPathParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    PaginatedListResource_MonitoringSubmission_:
       properties:
         nodes:
           items:
-            $ref: '#/components/schemas/ProjectMonitoringRequirement'
+            $ref: '#/components/schemas/MonitoringSubmission'
           title: Nodes
           type: array
         page_info:
@@ -1414,144 +1386,8 @@ components:
       - nodes
       - total_count
       - page_info
-      title: PaginatedListResource[ProjectMonitoringRequirement]
+      title: PaginatedListResource[MonitoringSubmission]
       type: object
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
-      type: string
-    QuantityKindType:
-      enum:
-      - acidity
-      - activity_concentration
-      - amount_of_substance
-      - amount_of_substance_concentration
-      - amount_of_substance_per_mass
-      - area
-      - area_carbon_emission_factor
-      - buffer_ph
-      - bulk_density
-      - count
-      - currency
-      - currency_carbon_emission_factor
-      - depth
-      - diameter
-      - diameter_at_breast_height
-      - dimensionless
-      - dimensionless_ratio
-      - distance
-      - distance_carbon_emission_factor
-      - dose_equivalent_rate
-      - electric_current
-      - elevation
-      - energy
-      - energy_carbon_emission_factor
-      - energy_density
-      - exchangeable_amount_of_substance_per_mass
-      - fuel_economy
-      - height
-      - ionic_strength
-      - latitude
-      - longitude
-      - mass
-      - mass_carbon
-      - mass_carbon_emission_factor
-      - mass_cdr_potential
-      - mass_concentration
-      - mass_density
-      - mass_distance
-      - mass_distance_carbon_emission_factor
-      - mass_energy_density
-      - mass_flow_rate
-      - mass_fraction
-      - mass_fraction_dry_basis
-      - mass_fraction_wet_basis
-      - mass_per_area
-      - mass_ratio
-      - molality_of_solute
-      - molar_mass
-      - mole_fraction
-      - partial_pressure
-      - particle_diameter
-      - particle_mass_density
-      - power
-      - pressure
-      - specific_surface_area
-      - specific_volume
-      - temperature
-      - time
-      - time_emission_factor
-      - voltage
-      - volume
-      - volume_carbon_emission_factor
-      - volume_distance_carbon_emission_factor
-      - volume_flow_rate
-      - volume_fraction
-      - volume_per_area
-      title: QuantityKindType
-      type: string
-    RemovalTemplate:
-      properties:
-        display_name:
-          title: Display Name
-          type: string
-        groups:
-          items:
-            $ref: '#/components/schemas/RemovalTemplateComponentGroup'
-          title: Groups
-          type: array
-        id:
-          example: rvt_1EVC8RZFE1S0BAT6
-          examples:
-          - rvt_1EVC8RZFE1S0BAT6
-          - rvt_1ECDZGE2DSBX88EX
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          title: Supplier Reference Id
-      required:
-      - id
-      - supplier_reference_id
-      - display_name
-      - project_id
-      - groups
-      title: RemovalTemplate
-      type: object
-    ComponentInputType:
-      enum:
-      - fixed
-      - monitored
-      title: ComponentInputType
-      type: string
-    IsometricIDRequestParam_MonitoringRequirement_:
-      example: mnr_1DJJQY5C61S0R519
-      examples:
-      - mnr_1DJJQY5C61S0R519
-      - mnr_1EKAZQMAZSBXDV59
-      maxLength: 37
-      minLength: 20
-      type: string
     PaginatedListResource_StorageLocation_:
       properties:
         nodes:
@@ -1570,16 +1406,6 @@ components:
       - page_info
       title: PaginatedListResource[StorageLocation]
       type: object
-    IsometricIDPathParam_MonitoringRequirement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_MonitoringRequirement_'
-    IsometricIDRequestParam_StorageLocation_:
-      example: slc_1F3PMGVC91S0SBK3
-      examples:
-      - slc_1F3PMGVC91S0SBK3
-      - slc_1DCY5K78BSBX3XMZ
-      maxLength: 37
-      minLength: 20
-      type: string
     MonitoringSubmission:
       properties:
         id:
@@ -1652,25 +1478,203 @@ components:
       - notes
       title: MonitoringSubmission
       type: object
-    IsometricIDRequestParam_MonitoringSubmission_:
-      example: mns_1D46WGW6A1S03FRG
+    IsometricIDPathParam_MonitoringRequirement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_MonitoringRequirement_'
+    IsometricIDRequestParam_MonitoringRequirement_:
+      example: mnr_1DJJQY5C61S0R519
       examples:
-      - mns_1D46WGW6A1S03FRG
-      - mns_1DCRH1P6JSBX480H
+      - mnr_1DJJQY5C61S0R519
+      - mnr_1EKAZQMAZSBXDV59
       maxLength: 37
       minLength: 20
       type: string
-    RiskOfReversal:
+    CreateMonitoringSubmissionRequest:
+      properties:
+        notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Any additional notes or comments.
+          examples:
+          - Pages 14-21
+          title: Notes
+        source_id:
+          description: The Isometric ID of the source that the submission is for.
+          example: src_1EBBF4M7X1S06G1Y
+          examples:
+          - src_1EBBF4M7X1S06G1Y
+          - src_1DW1B17VNSBX37N0
+          maxLength: 37
+          minLength: 20
+          title: Source Id
+          type: string
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          description: Supplier provided reference ID.
+          title: Supplier Reference Id
+        valid_from:
+          description: Signifies the start of the period that the submission is valid for.
+          format: date-time
+          title: Valid From
+          type: string
+        valid_to:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          description: Signifies the end of the period that the submission is valid for.
+          title: Valid To
+      required:
+      - source_id
+      - valid_from
+      title: CreateMonitoringSubmissionRequest
+      type: object
+    Frequency:
       enum:
-      - no_observable_risk
-      - very_low_v2
-      - very_low
-      - low
-      - medium
-      - high
-      - risk_assessment_driven
-      title: RiskOfReversal
+      - na
+      - once
+      - optional
+      - if_needed
+      - every_1_days
+      - every_1_months
+      - every_2_weeks
+      - every_3_months
+      - every_6_months
+      - every_2_years
+      - every_5_years
+      title: Frequency
       type: string
+    RemovalTemplateComponent:
+      properties:
+        blueprint_key:
+          title: Blueprint Key
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        display_name:
+          title: Display Name
+          type: string
+        id:
+          example: rtc_1DAA58EDM1S0AMPN
+          examples:
+          - rtc_1DAA58EDM1S0AMPN
+          - rtc_1CQAKRCVQSBXKKTM
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        inputs:
+          description: Inputs for this removal template component based on its component blueprint, including any customized display names and fixed input datapoints.
+          items:
+            $ref: '#/components/schemas/RemovalTemplateComponentInput'
+          title: Inputs
+          type: array
+        removal_template_component_group_id:
+          example: rtg_1EGQ9DZXZ1S05S28
+          examples:
+          - rtg_1EGQ9DZXZ1S05S28
+          - rtg_1CWEFDQ7GSBX1X5C
+          maxLength: 37
+          minLength: 20
+          title: Removal Template Component Group Id
+          type: string
+        removal_template_id:
+          example: rvt_1EVC8RZFE1S0BAT6
+          examples:
+          - rvt_1EVC8RZFE1S0BAT6
+          - rvt_1ECDZGE2DSBX88EX
+          maxLength: 37
+          minLength: 20
+          title: Removal Template Id
+          type: string
+      required:
+      - id
+      - display_name
+      - description
+      - blueprint_key
+      - removal_template_id
+      - removal_template_component_group_id
+      - inputs
+      title: RemovalTemplateComponent
+      type: object
+    ComponentInputType:
+      enum:
+      - fixed
+      - monitored
+      title: ComponentInputType
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    CreateStorageLocationRequest:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Description
+        latitude:
+          maximum: 90.0
+          minimum: -90.0
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180.0
+          minimum: -180.0
+          title: Longitude
+          type: number
+        name:
+          title: Name
+          type: string
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        storage_method:
+          anyOf:
+          - $ref: '#/components/schemas/StorageMethod'
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Storage Method
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Supplier Reference Id
+      required:
+      - project_id
+      - name
+      - latitude
+      - longitude
+      title: CreateStorageLocationRequest
+      type: object
     ProjectMonitoringRequirement:
       properties:
         display_name:
@@ -1744,26 +1748,11 @@ components:
       - notes
       title: ProjectMonitoringRequirement
       type: object
-    Frequency:
-      enum:
-      - na
-      - once
-      - optional
-      - if_needed
-      - every_1_days
-      - every_1_months
-      - every_2_weeks
-      - every_3_months
-      - every_6_months
-      - every_2_years
-      - every_5_years
-      title: Frequency
-      type: string
-    PaginatedListResource_MonitoringSubmission_:
+    PaginatedListResource_Project_:
       properties:
         nodes:
           items:
-            $ref: '#/components/schemas/MonitoringSubmission'
+            $ref: '#/components/schemas/Project'
           title: Nodes
           type: array
         page_info:
@@ -1775,8 +1764,160 @@ components:
       - nodes
       - total_count
       - page_info
-      title: PaginatedListResource[MonitoringSubmission]
+      title: PaginatedListResource[Project]
       type: object
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
+    PaginatedListResource_ProjectMonitoringRequirement_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/ProjectMonitoringRequirement'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[ProjectMonitoringRequirement]
+      type: object
+    QuantityKindType:
+      enum:
+      - acidity
+      - activity_concentration
+      - amount_of_substance
+      - amount_of_substance_concentration
+      - amount_of_substance_per_mass
+      - area
+      - area_carbon_emission_factor
+      - buffer_ph
+      - bulk_density
+      - count
+      - currency
+      - currency_carbon_emission_factor
+      - depth
+      - diameter
+      - diameter_at_breast_height
+      - dimensionless
+      - dimensionless_ratio
+      - distance
+      - distance_carbon_emission_factor
+      - dose_equivalent_rate
+      - electric_current
+      - elevation
+      - energy
+      - energy_carbon_emission_factor
+      - energy_density
+      - exchangeable_amount_of_substance_per_mass
+      - fuel_economy
+      - height
+      - ionic_strength
+      - latitude
+      - longitude
+      - mass
+      - mass_carbon
+      - mass_carbon_emission_factor
+      - mass_cdr_potential
+      - mass_concentration
+      - mass_density
+      - mass_distance
+      - mass_distance_carbon_emission_factor
+      - mass_energy_density
+      - mass_flow_rate
+      - mass_fraction
+      - mass_fraction_dry_basis
+      - mass_fraction_wet_basis
+      - mass_per_area
+      - mass_ratio
+      - molality_of_solute
+      - molar_mass
+      - mole_fraction
+      - partial_pressure
+      - particle_diameter
+      - particle_mass_density
+      - power
+      - pressure
+      - specific_surface_area
+      - specific_volume
+      - temperature
+      - time
+      - time_emission_factor
+      - voltage
+      - volume
+      - volume_carbon_emission_factor
+      - volume_distance_carbon_emission_factor
+      - volume_flow_rate
+      - volume_fraction
+      - volume_per_area
+      title: QuantityKindType
+      type: string
+    IsometricIDRequestParam_ProjectRequirement_:
+      example: pfx_1HQTSP3RX1S0Y2RG
+      examples:
+      - pfx_1HQTSP3RX1S0Y2RG
+      - pfx_1FFWQZH4HSBX6F9N
+      maxLength: 37
+      minLength: 20
+      type: string
+    IsometricIDPathParam_GhgEntryTemplate_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntryTemplate_'
+    MonitoringPhase:
+      enum:
+      - pre_op
+      - operation
+      - post_op
+      - feedstock
+      title: MonitoringPhase
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
+      examples:
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
+      maxLength: 37
+      minLength: 20
+      type: string
     PageInfo:
       properties:
         end_cursor:
@@ -1802,6 +1943,43 @@ components:
       - end_cursor
       title: PageInfo
       type: object
+    RemovalTemplateComponentGroup:
+      properties:
+        components:
+          items:
+            $ref: '#/components/schemas/RemovalTemplateComponent'
+          title: Components
+          type: array
+        description:
+          title: Description
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        id:
+          example: rtg_1EGQ9DZXZ1S05S28
+          examples:
+          - rtg_1EGQ9DZXZ1S05S28
+          - rtg_1CWEFDQ7GSBX1X5C
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        key:
+          title: Key
+          type: string
+      required:
+      - id
+      - key
+      - display_name
+      - description
+      - components
+      title: RemovalTemplateComponentGroup
+      type: object
+    IsometricIDPathParam_MonitoringSubmission_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_MonitoringSubmission_'
+    IsometricIDQueryParam_StorageUnit_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_StorageUnit_'
     IsometricIDRequestParam_StorageUnit_:
       example: sgu_1E844FWM71S0E0TM
       examples:
@@ -1810,225 +1988,72 @@ components:
       maxLength: 37
       minLength: 20
       type: string
-    PaginatedListResource_RemovalTemplate_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/RemovalTemplate'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[RemovalTemplate]
-      type: object
-    Undefined:
-      additionalProperties: false
-      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
-      properties:
-        __typename:
-          const: Undefined
-          default: Undefined
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-      title: Undefined
-      type: object
-    IsometricIDPathParam_GhgEntryTemplate_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntryTemplate_'
-    IsometricIDPathParam_MonitoringSubmission_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_MonitoringSubmission_'
-    CreateMonitoringSubmissionRequest:
-      properties:
-        notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Any additional notes or comments.
-          examples:
-          - Pages 14-21
-          title: Notes
-        source_id:
-          description: The Isometric ID of the source that the submission is for.
-          example: src_1EBBF4M7X1S06G1Y
-          examples:
-          - src_1EBBF4M7X1S06G1Y
-          - src_1DW1B17VNSBX37N0
-          maxLength: 37
-          minLength: 20
-          title: Source Id
-          type: string
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          description: Supplier provided reference ID.
-          title: Supplier Reference Id
-        valid_from:
-          description: Signifies the start of the period that the submission is valid for.
-          format: date-time
-          title: Valid From
-          type: string
-        valid_to:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          description: Signifies the end of the period that the submission is valid for.
-          title: Valid To
-      required:
-      - source_id
-      - valid_from
-      title: CreateMonitoringSubmissionRequest
-      type: object
-    IsometricIDRequestParam_ProjectRequirement_:
-      example: pfx_1HQTSP3RX1S0Y2RG
+    IsometricIDRequestParam_MonitoringSubmission_:
+      example: mns_1D46WGW6A1S03FRG
       examples:
-      - pfx_1HQTSP3RX1S0Y2RG
-      - pfx_1FFWQZH4HSBX6F9N
+      - mns_1D46WGW6A1S03FRG
+      - mns_1DCRH1P6JSBX480H
       maxLength: 37
       minLength: 20
       type: string
-    PatchStorageLocationRequest:
+    CreditQuantity:
       properties:
-        description:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Description
-        latitude:
-          anyOf:
-          - maximum: 90.0
-            minimum: -90.0
-            type: number
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Latitude
-        longitude:
-          anyOf:
-          - maximum: 180.0
-            minimum: -180.0
-            type: number
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Longitude
-        name:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Name
-        storage_method:
-          anyOf:
-          - $ref: '#/components/schemas/StorageMethod'
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Storage Method
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Supplier Reference Id
-      title: PatchStorageLocationRequest
-      type: object
-    StorageMethod:
-      enum:
-      - biochar_field
-      - biochar_landfill
-      - biomass_injection_well
-      - biomass_subsurface
-      - saline_aquifer
-      - in_situ_mineralization
-      title: StorageMethod
-      type: string
-    PaginatedListResource_Project_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Project'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
+          examples:
+          - 125632
+          title: Credit Kgs
           type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
       required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Project]
+      - credits
+      - credit_kgs
+      title: CreditQuantity
       type: object
-    IsometricIDRequestParam_GhgEntryTemplate_:
-      example: rvt_1EVC8RZFE1S0BAT6
-      examples:
-      - rvt_1EVC8RZFE1S0BAT6
-      - rvt_1ECDZGE2DSBX88EX
-      maxLength: 37
-      minLength: 20
-      type: string
-    HTTPValidationError:
+    Organisation:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    ProjectDocument:
-      properties:
-        display_name:
-          title: Display Name
-          type: string
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          examples:
+          - isometric.com
+          title: Domain
         id:
-          example: pjd_1ESC3V76T1S0S6J3
+          example: org_1GB56M1ST1S0GVNA
           examples:
-          - pjd_1ESC3V76T1S0S6J3
-          - pjd_1E0AZYQ9ESBX2569
+          - org_1GB56M1ST1S0GVNA
+          - org_1CP8EQDNQSBXTMR2
           maxLength: 37
           minLength: 20
           title: Id
           type: string
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
+        name:
           examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        url:
-          title: Url
+          - Isometric
+          title: Name
           type: string
       required:
       - id
-      - display_name
-      - project_id
-      - url
-      title: ProjectDocument
+      - name
+      - domain
+      title: Organisation
       type: object
+    ProjectStatus:
+      enum:
+      - draft
+      - preview
+      - under_validation
+      - validated
+      - validation_unsuccessful
+      - cancelled
+      title: ProjectStatus
+      type: string
     Supplier:
       properties:
         id:
@@ -2064,75 +2089,6 @@ components:
       - location
       title: Supplier
       type: object
-    ProjectStatus:
-      enum:
-      - draft
-      - preview
-      - under_validation
-      - validated
-      - validation_unsuccessful
-      - cancelled
-      title: ProjectStatus
-      type: string
-    Pathway:
-      enum:
-      - biomass_carbon_removal_and_storage
-      - direct_air_capture
-      - enhanced_weathering
-      - carbon_mineralization
-      - reforestation
-      - marine
-      - superpollutants
-      title: Pathway
-      type: string
-    Organisation:
-      properties:
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          examples:
-          - isometric.com
-          title: Domain
-        id:
-          example: org_1GB56M1ST1S0GVNA
-          examples:
-          - org_1GB56M1ST1S0GVNA
-          - org_1CP8EQDNQSBXTMR2
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          examples:
-          - Isometric
-          title: Name
-          type: string
-      required:
-      - id
-      - name
-      - domain
-      title: Organisation
-      type: object
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
     PaginatedListResource_ProjectDocument_:
       properties:
         nodes:
@@ -2150,6 +2106,39 @@ components:
       - total_count
       - page_info
       title: PaginatedListResource[ProjectDocument]
+      type: object
+    ProjectDocument:
+      properties:
+        display_name:
+          title: Display Name
+          type: string
+        id:
+          example: pjd_1ESC3V76T1S0S6J3
+          examples:
+          - pjd_1ESC3V76T1S0S6J3
+          - pjd_1E0AZYQ9ESBX2569
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        url:
+          title: Url
+          type: string
+      required:
+      - id
+      - display_name
+      - project_id
+      - url
+      title: ProjectDocument
       type: object
     Location:
       properties:
@@ -2291,6 +2280,17 @@ components:
       - location
       title: Project
       type: object
+    Pathway:
+      enum:
+      - biomass_carbon_removal_and_storage
+      - direct_air_capture
+      - enhanced_weathering
+      - carbon_mineralization
+      - reforestation
+      - marine
+      - superpollutants
+      title: Pathway
+      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

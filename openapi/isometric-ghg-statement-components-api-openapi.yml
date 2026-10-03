@@ -58,113 +58,6 @@ paths:
       - Ghg Statement Components
 components:
   schemas:
-    CreateComponentListInput:
-      properties:
-        __typename:
-          const: CreateComponentListInput
-          default: CreateComponentListInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_ids:
-          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
-          items:
-            example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Datapoint Ids
-          type: array
-        input_key:
-          description: Must match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_ids
-      title: CreateComponentListInput
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    ComponentListInput:
-      properties:
-        __typename:
-          const: ComponentListInput
-          default: ComponentListInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_ids:
-          description: The Isometric ID of the datapoints assigned to this input
-          items:
-            example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Datapoint Ids
-          type: array
-        input_key:
-          description: Will match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_ids
-      title: ComponentListInput
-      type: object
-    ProjectComponentAmortizationStrategy:
-      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
-
-
-        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
-
-
-        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
-
-
-        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
-
-
-        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
-      enum:
-      - ESTIMATED_PROJECT_TONNAGE
-      - MANUAL
-      - CUSTOM_TIME_PERIOD
-      - ESTIMATED_PROJECT_LIFETIME
-      title: ProjectComponentAmortizationStrategy
-      type: string
     Component:
       properties:
         activity_completed_at:
@@ -250,14 +143,41 @@ components:
       - inputs
       title: Component
       type: object
-    ComponentScope:
-      enum:
-      - REMOVAL
-      - GHG_STATEMENT
-      - PROJECT
-      - NET_NEGATIVITY
-      title: ComponentScope
-      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     CreateGhgStatementComponentRequest:
       properties:
         component_data:
@@ -278,6 +198,65 @@ components:
       - component_data
       title: CreateGhgStatementComponentRequest
       type: object
+    ProjectComponentAmortizationStrategy:
+      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
+
+
+        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
+
+
+        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
+
+
+        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
+
+
+        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
+      enum:
+      - ESTIMATED_PROJECT_TONNAGE
+      - MANUAL
+      - CUSTOM_TIME_PERIOD
+      - ESTIMATED_PROJECT_LIFETIME
+      title: ProjectComponentAmortizationStrategy
+      type: string
+    CreateComponentScalarInput:
+      properties:
+        __typename:
+          const: CreateComponentScalarInput
+          default: CreateComponentScalarInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_id:
+          description: The Isometric ID of the datapoint that will be used to populate the value of this input
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_id
+      title: CreateComponentScalarInput
+      type: object
+    ComponentType:
+      enum:
+      - ACTIVITY
+      - REMOVAL_COUNTERFACTUAL
+      - SEQUESTRATION
+      - LOSS
+      - ADJUSTMENT
+      - UNCERTAINTY_DISCOUNT
+      title: ComponentType
+      type: string
     CreateComponentRequest:
       properties:
         activity_completed_at:
@@ -339,44 +318,44 @@ components:
       - inputs
       title: CreateComponentRequest
       type: object
-    ComponentType:
-      enum:
-      - ACTIVITY
-      - REMOVAL_COUNTERFACTUAL
-      - SEQUESTRATION
-      - LOSS
-      - ADJUSTMENT
-      - UNCERTAINTY_DISCOUNT
-      title: ComponentType
-      type: string
-    CreateComponentScalarInput:
+    ComponentListInput:
       properties:
         __typename:
-          const: CreateComponentScalarInput
-          default: CreateComponentScalarInput
+          const: ComponentListInput
+          default: ComponentListInput
           description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
           title: Type name
           type: string
-        datapoint_id:
-          description: The Isometric ID of the datapoint that will be used to populate the value of this input
-          example: dtp_1DVKHKS101S0Q61Q
-          examples:
-          - dtp_1DVKHKS101S0Q61Q
-          - dtp_1DJN8P57VSBXASFX
-          maxLength: 37
-          minLength: 20
-          title: Datapoint Id
-          type: string
+        datapoint_ids:
+          description: The Isometric ID of the datapoints assigned to this input
+          items:
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
+          type: array
         input_key:
-          description: Must match an input key in the component blueprint.
+          description: Will match an input key in the component blueprint.
           maxLength: 100
           title: Input Key
           type: string
       required:
       - input_key
-      - datapoint_id
-      title: CreateComponentScalarInput
+      - datapoint_ids
+      title: ComponentListInput
       type: object
+    ComponentScope:
+      enum:
+      - REMOVAL
+      - GHG_STATEMENT
+      - PROJECT
+      - NET_NEGATIVITY
+      title: ComponentScope
+      type: string
     ComponentScalarInput:
       properties:
         __typename:
@@ -405,14 +384,35 @@ components:
       - datapoint_id
       title: ComponentScalarInput
       type: object
-    HTTPValidationError:
+    CreateComponentListInput:
       properties:
-        detail:
+        __typename:
+          const: CreateComponentListInput
+          default: CreateComponentListInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_ids:
+          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
           type: array
-      title: HTTPValidationError
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_ids
+      title: CreateComponentListInput
       type: object
   securitySchemes:
     HTTPBearer:

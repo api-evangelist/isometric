@@ -225,20 +225,137 @@ paths:
       - Transfers
 components:
   schemas:
-    ListResource_CreditBatch_:
+    CreditQuantity:
       properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/CreditBatch'
-          title: Nodes
-          type: array
-        total_count:
-          title: Total Count
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
+          examples:
+          - 125632
+          title: Credit Kgs
+          type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
+      required:
+      - credits
+      - credit_kgs
+      title: CreditQuantity
+      type: object
+    IsometricIDRequestParam_Organisation_:
+      example: org_1GB56M1ST1S0GVNA
+      examples:
+      - org_1GB56M1ST1S0GVNA
+      - org_1CP8EQDNQSBXTMR2
+      maxLength: 37
+      minLength: 20
+      type: string
+    CarbonRemovalData:
+      properties:
+        counterfactuals_kg:
+          title: Counterfactuals Kg
+          type: integer
+        emissions_kg:
+          title: Emissions Kg
+          type: integer
+        gross_carbon_removed_kg:
+          title: Gross Carbon Removed Kg
+          type: integer
+        losses_kg:
+          title: Losses Kg
+          type: integer
+        net_carbon_removed_kg:
+          title: Net Carbon Removed Kg
           type: integer
       required:
-      - nodes
-      - total_count
-      title: ListResource[CreditBatch]
+      - gross_carbon_removed_kg
+      - net_carbon_removed_kg
+      - emissions_kg
+      - counterfactuals_kg
+      - losses_kg
+      title: CarbonRemovalData
+      type: object
+    Organisation:
+      properties:
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          examples:
+          - isometric.com
+          title: Domain
+        id:
+          example: org_1GB56M1ST1S0GVNA
+          examples:
+          - org_1GB56M1ST1S0GVNA
+          - org_1CP8EQDNQSBXTMR2
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        name:
+          examples:
+          - Isometric
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      - domain
+      title: Organisation
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
     CreditBatch:
       properties:
@@ -421,6 +538,33 @@ components:
       - ccp_approved
       title: CreditBatch
       type: object
+    PaginatedListResource_Transfer_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Transfer'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Transfer]
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     CreateTransferRequest:
       properties:
         credit_batch_quantities:
@@ -476,82 +620,30 @@ components:
       - notes
       title: CreateTransferRequest
       type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    PaginatedListResource_Transfer_:
+    IsometricIDPathParam_Transfer_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Transfer_'
+    IsometricIDRequestParam_Transfer_:
+      example: tfr_1FJGWSY271S0QSMR
+      examples:
+      - tfr_1FJGWSY271S0QSMR
+      - tfr_1FAG5BDW1SBXJ1CH
+      maxLength: 37
+      minLength: 20
+      type: string
+    ListResource_CreditBatch_:
       properties:
         nodes:
           items:
-            $ref: '#/components/schemas/Transfer'
+            $ref: '#/components/schemas/CreditBatch'
           title: Nodes
           type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
         total_count:
           title: Total Count
           type: integer
       required:
       - nodes
       - total_count
-      - page_info
-      title: PaginatedListResource[Transfer]
-      type: object
-    IsometricIDQueryParam_Organisation_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Organisation_'
-    IsometricIDPathParam_Transfer_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Transfer_'
-    Organisation:
-      properties:
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          examples:
-          - isometric.com
-          title: Domain
-        id:
-          example: org_1GB56M1ST1S0GVNA
-          examples:
-          - org_1GB56M1ST1S0GVNA
-          - org_1CP8EQDNQSBXTMR2
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          examples:
-          - Isometric
-          title: Name
-          type: string
-      required:
-      - id
-      - name
-      - domain
-      title: Organisation
+      title: ListResource[CreditBatch]
       type: object
     CreditBatchQuantity:
       properties:
@@ -576,90 +668,6 @@ components:
       - credit_quantity_kg
       title: CreditBatchQuantity
       type: object
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
-    CarbonRemovalData:
-      properties:
-        counterfactuals_kg:
-          title: Counterfactuals Kg
-          type: integer
-        emissions_kg:
-          title: Emissions Kg
-          type: integer
-        gross_carbon_removed_kg:
-          title: Gross Carbon Removed Kg
-          type: integer
-        losses_kg:
-          title: Losses Kg
-          type: integer
-        net_carbon_removed_kg:
-          title: Net Carbon Removed Kg
-          type: integer
-      required:
-      - gross_carbon_removed_kg
-      - net_carbon_removed_kg
-      - emissions_kg
-      - counterfactuals_kg
-      - losses_kg
-      title: CarbonRemovalData
-      type: object
-    CreditBatchStatus:
-      enum:
-      - active
-      - split
-      - retired
-      title: CreditBatchStatus
-      type: string
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    IsometricIDRequestParam_Organisation_:
-      example: org_1GB56M1ST1S0GVNA
-      examples:
-      - org_1GB56M1ST1S0GVNA
-      - org_1CP8EQDNQSBXTMR2
-      maxLength: 37
-      minLength: 20
-      type: string
     Transfer:
       properties:
         credit_batch_size_total:
@@ -695,23 +703,15 @@ components:
       - notes
       title: Transfer
       type: object
-    IsometricIDRequestParam_Transfer_:
-      example: tfr_1FJGWSY271S0QSMR
-      examples:
-      - tfr_1FJGWSY271S0QSMR
-      - tfr_1FAG5BDW1SBXJ1CH
-      maxLength: 37
-      minLength: 20
+    IsometricIDQueryParam_Organisation_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Organisation_'
+    CreditBatchStatus:
+      enum:
+      - active
+      - split
+      - retired
+      title: CreditBatchStatus
       type: string
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

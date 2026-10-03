@@ -55,25 +55,6 @@ paths:
       url: https://api.isometric.com/mrv/v0
 components:
   schemas:
-    Organisation:
-      properties:
-        id:
-          example: org_1GB56M1ST1S0GVNA
-          examples:
-          - org_1GB56M1ST1S0GVNA
-          - org_1CP8EQDNQSBXTMR2
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          title: Name
-          type: string
-      required:
-      - id
-      - name
-      title: Organisation
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -99,6 +80,25 @@ components:
       - msg
       - type
       title: ValidationError
+      type: object
+    Organisation:
+      properties:
+        id:
+          example: org_1GB56M1ST1S0GVNA
+          examples:
+          - org_1GB56M1ST1S0GVNA
+          - org_1CP8EQDNQSBXTMR2
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      title: Organisation
       type: object
     HTTPValidationError:
       properties:

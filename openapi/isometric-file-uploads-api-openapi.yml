@@ -57,26 +57,6 @@ paths:
       - File Uploads
 components:
   schemas:
-    FileUpload:
-      properties:
-        id:
-          example: tfu_1DZPAW31R1S0ZESH
-          examples:
-          - tfu_1DZPAW31R1S0ZESH
-          - tfu_1CHF4YC38SBX9E20
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        upload_url:
-          description: A presigned upload URL, which must be used to upload the document associated with this source.
-          title: Upload Url
-          type: string
-      required:
-      - id
-      - upload_url
-      title: FileUpload
-      type: object
     CreateFileUploadRequest:
       properties:
         content_length:
@@ -133,6 +113,26 @@ components:
           title: Detail
           type: array
       title: HTTPValidationError
+      type: object
+    FileUpload:
+      properties:
+        id:
+          example: tfu_1DZPAW31R1S0ZESH
+          examples:
+          - tfu_1DZPAW31R1S0ZESH
+          - tfu_1CHF4YC38SBX9E20
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        upload_url:
+          description: A presigned upload URL, which must be used to upload the document associated with this source.
+          title: Upload Url
+          type: string
+      required:
+      - id
+      - upload_url
+      title: FileUpload
       type: object
   securitySchemes:
     HTTPBearer:

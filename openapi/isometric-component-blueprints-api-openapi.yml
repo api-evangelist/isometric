@@ -130,137 +130,6 @@ paths:
       - Component Blueprints
 components:
   schemas:
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    PaginatedListResource_ComponentBlueprint_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/ComponentBlueprint'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[ComponentBlueprint]
-      type: object
-    ComponentBlueprint:
-      properties:
-        description:
-          title: Description
-          type: string
-        display_name:
-          title: Display Name
-          type: string
-        expressions:
-          description: This field is exposed purely for documentation purposes. It shows how the inputs are processed to arrive at the component's output value.
-          items:
-            $ref: '#/components/schemas/ComponentBlueprintExpression'
-          title: Expressions
-          type: array
-        inputs:
-          description: List of inputs to the component blueprint. It documents what datapoints need to be provided when instantiating a component from it.
-          items:
-            $ref: '#/components/schemas/ComponentBlueprintInput'
-          title: Inputs
-          type: array
-        key:
-          title: Key
-          type: string
-        type:
-          $ref: '#/components/schemas/ComponentType'
-      required:
-      - key
-      - display_name
-      - description
-      - type
-      - inputs
-      - expressions
-      title: ComponentBlueprint
-      type: object
-    InputDataShape:
-      enum:
-      - SCALAR
-      - LIST
-      title: InputDataShape
-      type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    ComponentBlueprintExpression:
-      properties:
-        inputs:
-          description: List of inputs to the expression. It documents how variables in the template are interpolated.
-          items:
-            $ref: '#/components/schemas/ComponentBlueprintExpressionInput'
-          title: Inputs
-          type: array
-        key:
-          description: Identifier of the expression within the component.
-          title: Key
-          type: string
-        template:
-          description: Mathematical formula of the expression.
-          title: Template
-          type: string
-      required:
-      - key
-      - template
-      - inputs
-      title: ComponentBlueprintExpression
-      type: object
     ComponentBlueprintInput:
       properties:
         compatible_unit:
@@ -289,28 +158,115 @@ components:
       - compatible_unit
       title: ComponentBlueprintInput
       type: object
-    ComponentBlueprintExpressionInput:
+    ValidationError:
       properties:
-        data_shape:
-          $ref: '#/components/schemas/InputDataShape'
-          description: Whether the input is a list of datapoints or just a single datapoint
-        input_key:
-          description: Input identifier within other resources of the component. Depending on the type, it will match an input datapoint or another expression, unless it represents a fixed 0 tCO₂e value.
-          title: Input Key
-          type: string
-        template_key:
-          description: Input identifier within the template string. It will match a template variable wrapped in `{` & `}`.
-          title: Template Key
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
           type: string
         type:
-          $ref: '#/components/schemas/ComponentBlueprintExpressionInputType'
-          description: Type of resource pointed at by the input.
+          title: Error Type
+          type: string
       required:
-      - template_key
-      - input_key
+      - loc
+      - msg
       - type
-      - data_shape
-      title: ComponentBlueprintExpressionInput
+      title: ValidationError
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_ComponentBlueprint_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/ComponentBlueprint'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[ComponentBlueprint]
+      type: object
+    ComponentType:
+      enum:
+      - ACTIVITY
+      - REMOVAL_COUNTERFACTUAL
+      - SEQUESTRATION
+      - LOSS
+      - ADJUSTMENT
+      - UNCERTAINTY_DISCOUNT
+      title: ComponentType
+      type: string
+    ComponentBlueprintExpression:
+      properties:
+        inputs:
+          description: List of inputs to the expression. It documents how variables in the template are interpolated.
+          items:
+            $ref: '#/components/schemas/ComponentBlueprintExpressionInput'
+          title: Inputs
+          type: array
+        key:
+          description: Identifier of the expression within the component.
+          title: Key
+          type: string
+        template:
+          description: Mathematical formula of the expression.
+          title: Template
+          type: string
+      required:
+      - key
+      - template
+      - inputs
+      title: ComponentBlueprintExpression
       type: object
     QuantityKindType:
       enum:
@@ -382,16 +338,40 @@ components:
       - volume_per_area
       title: QuantityKindType
       type: string
-    ComponentType:
-      enum:
-      - ACTIVITY
-      - REMOVAL_COUNTERFACTUAL
-      - SEQUESTRATION
-      - LOSS
-      - ADJUSTMENT
-      - UNCERTAINTY_DISCOUNT
-      title: ComponentType
-      type: string
+    ComponentBlueprint:
+      properties:
+        description:
+          title: Description
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        expressions:
+          description: This field is exposed purely for documentation purposes. It shows how the inputs are processed to arrive at the component's output value.
+          items:
+            $ref: '#/components/schemas/ComponentBlueprintExpression'
+          title: Expressions
+          type: array
+        inputs:
+          description: List of inputs to the component blueprint. It documents what datapoints need to be provided when instantiating a component from it.
+          items:
+            $ref: '#/components/schemas/ComponentBlueprintInput'
+          title: Inputs
+          type: array
+        key:
+          title: Key
+          type: string
+        type:
+          $ref: '#/components/schemas/ComponentType'
+      required:
+      - key
+      - display_name
+      - description
+      - type
+      - inputs
+      - expressions
+      title: ComponentBlueprint
+      type: object
     ComponentBlueprintExpressionInputType:
       enum:
       - DATAPOINT
@@ -399,15 +379,35 @@ components:
       - ZERO_TCO2E
       title: ComponentBlueprintExpressionInputType
       type: string
-    HTTPValidationError:
+    ComponentBlueprintExpressionInput:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
+        data_shape:
+          $ref: '#/components/schemas/InputDataShape'
+          description: Whether the input is a list of datapoints or just a single datapoint
+        input_key:
+          description: Input identifier within other resources of the component. Depending on the type, it will match an input datapoint or another expression, unless it represents a fixed 0 tCO₂e value.
+          title: Input Key
+          type: string
+        template_key:
+          description: Input identifier within the template string. It will match a template variable wrapped in `{` & `}`.
+          title: Template Key
+          type: string
+        type:
+          $ref: '#/components/schemas/ComponentBlueprintExpressionInputType'
+          description: Type of resource pointed at by the input.
+      required:
+      - template_key
+      - input_key
+      - type
+      - data_shape
+      title: ComponentBlueprintExpressionInput
       type: object
+    InputDataShape:
+      enum:
+      - SCALAR
+      - LIST
+      title: InputDataShape
+      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

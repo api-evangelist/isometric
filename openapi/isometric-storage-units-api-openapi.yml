@@ -187,54 +187,8 @@ paths:
       - Storage Units
 components:
   schemas:
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
     IsometricIDQueryParam_StorageLocation_:
       $ref: '#/components/schemas/IsometricIDRequestParam_StorageLocation_'
-    PaginatedListResource_StorageUnit_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/StorageUnit'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[StorageUnit]
-      type: object
-    IsometricIDPathParam_StorageUnit_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_StorageUnit_'
     StorageUnit:
       properties:
         description:
@@ -309,6 +263,86 @@ components:
       - supplier_id
       title: StorageUnit
       type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    IsometricIDRequestParam_StorageLocation_:
+      example: slc_1F3PMGVC91S0SBK3
+      examples:
+      - slc_1F3PMGVC91S0SBK3
+      - slc_1DCY5K78BSBX3XMZ
+      maxLength: 37
+      minLength: 20
+      type: string
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
     IsometricIDRequestParam_StorageUnit_:
       example: sgu_1E844FWM71S0E0TM
       examples:
@@ -317,6 +351,26 @@ components:
       maxLength: 37
       minLength: 20
       type: string
+    IsometricIDPathParam_StorageUnit_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_StorageUnit_'
+    PaginatedListResource_StorageUnit_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/StorageUnit'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[StorageUnit]
+      type: object
     CreateStorageUnitRequest:
       properties:
         description:
@@ -364,60 +418,6 @@ components:
       - latitude
       - longitude
       title: CreateStorageUnitRequest
-      type: object
-    IsometricIDRequestParam_StorageLocation_:
-      example: slc_1F3PMGVC91S0SBK3
-      examples:
-      - slc_1F3PMGVC91S0SBK3
-      - slc_1DCY5K78BSBX3XMZ
-      maxLength: 37
-      minLength: 20
-      type: string
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    Undefined:
-      additionalProperties: false
-      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
-      properties:
-        __typename:
-          const: Undefined
-          default: Undefined
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-      title: Undefined
       type: object
   securitySchemes:
     HTTPBearer:

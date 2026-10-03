@@ -214,6 +214,14 @@ paths:
       - Ghg Statements
 components:
   schemas:
+    IsometricIDRequestParam_GhgStatement_:
+      example: ggs_1GDQJ99Z51S0DYW9
+      examples:
+      - ggs_1GDQJ99Z51S0DYW9
+      - ggs_1FWVEQRWSSBXK3NB
+      maxLength: 37
+      minLength: 20
+      type: string
     ValidationError:
       properties:
         ctx:
@@ -240,14 +248,6 @@ components:
       - type
       title: ValidationError
       type: object
-    IsometricIDRequestParam_GhgStatement_:
-      example: ggs_1GDQJ99Z51S0DYW9
-      examples:
-      - ggs_1GDQJ99Z51S0DYW9
-      - ggs_1FWVEQRWSSBXK3NB
-      maxLength: 37
-      minLength: 20
-      type: string
     ResubmitGhgStatementRequest:
       properties:
         ghg_statement_report_url:
@@ -263,36 +263,61 @@ components:
       - summary_of_changes
       title: ResubmitGhgStatementRequest
       type: object
-    PaginatedListResource_GhgStatement_:
+    PageInfo:
       properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/GhgStatement'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
       required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[GhgStatement]
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
-    SubmitGhgStatementRequest:
+    HTTPValidationError:
       properties:
-        ghg_statement_report_url:
-          description: The URL of the GHG statement report. This should be accessible to the verifier.
-          title: Ghg Statement Report Url
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    CreateGhgStatementRequest:
+      properties:
+        end_on:
+          description: The inclusive end date of the GHG Statement
+          format: date
+          title: End On
+          type: string
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
           type: string
       required:
-      - ghg_statement_report_url
-      title: SubmitGhgStatementRequest
+      - end_on
+      - project_id
+      title: CreateGhgStatementRequest
       type: object
-    IsometricIDPathParam_GhgStatement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
     GhgStatement:
       properties:
         credits_issued_at:
@@ -388,61 +413,36 @@ components:
       - FAILED_VERIFICATION
       title: GhgStatementStatus
       type: string
-    PageInfo:
+    SubmitGhgStatementRequest:
       properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    CreateGhgStatementRequest:
-      properties:
-        end_on:
-          description: The inclusive end date of the GHG Statement
-          format: date
-          title: End On
-          type: string
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
+        ghg_statement_report_url:
+          description: The URL of the GHG statement report. This should be accessible to the verifier.
+          title: Ghg Statement Report Url
           type: string
       required:
-      - end_on
-      - project_id
-      title: CreateGhgStatementRequest
+      - ghg_statement_report_url
+      title: SubmitGhgStatementRequest
       type: object
-    HTTPValidationError:
+    PaginatedListResource_GhgStatement_:
       properties:
-        detail:
+        nodes:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            $ref: '#/components/schemas/GhgStatement'
+          title: Nodes
           type: array
-      title: HTTPValidationError
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[GhgStatement]
       type: object
+    IsometricIDPathParam_GhgStatement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

@@ -116,6 +116,15 @@ components:
       - domain
       title: Organisation
       type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     CreateIndividualBeneficiary:
       properties:
         __typename:
@@ -169,15 +178,6 @@ components:
       - beneficiary_name
       - beneficiary_domain
       title: CreateOrganizationBeneficiary
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
       type: object
   securitySchemes:
     HTTPBearer:

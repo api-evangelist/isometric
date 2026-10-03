@@ -141,191 +141,6 @@ paths:
       - Project Components
 components:
   schemas:
-    CreateComponentListInput:
-      properties:
-        __typename:
-          const: CreateComponentListInput
-          default: CreateComponentListInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_ids:
-          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
-          items:
-            example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Datapoint Ids
-          type: array
-        input_key:
-          description: Must match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_ids
-      title: CreateComponentListInput
-      type: object
-    UpdateProjectComponentRemovalAttributionRequest:
-      properties:
-        attribution_factor:
-          anyOf:
-          - exclusiveMinimum: 0.0
-            maximum: 1.0
-            type: number
-          - type: 'null'
-          description: A scalar between 0 and 1 for the fraction of the CO2e flux of the project component that is to be attributed to this removal.
-          title: Attribution Factor
-        attribution_factor_datapoint_id:
-          anyOf:
-          - example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated, please use `attribution_factor` instead.
-
-
-            A scalar between 0 and 1 for the fraction of the CO2e flux of the project component that is to be attributed to this removal.'
-          title: Attribution Factor Datapoint Id
-        removal_id:
-          description: ID of Removal to attribute the project component to.
-          example: rmv_1EEM6NJXX1S0EXKD
-          examples:
-          - rmv_1EEM6NJXX1S0EXKD
-          - rmv_1E3V4J2EWSBX5E82
-          maxLength: 37
-          minLength: 20
-          title: Removal Id
-          type: string
-      required:
-      - removal_id
-      title: UpdateProjectComponentRemovalAttributionRequest
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    ComponentListInput:
-      properties:
-        __typename:
-          const: ComponentListInput
-          default: ComponentListInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_ids:
-          description: The Isometric ID of the datapoints assigned to this input
-          items:
-            example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Datapoint Ids
-          type: array
-        input_key:
-          description: Will match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_ids
-      title: ComponentListInput
-      type: object
-    ProjectComponentAmortizationStrategy:
-      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
-
-
-        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
-
-
-        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
-
-
-        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
-
-
-        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
-      enum:
-      - ESTIMATED_PROJECT_TONNAGE
-      - MANUAL
-      - CUSTOM_TIME_PERIOD
-      - ESTIMATED_PROJECT_LIFETIME
-      title: ProjectComponentAmortizationStrategy
-      type: string
-    IsometricIDRequestParam_GhgEntry_:
-      example: rmv_1EEM6NJXX1S0EXKD
-      examples:
-      - rmv_1EEM6NJXX1S0EXKD
-      - rmv_1E3V4J2EWSBX5E82
-      maxLength: 37
-      minLength: 20
-      type: string
-    CreateComponentScalarInput:
-      properties:
-        __typename:
-          const: CreateComponentScalarInput
-          default: CreateComponentScalarInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_id:
-          description: The Isometric ID of the datapoint that will be used to populate the value of this input
-          example: dtp_1DVKHKS101S0Q61Q
-          examples:
-          - dtp_1DVKHKS101S0Q61Q
-          - dtp_1DJN8P57VSBXASFX
-          maxLength: 37
-          minLength: 20
-          title: Datapoint Id
-          type: string
-        input_key:
-          description: Must match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_id
-      title: CreateComponentScalarInput
-      type: object
-    IsometricIDPathParam_GhgEntry_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
     Component:
       properties:
         activity_completed_at:
@@ -411,88 +226,6 @@ components:
       - inputs
       title: Component
       type: object
-    CreateComponentRequest:
-      properties:
-        activity_completed_at:
-          description: The date at which the physical activity related to this component started
-          format: date-time
-          title: Activity Completed At
-          type: string
-        activity_started_at:
-          description: The date by which the physical activity related to this component finished
-          format: date-time
-          title: Activity Started At
-          type: string
-        component_blueprint_key:
-          description: The key of the blueprint which we are deriving this component from.
-          title: Component Blueprint Key
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: An optional description that can be used to add more context to the component
-          title: Description
-        display_name:
-          maxLength: 100
-          minLength: 1
-          title: Display Name
-          type: string
-        inputs:
-          description: A list of component inputs. This must match the list of inputs on the component blueprint. See the component-blueprints endpoint.
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/CreateComponentListInput'
-            - $ref: '#/components/schemas/CreateComponentScalarInput'
-          title: Inputs
-          type: array
-        project_id:
-          description: The project in which to create the component
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        supplier_reference_id:
-          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-          maxLength: 100
-          minLength: 1
-          title: Supplier Reference Id
-          type: string
-      required:
-      - supplier_reference_id
-      - project_id
-      - component_blueprint_key
-      - display_name
-      - activity_completed_at
-      - activity_started_at
-      - inputs
-      title: CreateComponentRequest
-      type: object
-    ComponentScope:
-      enum:
-      - REMOVAL
-      - GHG_STATEMENT
-      - PROJECT
-      - NET_NEGATIVITY
-      title: ComponentScope
-      type: string
-    CreateProjectComponentRequest:
-      properties:
-        allocation_strategy:
-          $ref: '#/components/schemas/ProjectComponentAmortizationStrategy'
-          description: The strategy that the components emissions are distributed across GHG Statements.
-        component_data:
-          $ref: '#/components/schemas/CreateComponentRequest'
-          description: Data required to create any component
-      required:
-      - allocation_strategy
-      - component_data
-      title: CreateProjectComponentRequest
-      type: object
     Removal:
       properties:
         co2e_net_removed_kg:
@@ -570,8 +303,155 @@ components:
       - feedstock_type_id
       title: Removal
       type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    UpdateProjectComponentRemovalAttributionRequest:
+      properties:
+        attribution_factor:
+          anyOf:
+          - exclusiveMinimum: 0.0
+            maximum: 1.0
+            type: number
+          - type: 'null'
+          description: A scalar between 0 and 1 for the fraction of the CO2e flux of the project component that is to be attributed to this removal.
+          title: Attribution Factor
+        attribution_factor_datapoint_id:
+          anyOf:
+          - example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated, please use `attribution_factor` instead.
+
+
+            A scalar between 0 and 1 for the fraction of the CO2e flux of the project component that is to be attributed to this removal.'
+          title: Attribution Factor Datapoint Id
+        removal_id:
+          description: ID of Removal to attribute the project component to.
+          example: rmv_1EEM6NJXX1S0EXKD
+          examples:
+          - rmv_1EEM6NJXX1S0EXKD
+          - rmv_1E3V4J2EWSBX5E82
+          maxLength: 37
+          minLength: 20
+          title: Removal Id
+          type: string
+      required:
+      - removal_id
+      title: UpdateProjectComponentRemovalAttributionRequest
+      type: object
+    CreateProjectComponentRequest:
+      properties:
+        allocation_strategy:
+          $ref: '#/components/schemas/ProjectComponentAmortizationStrategy'
+          description: The strategy that the components emissions are distributed across GHG Statements.
+        component_data:
+          $ref: '#/components/schemas/CreateComponentRequest'
+          description: Data required to create any component
+      required:
+      - allocation_strategy
+      - component_data
+      title: CreateProjectComponentRequest
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    CreateComponentScalarInput:
+      properties:
+        __typename:
+          const: CreateComponentScalarInput
+          default: CreateComponentScalarInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_id:
+          description: The Isometric ID of the datapoint that will be used to populate the value of this input
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_id
+      title: CreateComponentScalarInput
+      type: object
     IsometricIDPathParam_Component_:
       $ref: '#/components/schemas/IsometricIDRequestParam_Component_'
+    ProjectComponentAmortizationStrategy:
+      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
+
+
+        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
+
+
+        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
+
+
+        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
+
+
+        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
+      enum:
+      - ESTIMATED_PROJECT_TONNAGE
+      - MANUAL
+      - CUSTOM_TIME_PERIOD
+      - ESTIMATED_PROJECT_LIFETIME
+      title: ProjectComponentAmortizationStrategy
+      type: string
+    ComponentScope:
+      enum:
+      - REMOVAL
+      - GHG_STATEMENT
+      - PROJECT
+      - NET_NEGATIVITY
+      title: ComponentScope
+      type: string
+    IsometricIDPathParam_GhgEntry_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
     ComponentType:
       enum:
       - ACTIVITY
@@ -582,11 +462,110 @@ components:
       - UNCERTAINTY_DISCOUNT
       title: ComponentType
       type: string
+    CreateComponentRequest:
+      properties:
+        activity_completed_at:
+          description: The date at which the physical activity related to this component started
+          format: date-time
+          title: Activity Completed At
+          type: string
+        activity_started_at:
+          description: The date by which the physical activity related to this component finished
+          format: date-time
+          title: Activity Started At
+          type: string
+        component_blueprint_key:
+          description: The key of the blueprint which we are deriving this component from.
+          title: Component Blueprint Key
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An optional description that can be used to add more context to the component
+          title: Description
+        display_name:
+          maxLength: 100
+          minLength: 1
+          title: Display Name
+          type: string
+        inputs:
+          description: A list of component inputs. This must match the list of inputs on the component blueprint. See the component-blueprints endpoint.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CreateComponentListInput'
+            - $ref: '#/components/schemas/CreateComponentScalarInput'
+          title: Inputs
+          type: array
+        project_id:
+          description: The project in which to create the component
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        supplier_reference_id:
+          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+          maxLength: 100
+          minLength: 1
+          title: Supplier Reference Id
+          type: string
+      required:
+      - supplier_reference_id
+      - project_id
+      - component_blueprint_key
+      - display_name
+      - activity_completed_at
+      - activity_started_at
+      - inputs
+      title: CreateComponentRequest
+      type: object
     IsometricIDRequestParam_Component_:
       example: cmp_1EP2SB7MZ1S036PY
       examples:
       - cmp_1EP2SB7MZ1S036PY
       - cmp_1EHK4R6QJSBXFC5N
+      maxLength: 37
+      minLength: 20
+      type: string
+    ComponentListInput:
+      properties:
+        __typename:
+          const: ComponentListInput
+          default: ComponentListInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_ids:
+          description: The Isometric ID of the datapoints assigned to this input
+          items:
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
+          type: array
+        input_key:
+          description: Will match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_ids
+      title: ComponentListInput
+      type: object
+    IsometricIDRequestParam_GhgEntry_:
+      example: rmv_1EEM6NJXX1S0EXKD
+      examples:
+      - rmv_1EEM6NJXX1S0EXKD
+      - rmv_1E3V4J2EWSBX5E82
       maxLength: 37
       minLength: 20
       type: string
@@ -618,14 +597,35 @@ components:
       - datapoint_id
       title: ComponentScalarInput
       type: object
-    HTTPValidationError:
+    CreateComponentListInput:
       properties:
-        detail:
+        __typename:
+          const: CreateComponentListInput
+          default: CreateComponentListInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_ids:
+          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
           type: array
-      title: HTTPValidationError
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_ids
+      title: CreateComponentListInput
       type: object
   securitySchemes:
     HTTPBearer:

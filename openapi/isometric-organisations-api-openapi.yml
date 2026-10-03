@@ -375,48 +375,74 @@ paths:
       - Organisations
 components:
   schemas:
-    ValidationError:
+    IsometricIDRequestParam_Organisation_:
+      example: org_1GB56M1ST1S0GVNA
+      examples:
+      - org_1GB56M1ST1S0GVNA
+      - org_1CP8EQDNQSBXTMR2
+      maxLength: 37
+      minLength: 20
+      type: string
+    PaginatedListResource_Order_:
       properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
+        nodes:
           items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
+            $ref: '#/components/schemas/Order'
+          title: Nodes
           type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Order]
       type: object
-    IsometricIDRequestParam_Retirement_:
-      example: ret_1FYBH4QDT1S0SVKF
-      examples:
-      - ret_1FYBH4QDT1S0SVKF
-      - ret_1CGV2XADRSBX1CHB
-      maxLength: 37
-      minLength: 20
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    SortDirection:
+      enum:
+      - asc
+      - desc
+      title: SortDirection
       type: string
-    IsometricIDRequestParam_Order_:
-      example: ord_1FAN3S3WV1S0B842
-      examples:
-      - ord_1FAN3S3WV1S0B842
-      - ord_1DBVRQDHBSBXWBWP
-      maxLength: 37
-      minLength: 20
+    OrderStatus:
+      enum:
+      - placed
+      - in_progress
+      - completed
+      title: OrderStatus
       type: string
+    IsometricIDQueryParam_Supplier_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Supplier_'
+    CarbonRemovalData:
+      properties:
+        counterfactuals_kg:
+          title: Counterfactuals Kg
+          type: integer
+        emissions_kg:
+          title: Emissions Kg
+          type: integer
+        gross_carbon_removed_kg:
+          title: Gross Carbon Removed Kg
+          type: integer
+        losses_kg:
+          title: Losses Kg
+          type: integer
+        net_carbon_removed_kg:
+          title: Net Carbon Removed Kg
+          type: integer
+      required:
+      - gross_carbon_removed_kg
+      - net_carbon_removed_kg
+      - emissions_kg
+      - counterfactuals_kg
+      - losses_kg
+      title: CarbonRemovalData
+      type: object
     Supplier:
       properties:
         id:
@@ -452,121 +478,73 @@ components:
       - location
       title: Supplier
       type: object
+    IsometricIDQueryParam_Issuance_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Issuance_'
     IsometricIDQueryParam_Delivery_:
       $ref: '#/components/schemas/IsometricIDRequestParam_Delivery_'
-    OrderStatus:
-      enum:
-      - placed
-      - in_progress
-      - completed
-      title: OrderStatus
-      type: string
-    IsometricIDQueryParam_Organisation_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Organisation_'
-    IsometricIDQueryParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
     IsometricIDPathParam_Organisation_:
       $ref: '#/components/schemas/IsometricIDRequestParam_Organisation_'
-    IsometricIDRequestParam_Supplier_:
-      example: spl_1CC712KFS1S0YKPS
-      examples:
-      - spl_1CC712KFS1S0YKPS
-      - spl_1FJBMMGR3SBXKDME
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
-      type: string
-    CarbonRemovalData:
+    CreditQuantity:
       properties:
-        counterfactuals_kg:
-          title: Counterfactuals Kg
-          type: integer
-        emissions_kg:
-          title: Emissions Kg
-          type: integer
-        gross_carbon_removed_kg:
-          title: Gross Carbon Removed Kg
-          type: integer
-        losses_kg:
-          title: Losses Kg
-          type: integer
-        net_carbon_removed_kg:
-          title: Net Carbon Removed Kg
-          type: integer
-      required:
-      - gross_carbon_removed_kg
-      - net_carbon_removed_kg
-      - emissions_kg
-      - counterfactuals_kg
-      - losses_kg
-      title: CarbonRemovalData
-      type: object
-    CreditBalance:
-      properties:
-        active_credits_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        retired_credits_total:
-          $ref: '#/components/schemas/CreditQuantity'
-      required:
-      - active_credits_total
-      - retired_credits_total
-      title: CreditBalance
-      type: object
-    IsometricIDQueryParam_Retirement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Retirement_'
-    ProjectCreditBalance:
-      properties:
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
           examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
+          - 125632
+          title: Credit Kgs
+          type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
+      required:
+      - credits
+      - credit_kgs
+      title: CreditQuantity
+      type: object
+    Order:
+      properties:
+        buyer_organisation:
+          $ref: '#/components/schemas/Organisation'
+        credits_delivered:
+          $ref: '#/components/schemas/CreditQuantity'
+        credits_ordered:
+          $ref: '#/components/schemas/CreditQuantity'
+        effective_contract_date:
+          format: date
+          title: Effective Contract Date
+          type: string
+        fulfilled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Fulfilled At
+        id:
+          example: ord_1FAN3S3WV1S0B842
+          examples:
+          - ord_1FAN3S3WV1S0B842
+          - ord_1DBVRQDHBSBXWBWP
           maxLength: 37
           minLength: 20
-          title: Project Id
+          title: Id
           type: string
-        total:
-          $ref: '#/components/schemas/CreditBalance'
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        supplier:
+          $ref: '#/components/schemas/Supplier'
       required:
-      - project_id
-      - total
-      title: ProjectCreditBalance
+      - id
+      - effective_contract_date
+      - fulfilled_at
+      - buyer_organisation
+      - supplier
+      - status
+      - credits_ordered
+      - credits_delivered
+      title: Order
       type: object
-    OrganisationCreditBalance:
-      properties:
-        order_balances:
-          items:
-            $ref: '#/components/schemas/OrderCreditBalance'
-          title: Order Balances
-          type: array
-        project_balances:
-          items:
-            $ref: '#/components/schemas/ProjectCreditBalance'
-          title: Project Balances
-          type: array
-        supplier_balances:
-          items:
-            $ref: '#/components/schemas/SupplierCreditBalance'
-          title: Supplier Balances
-          type: array
-        total:
-          $ref: '#/components/schemas/CreditBalance'
-      required:
-      - total
-      - supplier_balances
-      - project_balances
-      - order_balances
-      title: OrganisationCreditBalance
-      type: object
-    IsometricIDQueryParam_Order_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Order_'
     CreditBatch:
       properties:
         beneficiary:
@@ -748,39 +726,136 @@ components:
       - ccp_approved
       title: CreditBatch
       type: object
-    IsometricIDQueryParam_Supplier_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Supplier_'
-    IsometricIDRequestParam_Issuance_:
-      example: iss_1EWT8R5FY1S0GFCY
+    IsometricIDRequestParam_Supplier_:
+      example: spl_1CC712KFS1S0YKPS
       examples:
-      - iss_1EWT8R5FY1S0GFCY
-      - iss_1CSVDDHH3SBXRP6K
+      - spl_1CC712KFS1S0YKPS
+      - spl_1FJBMMGR3SBXKDME
       maxLength: 37
       minLength: 20
       type: string
-    SupplierCreditBalance:
+    HTTPValidationError:
       properties:
-        supplier_id:
-          example: spl_1CC712KFS1S0YKPS
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    OrganisationCreditBalance:
+      properties:
+        order_balances:
+          items:
+            $ref: '#/components/schemas/OrderCreditBalance'
+          title: Order Balances
+          type: array
+        project_balances:
+          items:
+            $ref: '#/components/schemas/ProjectCreditBalance'
+          title: Project Balances
+          type: array
+        supplier_balances:
+          items:
+            $ref: '#/components/schemas/SupplierCreditBalance'
+          title: Supplier Balances
+          type: array
+        total:
+          $ref: '#/components/schemas/CreditBalance'
+      required:
+      - total
+      - supplier_balances
+      - project_balances
+      - order_balances
+      title: OrganisationCreditBalance
+      type: object
+    OrderCreditBalance:
+      properties:
+        order_id:
+          example: ord_1FAN3S3WV1S0B842
           examples:
-          - spl_1CC712KFS1S0YKPS
-          - spl_1FJBMMGR3SBXKDME
+          - ord_1FAN3S3WV1S0B842
+          - ord_1DBVRQDHBSBXWBWP
           maxLength: 37
           minLength: 20
-          title: Supplier Id
+          title: Order Id
           type: string
         total:
           $ref: '#/components/schemas/CreditBalance'
       required:
-      - supplier_id
+      - order_id
       - total
-      title: SupplierCreditBalance
+      title: OrderCreditBalance
       type: object
-    CreditBatchSortField:
-      enum:
-      - issued_at
-      title: CreditBatchSortField
+    IsometricIDRequestParam_Retirement_:
+      example: ret_1FYBH4QDT1S0SVKF
+      examples:
+      - ret_1FYBH4QDT1S0SVKF
+      - ret_1CGV2XADRSBX1CHB
+      maxLength: 37
+      minLength: 20
       type: string
+    ProjectCreditBalance:
+      properties:
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        total:
+          $ref: '#/components/schemas/CreditBalance'
+      required:
+      - project_id
+      - total
+      title: ProjectCreditBalance
+      type: object
+    IsometricIDQueryParam_Organisation_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Organisation_'
+    IsometricIDRequestParam_Delivery_:
+      example: dlv_1C454ZXA61S03Z9T
+      examples:
+      - dlv_1C454ZXA61S03Z9T
+      - dlv_1FAGG2H2PSBXHGYY
+      maxLength: 37
+      minLength: 20
+      type: string
+    CreditBatchStatus:
+      enum:
+      - active
+      - split
+      - retired
+      title: CreditBatchStatus
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     Organisation:
       properties:
         domain:
@@ -810,31 +885,13 @@ components:
       - domain
       title: Organisation
       type: object
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
-    CreditBatchStatus:
-      enum:
-      - active
-      - split
-      - retired
-      title: CreditBatchStatus
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
+      examples:
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
+      maxLength: 37
+      minLength: 20
       type: string
     PageInfo:
       properties:
@@ -861,11 +918,37 @@ components:
       - end_cursor
       title: PageInfo
       type: object
-    IsometricIDRequestParam_Organisation_:
-      example: org_1GB56M1ST1S0GVNA
+    PaginatedListResource_CreditBatch_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/CreditBatch'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[CreditBatch]
+      type: object
+    IsometricIDRequestParam_Issuance_:
+      example: iss_1EWT8R5FY1S0GFCY
       examples:
-      - org_1GB56M1ST1S0GVNA
-      - org_1CP8EQDNQSBXTMR2
+      - iss_1EWT8R5FY1S0GFCY
+      - iss_1CSVDDHH3SBXRP6K
+      maxLength: 37
+      minLength: 20
+      type: string
+    IsometricIDRequestParam_Order_:
+      example: ord_1FAN3S3WV1S0B842
+      examples:
+      - ord_1FAN3S3WV1S0B842
+      - ord_1DBVRQDHBSBXWBWP
       maxLength: 37
       minLength: 20
       type: string
@@ -899,127 +982,44 @@ components:
       - longitude
       title: Location
       type: object
-    Order:
+    IsometricIDQueryParam_Order_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Order_'
+    CreditBalance:
       properties:
-        buyer_organisation:
-          $ref: '#/components/schemas/Organisation'
-        credits_delivered:
+        active_credits_total:
           $ref: '#/components/schemas/CreditQuantity'
-        credits_ordered:
+        retired_credits_total:
           $ref: '#/components/schemas/CreditQuantity'
-        effective_contract_date:
-          format: date
-          title: Effective Contract Date
-          type: string
-        fulfilled_at:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          title: Fulfilled At
-        id:
-          example: ord_1FAN3S3WV1S0B842
-          examples:
-          - ord_1FAN3S3WV1S0B842
-          - ord_1DBVRQDHBSBXWBWP
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        status:
-          $ref: '#/components/schemas/OrderStatus'
-        supplier:
-          $ref: '#/components/schemas/Supplier'
       required:
-      - id
-      - effective_contract_date
-      - fulfilled_at
-      - buyer_organisation
-      - supplier
-      - status
-      - credits_ordered
-      - credits_delivered
-      title: Order
+      - active_credits_total
+      - retired_credits_total
+      title: CreditBalance
       type: object
-    SortDirection:
+    IsometricIDQueryParam_Retirement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Retirement_'
+    CreditBatchSortField:
       enum:
-      - asc
-      - desc
-      title: SortDirection
+      - issued_at
+      title: CreditBatchSortField
       type: string
-    PaginatedListResource_Order_:
+    SupplierCreditBalance:
       properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Order'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Order]
-      type: object
-    PaginatedListResource_CreditBatch_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/CreditBatch'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[CreditBatch]
-      type: object
-    IsometricIDRequestParam_Delivery_:
-      example: dlv_1C454ZXA61S03Z9T
-      examples:
-      - dlv_1C454ZXA61S03Z9T
-      - dlv_1FAGG2H2PSBXHGYY
-      maxLength: 37
-      minLength: 20
-      type: string
-    OrderCreditBalance:
-      properties:
-        order_id:
-          example: ord_1FAN3S3WV1S0B842
+        supplier_id:
+          example: spl_1CC712KFS1S0YKPS
           examples:
-          - ord_1FAN3S3WV1S0B842
-          - ord_1DBVRQDHBSBXWBWP
+          - spl_1CC712KFS1S0YKPS
+          - spl_1FJBMMGR3SBXKDME
           maxLength: 37
           minLength: 20
-          title: Order Id
+          title: Supplier Id
           type: string
         total:
           $ref: '#/components/schemas/CreditBalance'
       required:
-      - order_id
+      - supplier_id
       - total
-      title: OrderCreditBalance
+      title: SupplierCreditBalance
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    IsometricIDQueryParam_Issuance_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Issuance_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT
