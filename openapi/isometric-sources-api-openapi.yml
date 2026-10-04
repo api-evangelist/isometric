@@ -363,6 +363,21 @@ paths:
       - Sources
 components:
   schemas:
+    SourcePublicUrlInfo:
+      properties:
+        __typename:
+          const: SourcePublicUrlInfo
+          default: SourcePublicUrlInfo
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        url:
+          title: Url
+          type: string
+      required:
+      - url
+      title: SourcePublicUrlInfo
+      type: object
     ValidationError:
       properties:
         ctx:
@@ -389,99 +404,45 @@ components:
       - type
       title: ValidationError
       type: object
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDQueryParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
-    PageInfo:
+    PatchSourceRequest:
       properties:
-        end_cursor:
+        display_name:
           anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
+          - maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Display Name
+        is_public:
           anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    SourcePublicUrlInfo:
-      properties:
-        __typename:
-          const: SourcePublicUrlInfo
-          default: SourcePublicUrlInfo
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        url:
-          title: Url
-          type: string
-      required:
-      - url
-      title: SourcePublicUrlInfo
-      type: object
-    SourceType:
-      enum:
-      - DOCUMENT
-      - WEBSITE
-      title: SourceType
-      type: string
-    CreateSourceResponse:
-      properties:
-        signed_upload_url:
-          description: A presigned upload URL, which must be used to upload the document associated with this source.
-          title: Signed Upload Url
-          type: string
-        source:
-          $ref: '#/components/schemas/Source'
-      required:
-      - source
-      - signed_upload_url
-      title: CreateSourceResponse
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    SourcePrivateUrlInfo:
-      properties:
-        __typename:
-          const: SourcePrivateUrlInfo
-          default: SourcePrivateUrlInfo
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        is_accessible:
-          description: This field indicates whether or not a private source visible to the caller. If it is, to get a temporary pre-signed url that will allow the caller to view the source, make a request to the "/sources/{id}/private_url" endpoint.
-          title: Is Accessible
-          type: boolean
-      required:
-      - is_accessible
-      title: SourcePrivateUrlInfo
+          - type: boolean
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: If the source document should be publicly available on the Registry once credits are issued.
+          title: Is Public
+        published_at:
+          anyOf:
+          - description: Date in ISO format (YYYY-MM-DD)
+            format: date
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Published At
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Supplier Reference Id
+      title: PatchSourceRequest
       type: object
     IsometricIDRequestParam_Source_:
       example: src_1EBBF4M7X1S06G1Y
@@ -491,22 +452,6 @@ components:
       maxLength: 37
       minLength: 20
       type: string
-    SignedUploadUrlRequest:
-      properties:
-        content_length:
-          description: The size (in bytes) of the file that will be uploaded. The pre-signed URL will only accept a file of this size.
-          maximum: 50000000.0
-          title: Content Length
-          type: integer
-        content_type:
-          description: The content type of the file that will be uploaded. This must also be passed as a 'content-type' header during the upload. The pre-signed URL will only accept a file of this content-type.
-          title: Content Type
-          type: string
-      required:
-      - content_type
-      - content_length
-      title: SignedUploadUrlRequest
-      type: object
     CreateDocumentSourceRequest:
       properties:
         __typename:
@@ -569,6 +514,31 @@ components:
       - project_id
       title: CreateDocumentSourceRequest
       type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
     Undefined:
       additionalProperties: false
       description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
@@ -581,6 +551,68 @@ components:
           type: string
       title: Undefined
       type: object
+    CreateSourceResponse:
+      properties:
+        signed_upload_url:
+          description: A presigned upload URL, which must be used to upload the document associated with this source.
+          title: Signed Upload Url
+          type: string
+        source:
+          $ref: '#/components/schemas/Source'
+      required:
+      - source
+      - signed_upload_url
+      title: CreateSourceResponse
+      type: object
+    PaginatedListResource_Source_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Source'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Source]
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    SourcePrivateUrlInfo:
+      properties:
+        __typename:
+          const: SourcePrivateUrlInfo
+          default: SourcePrivateUrlInfo
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        is_accessible:
+          description: This field indicates whether or not a private source visible to the caller. If it is, to get a temporary pre-signed url that will allow the caller to view the source, make a request to the "/sources/{id}/private_url" endpoint.
+          title: Is Accessible
+          type: boolean
+      required:
+      - is_accessible
+      title: SourcePrivateUrlInfo
+      type: object
+    SourceType:
+      enum:
+      - DOCUMENT
+      - WEBSITE
+      title: SourceType
+      type: string
     Source:
       properties:
         display_name:
@@ -659,66 +691,34 @@ components:
       - project_id
       title: Source
       type: object
-    PatchSourceRequest:
-      properties:
-        display_name:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Display Name
-        is_public:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: If the source document should be publicly available on the Registry once credits are issued.
-          title: Is Public
-        published_at:
-          anyOf:
-          - description: Date in ISO format (YYYY-MM-DD)
-            format: date
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Published At
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Supplier Reference Id
-      title: PatchSourceRequest
-      type: object
-    PaginatedListResource_Source_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Source'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Source]
-      type: object
     IsometricIDPathParam_Source_:
       $ref: '#/components/schemas/IsometricIDRequestParam_Source_'
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    SignedUploadUrlRequest:
+      properties:
+        content_length:
+          description: The size (in bytes) of the file that will be uploaded. The pre-signed URL will only accept a file of this size.
+          maximum: 50000000.0
+          title: Content Length
+          type: integer
+        content_type:
+          description: The content type of the file that will be uploaded. This must also be passed as a 'content-type' header during the upload. The pre-signed URL will only accept a file of this content-type.
+          title: Content Type
+          type: string
+      required:
+      - content_type
+      - content_length
+      title: SignedUploadUrlRequest
+      type: object
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
+      examples:
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
+      maxLength: 37
+      minLength: 20
+      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

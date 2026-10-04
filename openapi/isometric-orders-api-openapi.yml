@@ -138,67 +138,6 @@ paths:
       - Orders
 components:
   schemas:
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
-    Order:
-      properties:
-        buyer_organisation:
-          $ref: '#/components/schemas/Organisation'
-        credits_delivered:
-          $ref: '#/components/schemas/CreditQuantity'
-        credits_ordered:
-          $ref: '#/components/schemas/CreditQuantity'
-        effective_contract_date:
-          format: date
-          title: Effective Contract Date
-          type: string
-        fulfilled_at:
-          anyOf:
-          - format: date-time
-            type: string
-          - type: 'null'
-          title: Fulfilled At
-        id:
-          example: ord_1FAN3S3WV1S0B842
-          examples:
-          - ord_1FAN3S3WV1S0B842
-          - ord_1DBVRQDHBSBXWBWP
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        status:
-          $ref: '#/components/schemas/OrderStatus'
-        supplier:
-          $ref: '#/components/schemas/Supplier'
-      required:
-      - id
-      - effective_contract_date
-      - fulfilled_at
-      - buyer_organisation
-      - supplier
-      - status
-      - credits_ordered
-      - credits_delivered
-      title: Order
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -224,6 +163,36 @@ components:
       - msg
       - type
       title: ValidationError
+      type: object
+    Location:
+      properties:
+        country_code:
+          title: Country Code
+          type: string
+        country_name:
+          title: Country Name
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        latitude:
+          maximum: 90
+          minimum: -90
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180
+          minimum: -180
+          title: Longitude
+          type: number
+      required:
+      - country_code
+      - country_name
+      - latitude
+      - longitude
+      title: Location
       type: object
     Organisation:
       properties:
@@ -254,94 +223,24 @@ components:
       - domain
       title: Organisation
       type: object
-    IsometricIDPathParam_Order_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Order_'
-    Supplier:
+    CreditQuantity:
       properties:
-        id:
-          example: spl_1CC712KFS1S0YKPS
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
           examples:
-          - spl_1CC712KFS1S0YKPS
-          - spl_1FJBMMGR3SBXKDME
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-        long_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Long Description
-        organisation:
-          $ref: '#/components/schemas/Organisation'
-        short_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Short Description
-      required:
-      - id
-      - short_description
-      - long_description
-      - organisation
-      - location
-      title: Supplier
-      type: object
-    PaginatedListResource_Delivery_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Delivery'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
+          - 125632
+          title: Credit Kgs
           type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
       required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Delivery]
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+      - credits
+      - credit_kgs
+      title: CreditQuantity
       type: object
     Delivery:
       properties:
@@ -396,43 +295,83 @@ components:
       - notes
       title: Delivery
       type: object
-    IsometricIDRequestParam_Order_:
-      example: ord_1FAN3S3WV1S0B842
-      examples:
-      - ord_1FAN3S3WV1S0B842
-      - ord_1DBVRQDHBSBXWBWP
-      maxLength: 37
-      minLength: 20
-      type: string
-    Location:
+    IsometricIDPathParam_Order_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Order_'
+    PageInfo:
       properties:
-        country_code:
-          title: Country Code
-          type: string
-        country_name:
-          title: Country Name
-          type: string
-        description:
+        end_cursor:
           anyOf:
           - type: string
           - type: 'null'
-          title: Description
-        latitude:
-          maximum: 90
-          minimum: -90
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180
-          minimum: -180
-          title: Longitude
-          type: number
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
       required:
-      - country_code
-      - country_name
-      - latitude
-      - longitude
-      title: Location
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    Order:
+      properties:
+        buyer_organisation:
+          $ref: '#/components/schemas/Organisation'
+        credits_delivered:
+          $ref: '#/components/schemas/CreditQuantity'
+        credits_ordered:
+          $ref: '#/components/schemas/CreditQuantity'
+        effective_contract_date:
+          format: date
+          title: Effective Contract Date
+          type: string
+        fulfilled_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Fulfilled At
+        id:
+          example: ord_1FAN3S3WV1S0B842
+          examples:
+          - ord_1FAN3S3WV1S0B842
+          - ord_1DBVRQDHBSBXWBWP
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        supplier:
+          $ref: '#/components/schemas/Supplier'
+      required:
+      - id
+      - effective_contract_date
+      - fulfilled_at
+      - buyer_organisation
+      - supplier
+      - status
+      - credits_ordered
+      - credits_delivered
+      title: Order
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
     OrderStatus:
       enum:
@@ -441,6 +380,67 @@ components:
       - completed
       title: OrderStatus
       type: string
+    IsometricIDRequestParam_Order_:
+      example: ord_1FAN3S3WV1S0B842
+      examples:
+      - ord_1FAN3S3WV1S0B842
+      - ord_1DBVRQDHBSBXWBWP
+      maxLength: 37
+      minLength: 20
+      type: string
+    PaginatedListResource_Delivery_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Delivery'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Delivery]
+      type: object
+    Supplier:
+      properties:
+        id:
+          example: spl_1CC712KFS1S0YKPS
+          examples:
+          - spl_1CC712KFS1S0YKPS
+          - spl_1FJBMMGR3SBXKDME
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+        long_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Long Description
+        organisation:
+          $ref: '#/components/schemas/Organisation'
+        short_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Description
+      required:
+      - id
+      - short_description
+      - long_description
+      - organisation
+      - location
+      title: Supplier
+      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

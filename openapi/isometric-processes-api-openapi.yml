@@ -96,6 +96,24 @@ paths:
       - Processes
 components:
   schemas:
+    PaginatedListResource_Process_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Process'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Process]
+      type: object
     ValidationError:
       properties:
         ctx:
@@ -121,6 +139,23 @@ components:
       - msg
       - type
       title: ValidationError
+      type: object
+    ProcessStep:
+      properties:
+        description:
+          title: Description
+          type: string
+        display_name:
+          title: Display Name
+          type: string
+        key:
+          title: Key
+          type: string
+      required:
+      - key
+      - display_name
+      - description
+      title: ProcessStep
       type: object
     PageInfo:
       properties:
@@ -156,24 +191,6 @@ components:
           type: array
       title: HTTPValidationError
       type: object
-    PaginatedListResource_Process_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Process'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Process]
-      type: object
     Process:
       properties:
         display_name:
@@ -192,23 +209,6 @@ components:
       - display_name
       - steps
       title: Process
-      type: object
-    ProcessStep:
-      properties:
-        description:
-          title: Description
-          type: string
-        display_name:
-          title: Display Name
-          type: string
-        key:
-          title: Key
-          type: string
-      required:
-      - key
-      - display_name
-      - description
-      title: ProcessStep
       type: object
   securitySchemes:
     HTTPBearer:

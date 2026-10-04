@@ -95,50 +95,6 @@ paths:
       - Refunds
 components:
   schemas:
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
-    CarbonRemovalData:
-      properties:
-        counterfactuals_kg:
-          title: Counterfactuals Kg
-          type: integer
-        emissions_kg:
-          title: Emissions Kg
-          type: integer
-        gross_carbon_removed_kg:
-          title: Gross Carbon Removed Kg
-          type: integer
-        losses_kg:
-          title: Losses Kg
-          type: integer
-        net_carbon_removed_kg:
-          title: Net Carbon Removed Kg
-          type: integer
-      required:
-      - gross_carbon_removed_kg
-      - net_carbon_removed_kg
-      - emissions_kg
-      - counterfactuals_kg
-      - losses_kg
-      title: CarbonRemovalData
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -164,6 +120,39 @@ components:
       - msg
       - type
       title: ValidationError
+      type: object
+    BufferPoolRefund:
+      properties:
+        credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        from_buffer_pool_organisation:
+          $ref: '#/components/schemas/Organisation'
+        id:
+          example: bpr_1E5BH6AG21S0SKTW
+          examples:
+          - bpr_1E5BH6AG21S0SKTW
+          - bpr_1E94SXW89SBX58PK
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        notes:
+          title: Notes
+          type: string
+        refunded_at:
+          format: date-time
+          title: Refunded At
+          type: string
+        to_organisation:
+          $ref: '#/components/schemas/Organisation'
+      required:
+      - id
+      - refunded_at
+      - from_buffer_pool_organisation
+      - to_organisation
+      - credit_batch_size_total
+      - notes
+      title: BufferPoolRefund
       type: object
     Organisation:
       properties:
@@ -194,14 +183,27 @@ components:
       - domain
       title: Organisation
       type: object
-    IsometricIDRequestParam_BufferPoolRefund_:
-      example: bpr_1E5BH6AG21S0SKTW
-      examples:
-      - bpr_1E5BH6AG21S0SKTW
-      - bpr_1E94SXW89SBX58PK
-      maxLength: 37
-      minLength: 20
-      type: string
+    CreditQuantity:
+      properties:
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
+          examples:
+          - 125632
+          title: Credit Kgs
+          type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
+      required:
+      - credits
+      - credit_kgs
+      title: CreditQuantity
+      type: object
+    IsometricIDPathParam_BufferPoolRefund_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_BufferPoolRefund_'
     CreditBatch:
       properties:
         beneficiary:
@@ -383,6 +385,31 @@ components:
       - ccp_approved
       title: CreditBatch
       type: object
+    CarbonRemovalData:
+      properties:
+        counterfactuals_kg:
+          title: Counterfactuals Kg
+          type: integer
+        emissions_kg:
+          title: Emissions Kg
+          type: integer
+        gross_carbon_removed_kg:
+          title: Gross Carbon Removed Kg
+          type: integer
+        losses_kg:
+          title: Losses Kg
+          type: integer
+        net_carbon_removed_kg:
+          title: Net Carbon Removed Kg
+          type: integer
+      required:
+      - gross_carbon_removed_kg
+      - net_carbon_removed_kg
+      - emissions_kg
+      - counterfactuals_kg
+      - losses_kg
+      title: CarbonRemovalData
+      type: object
     HTTPValidationError:
       properties:
         detail:
@@ -407,8 +434,14 @@ components:
       - total_count
       title: ListResource[CreditBatch]
       type: object
-    IsometricIDPathParam_BufferPoolRefund_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_BufferPoolRefund_'
+    IsometricIDRequestParam_BufferPoolRefund_:
+      example: bpr_1E5BH6AG21S0SKTW
+      examples:
+      - bpr_1E5BH6AG21S0SKTW
+      - bpr_1E94SXW89SBX58PK
+      maxLength: 37
+      minLength: 20
+      type: string
     CreditBatchStatus:
       enum:
       - active
@@ -416,39 +449,6 @@ components:
       - retired
       title: CreditBatchStatus
       type: string
-    BufferPoolRefund:
-      properties:
-        credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        from_buffer_pool_organisation:
-          $ref: '#/components/schemas/Organisation'
-        id:
-          example: bpr_1E5BH6AG21S0SKTW
-          examples:
-          - bpr_1E5BH6AG21S0SKTW
-          - bpr_1E94SXW89SBX58PK
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        notes:
-          title: Notes
-          type: string
-        refunded_at:
-          format: date-time
-          title: Refunded At
-          type: string
-        to_organisation:
-          $ref: '#/components/schemas/Organisation'
-      required:
-      - id
-      - refunded_at
-      - from_buffer_pool_organisation
-      - to_organisation
-      - credit_batch_size_total
-      - notes
-      title: BufferPoolRefund
-      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

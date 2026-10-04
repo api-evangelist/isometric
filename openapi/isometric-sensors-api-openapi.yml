@@ -210,40 +210,20 @@ components:
       - type
       title: ValidationError
       type: object
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDQueryParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
-    PageInfo:
+    IsometricIDPathParam_Sensor_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Sensor_'
+    MeasurementProperty:
       properties:
-        end_cursor:
+        qualifier:
           anyOf:
-          - type: string
+          - $ref: '#/components/schemas/QuantityKindQualifierType'
           - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
+        quantity_kind:
+          $ref: '#/components/schemas/QuantityKindType'
       required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+      - quantity_kind
+      - qualifier
+      title: MeasurementProperty
       type: object
     Sensor:
       properties:
@@ -287,143 +267,57 @@ components:
       - model
       title: Sensor
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    IsometricIDPathParam_Sensor_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Sensor_'
-    CreateSensorRequest:
-      properties:
-        facility_id:
-          anyOf:
-          - example: fcl_1G8QT5ZAB1S0XSDW
-            examples:
-            - fcl_1G8QT5ZAB1S0XSDW
-            - fcl_1E384BDCGSBXNNZZ
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          description: The facility where the sensor is installed
-          title: Facility Id
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The manufacturer of the sensor
-          title: Manufacturer
-        measurement_property:
-          $ref: '#/components/schemas/MeasurementProperty'
-          description: The physical quantity this sensor measures
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The model of the sensor
-          title: Model
-        reference:
-          description: What the supplier refers to this sensor by
-          maxLength: 255
-          title: Reference
-          type: string
-        storage_location_id:
-          anyOf:
-          - example: slc_1F3PMGVC91S0SBK3
-            examples:
-            - slc_1F3PMGVC91S0SBK3
-            - slc_1DCY5K78BSBX3XMZ
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          description: The storage location where the sensor is stored
-          title: Storage Location Id
-        units:
-          description: The units of measurement for this sensor
-          title: Units
-          type: string
-      required:
-      - reference
-      - measurement_property
-      - units
-      title: CreateSensorRequest
-      type: object
-    QuantityKindType:
-      enum:
-      - acidity
-      - activity_concentration
-      - amount_of_substance
-      - amount_of_substance_concentration
-      - amount_of_substance_per_mass
-      - area
-      - area_carbon_emission_factor
-      - buffer_ph
-      - bulk_density
-      - count
-      - currency
-      - currency_carbon_emission_factor
-      - depth
-      - diameter
-      - diameter_at_breast_height
-      - dimensionless
-      - dimensionless_ratio
-      - distance
-      - distance_carbon_emission_factor
-      - dose_equivalent_rate
-      - electric_current
-      - elevation
-      - energy
-      - energy_carbon_emission_factor
-      - energy_density
-      - exchangeable_amount_of_substance_per_mass
-      - fuel_economy
-      - height
-      - ionic_strength
-      - latitude
-      - longitude
-      - mass
-      - mass_carbon
-      - mass_carbon_emission_factor
-      - mass_cdr_potential
-      - mass_concentration
-      - mass_density
-      - mass_distance
-      - mass_distance_carbon_emission_factor
-      - mass_energy_density
-      - mass_flow_rate
-      - mass_fraction
-      - mass_fraction_dry_basis
-      - mass_fraction_wet_basis
-      - mass_per_area
-      - mass_ratio
-      - molality_of_solute
-      - molar_mass
-      - mole_fraction
-      - partial_pressure
-      - particle_diameter
-      - particle_mass_density
-      - power
-      - pressure
-      - specific_surface_area
-      - specific_volume
-      - temperature
-      - time
-      - time_emission_factor
-      - voltage
-      - volume
-      - volume_carbon_emission_factor
-      - volume_distance_carbon_emission_factor
-      - volume_flow_rate
-      - volume_fraction
-      - volume_per_area
-      title: QuantityKindType
+    IsometricIDRequestParam_Sensor_:
+      example: sns_1GJ82BEMB1S0FBFV
+      examples:
+      - sns_1GJ82BEMB1S0FBFV
+      - sns_1CCYZYWFWSBXYG38
+      maxLength: 37
+      minLength: 20
       type: string
+    PaginatedListResource_Sensor_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Sensor'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Sensor]
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
     QuantityKindQualifierType:
       enum:
       - base_saturation_ca_2plus
@@ -1315,45 +1209,151 @@ components:
       - percentile_97
       title: QuantityKindQualifierType
       type: string
-    IsometricIDRequestParam_Sensor_:
-      example: sns_1GJ82BEMB1S0FBFV
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    CreateSensorRequest:
+      properties:
+        facility_id:
+          anyOf:
+          - example: fcl_1G8QT5ZAB1S0XSDW
+            examples:
+            - fcl_1G8QT5ZAB1S0XSDW
+            - fcl_1E384BDCGSBXNNZZ
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: The facility where the sensor is installed
+          title: Facility Id
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The manufacturer of the sensor
+          title: Manufacturer
+        measurement_property:
+          $ref: '#/components/schemas/MeasurementProperty'
+          description: The physical quantity this sensor measures
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The model of the sensor
+          title: Model
+        reference:
+          description: What the supplier refers to this sensor by
+          maxLength: 255
+          title: Reference
+          type: string
+        storage_location_id:
+          anyOf:
+          - example: slc_1F3PMGVC91S0SBK3
+            examples:
+            - slc_1F3PMGVC91S0SBK3
+            - slc_1DCY5K78BSBX3XMZ
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: The storage location where the sensor is stored
+          title: Storage Location Id
+        units:
+          description: The units of measurement for this sensor
+          title: Units
+          type: string
+      required:
+      - reference
+      - measurement_property
+      - units
+      title: CreateSensorRequest
+      type: object
+    QuantityKindType:
+      enum:
+      - acidity
+      - activity_concentration
+      - amount_of_substance
+      - amount_of_substance_concentration
+      - amount_of_substance_per_mass
+      - area
+      - area_carbon_emission_factor
+      - buffer_ph
+      - bulk_density
+      - count
+      - currency
+      - currency_carbon_emission_factor
+      - depth
+      - diameter
+      - diameter_at_breast_height
+      - dimensionless
+      - dimensionless_ratio
+      - distance
+      - distance_carbon_emission_factor
+      - dose_equivalent_rate
+      - electric_current
+      - elevation
+      - energy
+      - energy_carbon_emission_factor
+      - energy_density
+      - exchangeable_amount_of_substance_per_mass
+      - fuel_economy
+      - height
+      - ionic_strength
+      - latitude
+      - longitude
+      - mass
+      - mass_carbon
+      - mass_carbon_emission_factor
+      - mass_cdr_potential
+      - mass_concentration
+      - mass_density
+      - mass_distance
+      - mass_distance_carbon_emission_factor
+      - mass_energy_density
+      - mass_flow_rate
+      - mass_fraction
+      - mass_fraction_dry_basis
+      - mass_fraction_wet_basis
+      - mass_per_area
+      - mass_ratio
+      - molality_of_solute
+      - molar_mass
+      - mole_fraction
+      - partial_pressure
+      - particle_diameter
+      - particle_mass_density
+      - power
+      - pressure
+      - specific_surface_area
+      - specific_volume
+      - temperature
+      - time
+      - time_emission_factor
+      - voltage
+      - volume
+      - volume_carbon_emission_factor
+      - volume_distance_carbon_emission_factor
+      - volume_flow_rate
+      - volume_fraction
+      - volume_per_area
+      title: QuantityKindType
+      type: string
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
       examples:
-      - sns_1GJ82BEMB1S0FBFV
-      - sns_1CCYZYWFWSBXYG38
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
       maxLength: 37
       minLength: 20
       type: string
-    PaginatedListResource_Sensor_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Sensor'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Sensor]
-      type: object
-    MeasurementProperty:
-      properties:
-        qualifier:
-          anyOf:
-          - $ref: '#/components/schemas/QuantityKindQualifierType'
-          - type: 'null'
-        quantity_kind:
-          $ref: '#/components/schemas/QuantityKindType'
-      required:
-      - quantity_kind
-      - qualifier
-      title: MeasurementProperty
-      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

@@ -372,8 +372,100 @@ components:
       - inputs
       title: Component
       type: object
-    IsometricIDQueryParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    PatchComponentRequest:
+      properties:
+        allocation_strategy:
+          anyOf:
+          - $ref: '#/components/schemas/ProjectComponentAmortizationStrategy'
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: Allocation strategy to change the component to. This can only be set on project-scoped components.
+          title: Allocation Strategy
+        description:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Description
+        display_name:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Display Name
+        inputs:
+          anyOf:
+          - items:
+              oneOf:
+              - $ref: '#/components/schemas/CreateComponentListInput'
+              - $ref: '#/components/schemas/CreateComponentScalarInput'
+            type: array
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: Overwrite existing component inputs
+          title: Inputs
+      title: PatchComponentRequest
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    ProjectComponentAmortizationStrategy:
+      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
+
+
+        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
+
+
+        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
+
+
+        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
+
+
+        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
+      enum:
+      - ESTIMATED_PROJECT_TONNAGE
+      - MANUAL
+      - CUSTOM_TIME_PERIOD
+      - ESTIMATED_PROJECT_LIFETIME
+      title: ProjectComponentAmortizationStrategy
+      type: string
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
+      examples:
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
+      maxLength: 37
+      minLength: 20
+      type: string
     ComponentListInput:
       properties:
         __typename:
@@ -403,6 +495,60 @@ components:
       - input_key
       - datapoint_ids
       title: ComponentListInput
+      type: object
+    IsometricIDQueryParam_GhgEntry_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
+    IsometricIDRequestParam_GhgEntry_:
+      example: rmv_1EEM6NJXX1S0EXKD
+      examples:
+      - rmv_1EEM6NJXX1S0EXKD
+      - rmv_1E3V4J2EWSBX5E82
+      maxLength: 37
+      minLength: 20
+      type: string
+    ComponentType:
+      enum:
+      - ACTIVITY
+      - REMOVAL_COUNTERFACTUAL
+      - SEQUESTRATION
+      - LOSS
+      - ADJUSTMENT
+      - UNCERTAINTY_DISCOUNT
+      title: ComponentType
+      type: string
+    IsometricIDRequestParam_Component_:
+      example: cmp_1EP2SB7MZ1S036PY
+      examples:
+      - cmp_1EP2SB7MZ1S036PY
+      - cmp_1EHK4R6QJSBXFC5N
+      maxLength: 37
+      minLength: 20
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
     ComponentScalarInput:
       properties:
@@ -440,6 +586,36 @@ components:
       maxLength: 37
       minLength: 20
       type: string
+    CreateComponentListInput:
+      properties:
+        __typename:
+          const: CreateComponentListInput
+          default: CreateComponentListInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_ids:
+          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
+          items:
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
+          type: array
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_ids
+      title: CreateComponentListInput
+      type: object
     ComponentScope:
       enum:
       - REMOVAL
@@ -448,175 +624,6 @@ components:
       - NET_NEGATIVITY
       title: ComponentScope
       type: string
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    CreateComponentScalarInput:
-      properties:
-        __typename:
-          const: CreateComponentScalarInput
-          default: CreateComponentScalarInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_id:
-          description: The Isometric ID of the datapoint that will be used to populate the value of this input
-          example: dtp_1DVKHKS101S0Q61Q
-          examples:
-          - dtp_1DVKHKS101S0Q61Q
-          - dtp_1DJN8P57VSBXASFX
-          maxLength: 37
-          minLength: 20
-          title: Datapoint Id
-          type: string
-        input_key:
-          description: Must match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_id
-      title: CreateComponentScalarInput
-      type: object
-    ProjectComponentAmortizationStrategy:
-      description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
-
-
-        ESTIMATED_PROJECT_TONNAGE - Automatic amortization ensuring full amortization in proportion to the project''s estimated gross removal.
-
-
-        MANUAL - No automatic amortization. All GHG Statement and Removal attributions are performed manually.
-
-
-        CUSTOM_TIME_PERIOD - Automatic amortization ensuring full amortization by a specified target date.
-
-
-        ESTIMATED_PROJECT_LIFETIME - Automatic amortization ensuring full amortization over the project''s estimated lifetime.'
-      enum:
-      - ESTIMATED_PROJECT_TONNAGE
-      - MANUAL
-      - CUSTOM_TIME_PERIOD
-      - ESTIMATED_PROJECT_LIFETIME
-      title: ProjectComponentAmortizationStrategy
-      type: string
-    Undefined:
-      additionalProperties: false
-      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
-      properties:
-        __typename:
-          const: Undefined
-          default: Undefined
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-      title: Undefined
-      type: object
-    ComponentType:
-      enum:
-      - ACTIVITY
-      - REMOVAL_COUNTERFACTUAL
-      - SEQUESTRATION
-      - LOSS
-      - ADJUSTMENT
-      - UNCERTAINTY_DISCOUNT
-      title: ComponentType
-      type: string
-    IsometricIDRequestParam_GhgEntry_:
-      example: rmv_1EEM6NJXX1S0EXKD
-      examples:
-      - rmv_1EEM6NJXX1S0EXKD
-      - rmv_1E3V4J2EWSBX5E82
-      maxLength: 37
-      minLength: 20
-      type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDQueryParam_GhgStatement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
-    PaginatedListResource_Component_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Component'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Component]
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    IsometricIDPathParam_Component_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Component_'
     CreateComponentRequest:
       properties:
         activity_completed_at:
@@ -678,76 +685,30 @@ components:
       - inputs
       title: CreateComponentRequest
       type: object
-    PatchComponentRequest:
-      properties:
-        allocation_strategy:
-          anyOf:
-          - $ref: '#/components/schemas/ProjectComponentAmortizationStrategy'
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: Allocation strategy to change the component to. This can only be set on project-scoped components.
-          title: Allocation Strategy
-        description:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Description
-        display_name:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Display Name
-        inputs:
-          anyOf:
-          - items:
-              oneOf:
-              - $ref: '#/components/schemas/CreateComponentListInput'
-              - $ref: '#/components/schemas/CreateComponentScalarInput'
-            type: array
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: Overwrite existing component inputs
-          title: Inputs
-      title: PatchComponentRequest
-      type: object
-    IsometricIDRequestParam_Component_:
-      example: cmp_1EP2SB7MZ1S036PY
-      examples:
-      - cmp_1EP2SB7MZ1S036PY
-      - cmp_1EHK4R6QJSBXFC5N
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDQueryParam_GhgEntry_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
-    CreateComponentListInput:
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    IsometricIDPathParam_Component_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Component_'
+    IsometricIDQueryParam_GhgStatement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
+    CreateComponentScalarInput:
       properties:
         __typename:
-          const: CreateComponentListInput
-          default: CreateComponentListInput
+          const: CreateComponentScalarInput
+          default: CreateComponentScalarInput
           description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
           title: Type name
           type: string
-        datapoint_ids:
-          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
-          items:
-            example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Datapoint Ids
-          type: array
+        datapoint_id:
+          description: The Isometric ID of the datapoint that will be used to populate the value of this input
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
         input_key:
           description: Must match an input key in the component blueprint.
           maxLength: 100
@@ -755,8 +716,47 @@ components:
           type: string
       required:
       - input_key
-      - datapoint_ids
-      title: CreateComponentListInput
+      - datapoint_id
+      title: CreateComponentScalarInput
+      type: object
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_Component_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Component'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Component]
       type: object
   securitySchemes:
     HTTPBearer:

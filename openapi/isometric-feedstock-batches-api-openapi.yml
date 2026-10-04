@@ -129,6 +129,109 @@ paths:
       - Feedstock Batches
 components:
   schemas:
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    CreateFeedstockBatchRequest:
+      properties:
+        delivery_date:
+          description: The date the feedstock batch was delivered to a field / to a site etc
+          format: date
+          title: Delivery Date
+          type: string
+        display_name:
+          description: The display name for this feedstock batch
+          maxLength: 100
+          minLength: 1
+          title: Display Name
+          type: string
+        feedstock_type_id:
+          description: The kind of feedstock used to create this feedstock batch
+          example: ftt_1D7KZ1P761S0G7BN
+          examples:
+          - ftt_1D7KZ1P761S0G7BN
+          - ftt_1CSRJN4HHSBXZ3TK
+          maxLength: 37
+          minLength: 20
+          title: Feedstock Type Id
+          type: string
+        mass:
+          $ref: '#/components/schemas/ScalarQuantity'
+        supplier_reference_id:
+          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+          maxLength: 100
+          minLength: 1
+          title: Supplier Reference Id
+          type: string
+      required:
+      - feedstock_type_id
+      - supplier_reference_id
+      - display_name
+      - delivery_date
+      - mass
+      title: CreateFeedstockBatchRequest
+      type: object
+    ScalarQuantity:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Standard Deviation
+        unit:
+          minLength: 1
+          title: Unit
+          type: string
+      required:
+      - magnitude
+      - unit
+      title: ScalarQuantity
+      type: object
+    IsometricIDRequestParam_FeedstockBatch_:
+      example: ftb_1DYYDB3C91S0ZHPX
+      examples:
+      - ftb_1DYYDB3C91S0ZHPX
+      - ftb_1G59XDK6HSBXCZ9B
+      maxLength: 37
+      minLength: 20
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    IsometricIDPathParam_FeedstockBatch_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_FeedstockBatch_'
     FeedstockBatch:
       properties:
         created_at:
@@ -182,109 +285,6 @@ components:
       - created_at
       title: FeedstockBatch
       type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    ScalarQuantity:
-      properties:
-        magnitude:
-          title: Magnitude
-          type: number
-        standard_deviation:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Standard Deviation
-        unit:
-          minLength: 1
-          title: Unit
-          type: string
-      required:
-      - magnitude
-      - unit
-      title: ScalarQuantity
-      type: object
-    CreateFeedstockBatchRequest:
-      properties:
-        delivery_date:
-          description: The date the feedstock batch was delivered to a field / to a site etc
-          format: date
-          title: Delivery Date
-          type: string
-        display_name:
-          description: The display name for this feedstock batch
-          maxLength: 100
-          minLength: 1
-          title: Display Name
-          type: string
-        feedstock_type_id:
-          description: The kind of feedstock used to create this feedstock batch
-          example: ftt_1D7KZ1P761S0G7BN
-          examples:
-          - ftt_1D7KZ1P761S0G7BN
-          - ftt_1CSRJN4HHSBXZ3TK
-          maxLength: 37
-          minLength: 20
-          title: Feedstock Type Id
-          type: string
-        mass:
-          $ref: '#/components/schemas/ScalarQuantity'
-        supplier_reference_id:
-          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-          maxLength: 100
-          minLength: 1
-          title: Supplier Reference Id
-          type: string
-      required:
-      - feedstock_type_id
-      - supplier_reference_id
-      - display_name
-      - delivery_date
-      - mass
-      title: CreateFeedstockBatchRequest
-      type: object
-    IsometricIDRequestParam_FeedstockBatch_:
-      example: ftb_1DYYDB3C91S0ZHPX
-      examples:
-      - ftb_1DYYDB3C91S0ZHPX
-      - ftb_1G59XDK6HSBXCZ9B
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDPathParam_FeedstockBatch_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_FeedstockBatch_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

@@ -295,6 +295,171 @@ paths:
       - Feedstock Types
 components:
   schemas:
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    IsometricIDRequestParam_FeedstockType_:
+      example: ftt_1D7KZ1P761S0G7BN
+      examples:
+      - ftt_1D7KZ1P761S0G7BN
+      - ftt_1CSRJN4HHSBXZ3TK
+      maxLength: 37
+      minLength: 20
+      type: string
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
+    ScalarQuantity:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Standard Deviation
+        unit:
+          minLength: 1
+          title: Unit
+          type: string
+      required:
+      - magnitude
+      - unit
+      title: ScalarQuantity
+      type: object
+    PaginatedListResource_FeedstockType_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/FeedstockType'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[FeedstockType]
+      type: object
+    FeedstockType:
+      properties:
+        id:
+          example: ftt_1D7KZ1P761S0G7BN
+          examples:
+          - ftt_1D7KZ1P761S0G7BN
+          - ftt_1CSRJN4HHSBXZ3TK
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+      required:
+      - id
+      - supplier_reference_id
+      - name
+      title: FeedstockType
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_FeedstockBatch_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/FeedstockBatch'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[FeedstockBatch]
+      type: object
+    IsometricIDPathParam_FeedstockType_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_FeedstockType_'
     FeedstockBatch:
       properties:
         created_at:
@@ -348,153 +513,6 @@ components:
       - created_at
       title: FeedstockBatch
       type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    PaginatedListResource_FeedstockType_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/FeedstockType'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[FeedstockType]
-      type: object
-    IsometricIDPathParam_FeedstockType_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_FeedstockType_'
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    ScalarQuantity:
-      properties:
-        magnitude:
-          title: Magnitude
-          type: number
-        standard_deviation:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Standard Deviation
-        unit:
-          minLength: 1
-          title: Unit
-          type: string
-      required:
-      - magnitude
-      - unit
-      title: ScalarQuantity
-      type: object
-    FeedstockType:
-      properties:
-        id:
-          example: ftt_1D7KZ1P761S0G7BN
-          examples:
-          - ftt_1D7KZ1P761S0G7BN
-          - ftt_1CSRJN4HHSBXZ3TK
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        name:
-          title: Name
-          type: string
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          title: Supplier Reference Id
-      required:
-      - id
-      - supplier_reference_id
-      - name
-      title: FeedstockType
-      type: object
-    Undefined:
-      additionalProperties: false
-      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
-      properties:
-        __typename:
-          const: Undefined
-          default: Undefined
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-      title: Undefined
-      type: object
-    IsometricIDRequestParam_FeedstockType_:
-      example: ftt_1D7KZ1P761S0G7BN
-      examples:
-      - ftt_1D7KZ1P761S0G7BN
-      - ftt_1CSRJN4HHSBXZ3TK
-      maxLength: 37
-      minLength: 20
-      type: string
     PatchFeedstockType:
       properties:
         name:
@@ -515,24 +533,6 @@ components:
             __typename: Undefined
           title: Supplier Reference Id
       title: PatchFeedstockType
-      type: object
-    PaginatedListResource_FeedstockBatch_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/FeedstockBatch'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[FeedstockBatch]
       type: object
   securitySchemes:
     HTTPBearer:

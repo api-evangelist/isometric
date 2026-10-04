@@ -123,70 +123,6 @@ components:
       - type
       title: ValidationError
       type: object
-    StripeSubscriptionFrequency:
-      enum:
-      - one_time
-      - monthly
-      - yearly
-      title: StripeSubscriptionFrequency
-      type: string
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    SupplierStripeConfiguration:
-      properties:
-        account_id:
-          description: Stripe account ID of the supplier's connected account
-          title: Account Id
-          type: string
-        credit_product_price_per_tonne:
-          anyOf:
-          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
-            type: string
-          - type: 'null'
-          description: Price per tonne for carbon dioxide removal; set by the supplier. See `currency` field for the currency.
-          title: Credit Product Price Per Tonne
-        currency:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Currency used for this account (ISO 4217 code)
-          title: Currency
-        id:
-          example: ssc_1EFF4PWKE1S0TF1S
-          examples:
-          - ssc_1EFF4PWKE1S0TF1S
-          - ssc_1FH1888QSSBXWB18
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        isometric_terms_and_conditions_url:
-          description: URL to the Isometric terms and conditions
-          title: Isometric Terms And Conditions Url
-          type: string
-        verification_product_price_per_tonne:
-          anyOf:
-          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
-            type: string
-          - type: 'null'
-          description: Price per tonne for verification; set by Isometric. See `currency` field for the currency.
-          title: Verification Product Price Per Tonne
-      required:
-      - id
-      - account_id
-      - credit_product_price_per_tonne
-      - verification_product_price_per_tonne
-      - currency
-      - isometric_terms_and_conditions_url
-      title: SupplierStripeConfiguration
-      type: object
     StripeCheckoutResponse:
       properties:
         redirect_url:
@@ -196,6 +132,22 @@ components:
       - redirect_url
       title: StripeCheckoutResponse
       type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    StripeSubscriptionFrequency:
+      enum:
+      - one_time
+      - monthly
+      - yearly
+      title: StripeSubscriptionFrequency
+      type: string
     CreateStripeCheckoutSessionRequest:
       properties:
         cancel_url:
@@ -249,6 +201,54 @@ components:
       - success_url
       - cancel_url
       title: CreateStripeCheckoutSessionRequest
+      type: object
+    SupplierStripeConfiguration:
+      properties:
+        account_id:
+          description: Stripe account ID of the supplier's connected account
+          title: Account Id
+          type: string
+        credit_product_price_per_tonne:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: Price per tonne for carbon dioxide removal; set by the supplier. See `currency` field for the currency.
+          title: Credit Product Price Per Tonne
+        currency:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Currency used for this account (ISO 4217 code)
+          title: Currency
+        id:
+          example: ssc_1EFF4PWKE1S0TF1S
+          examples:
+          - ssc_1EFF4PWKE1S0TF1S
+          - ssc_1FH1888QSSBXWB18
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        isometric_terms_and_conditions_url:
+          description: URL to the Isometric terms and conditions
+          title: Isometric Terms And Conditions Url
+          type: string
+        verification_product_price_per_tonne:
+          anyOf:
+          - pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+            type: string
+          - type: 'null'
+          description: Price per tonne for verification; set by Isometric. See `currency` field for the currency.
+          title: Verification Product Price Per Tonne
+      required:
+      - id
+      - account_id
+      - credit_product_price_per_tonne
+      - verification_product_price_per_tonne
+      - currency
+      - isometric_terms_and_conditions_url
+      title: SupplierStripeConfiguration
       type: object
   securitySchemes:
     HTTPBearer:

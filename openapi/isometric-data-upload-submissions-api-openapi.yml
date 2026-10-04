@@ -175,14 +175,6 @@ paths:
       - Data Upload Submissions
 components:
   schemas:
-    IsometricIDRequestParam_DataUploadSubmission_:
-      example: dus_1GBBSJ6P91S0R41N
-      examples:
-      - dus_1GBBSJ6P91S0R41N
-      - dus_1CRY1X1Q3SBX1CY2
-      maxLength: 37
-      minLength: 20
-      type: string
     ValidationError:
       properties:
         ctx:
@@ -209,40 +201,22 @@ components:
       - type
       title: ValidationError
       type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
+    IsometricIDRequestParam_DataUploadSubmission_:
+      example: dus_1GBBSJ6P91S0R41N
+      examples:
+      - dus_1GBBSJ6P91S0R41N
+      - dus_1CRY1X1Q3SBX1CY2
+      maxLength: 37
+      minLength: 20
+      type: string
+    DataUploadSubmissionType:
+      enum:
+      - biochar_pyrolysis_reactor_facility_time_series
+      - dac_storage_site_time_series
+      - dac_facility_time_series
+      - wae_wastewater_treatment_plant_facility_time_series
+      title: DataUploadSubmissionType
+      type: string
     CreateDataUploadSubmissionRequest:
       properties:
         facility_id:
@@ -285,6 +259,65 @@ components:
       - submission_type
       - file_upload_id
       title: CreateDataUploadSubmissionRequest
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    DataUploadSubmissionStatus:
+      enum:
+      - pending
+      - completed
+      - failed
+      title: DataUploadSubmissionStatus
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_DataUploadSubmission_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/DataUploadSubmission'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[DataUploadSubmission]
       type: object
     DataUploadSubmission:
       properties:
@@ -337,41 +370,8 @@ components:
       - facility_id
       title: DataUploadSubmission
       type: object
-    PaginatedListResource_DataUploadSubmission_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/DataUploadSubmission'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[DataUploadSubmission]
-      type: object
-    DataUploadSubmissionType:
-      enum:
-      - biochar_pyrolysis_reactor_facility_time_series
-      - dac_storage_site_time_series
-      - dac_facility_time_series
-      - wae_wastewater_treatment_plant_facility_time_series
-      title: DataUploadSubmissionType
-      type: string
     IsometricIDPathParam_DataUploadSubmission_:
       $ref: '#/components/schemas/IsometricIDRequestParam_DataUploadSubmission_'
-    DataUploadSubmissionStatus:
-      enum:
-      - pending
-      - completed
-      - failed
-      title: DataUploadSubmissionStatus
-      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

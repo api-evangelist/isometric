@@ -130,34 +130,6 @@ paths:
       - Component Blueprints
 components:
   schemas:
-    ComponentBlueprintInput:
-      properties:
-        compatible_unit:
-          description: An example unit for this blueprint input. The unit provided when creating a component from this blueprint can be different, but must be able to be converted to this unit.
-          title: Compatible Unit
-          type: string
-        data_shape:
-          $ref: '#/components/schemas/InputDataShape'
-          description: Whether the input is a list of datapoints
-        description:
-          description: Description of the input variable
-          title: Description
-          type: string
-        input_key:
-          description: When instantiating a component from this blueprint, one of input datapoints must match this key.
-          title: Input Key
-          type: string
-        quantity_kind:
-          $ref: '#/components/schemas/QuantityKindType'
-          description: The type of datapoint value that the input requires. Units compatible with this type can be found in the component blueprint library.
-      required:
-      - input_key
-      - description
-      - data_shape
-      - quantity_kind
-      - compatible_unit
-      title: ComponentBlueprintInput
-      type: object
     ValidationError:
       properties:
         ctx:
@@ -184,6 +156,46 @@ components:
       - type
       title: ValidationError
       type: object
+    PaginatedListResource_ComponentBlueprint_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/ComponentBlueprint'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[ComponentBlueprint]
+      type: object
+    ComponentBlueprintExpression:
+      properties:
+        inputs:
+          description: List of inputs to the expression. It documents how variables in the template are interpolated.
+          items:
+            $ref: '#/components/schemas/ComponentBlueprintExpressionInput'
+          title: Inputs
+          type: array
+        key:
+          description: Identifier of the expression within the component.
+          title: Key
+          type: string
+        template:
+          description: Mathematical formula of the expression.
+          title: Template
+          type: string
+      required:
+      - key
+      - template
+      - inputs
+      title: ComponentBlueprintExpression
+      type: object
     PageInfo:
       properties:
         end_cursor:
@@ -209,6 +221,13 @@ components:
       - end_cursor
       title: PageInfo
       type: object
+    ComponentBlueprintExpressionInputType:
+      enum:
+      - DATAPOINT
+      - EXPRESSION_RESULT
+      - ZERO_TCO2E
+      title: ComponentBlueprintExpressionInputType
+      type: string
     HTTPValidationError:
       properties:
         detail:
@@ -217,24 +236,6 @@ components:
           title: Detail
           type: array
       title: HTTPValidationError
-      type: object
-    PaginatedListResource_ComponentBlueprint_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/ComponentBlueprint'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[ComponentBlueprint]
       type: object
     ComponentType:
       enum:
@@ -246,27 +247,28 @@ components:
       - UNCERTAINTY_DISCOUNT
       title: ComponentType
       type: string
-    ComponentBlueprintExpression:
+    ComponentBlueprintExpressionInput:
       properties:
-        inputs:
-          description: List of inputs to the expression. It documents how variables in the template are interpolated.
-          items:
-            $ref: '#/components/schemas/ComponentBlueprintExpressionInput'
-          title: Inputs
-          type: array
-        key:
-          description: Identifier of the expression within the component.
-          title: Key
+        data_shape:
+          $ref: '#/components/schemas/InputDataShape'
+          description: Whether the input is a list of datapoints or just a single datapoint
+        input_key:
+          description: Input identifier within other resources of the component. Depending on the type, it will match an input datapoint or another expression, unless it represents a fixed 0 tCO₂e value.
+          title: Input Key
           type: string
-        template:
-          description: Mathematical formula of the expression.
-          title: Template
+        template_key:
+          description: Input identifier within the template string. It will match a template variable wrapped in `{` & `}`.
+          title: Template Key
           type: string
+        type:
+          $ref: '#/components/schemas/ComponentBlueprintExpressionInputType'
+          description: Type of resource pointed at by the input.
       required:
-      - key
-      - template
-      - inputs
-      title: ComponentBlueprintExpression
+      - template_key
+      - input_key
+      - type
+      - data_shape
+      title: ComponentBlueprintExpressionInput
       type: object
     QuantityKindType:
       enum:
@@ -372,42 +374,40 @@ components:
       - expressions
       title: ComponentBlueprint
       type: object
-    ComponentBlueprintExpressionInputType:
-      enum:
-      - DATAPOINT
-      - EXPRESSION_RESULT
-      - ZERO_TCO2E
-      title: ComponentBlueprintExpressionInputType
-      type: string
-    ComponentBlueprintExpressionInput:
-      properties:
-        data_shape:
-          $ref: '#/components/schemas/InputDataShape'
-          description: Whether the input is a list of datapoints or just a single datapoint
-        input_key:
-          description: Input identifier within other resources of the component. Depending on the type, it will match an input datapoint or another expression, unless it represents a fixed 0 tCO₂e value.
-          title: Input Key
-          type: string
-        template_key:
-          description: Input identifier within the template string. It will match a template variable wrapped in `{` & `}`.
-          title: Template Key
-          type: string
-        type:
-          $ref: '#/components/schemas/ComponentBlueprintExpressionInputType'
-          description: Type of resource pointed at by the input.
-      required:
-      - template_key
-      - input_key
-      - type
-      - data_shape
-      title: ComponentBlueprintExpressionInput
-      type: object
     InputDataShape:
       enum:
       - SCALAR
       - LIST
       title: InputDataShape
       type: string
+    ComponentBlueprintInput:
+      properties:
+        compatible_unit:
+          description: An example unit for this blueprint input. The unit provided when creating a component from this blueprint can be different, but must be able to be converted to this unit.
+          title: Compatible Unit
+          type: string
+        data_shape:
+          $ref: '#/components/schemas/InputDataShape'
+          description: Whether the input is a list of datapoints
+        description:
+          description: Description of the input variable
+          title: Description
+          type: string
+        input_key:
+          description: When instantiating a component from this blueprint, one of input datapoints must match this key.
+          title: Input Key
+          type: string
+        quantity_kind:
+          $ref: '#/components/schemas/QuantityKindType'
+          description: The type of datapoint value that the input requires. Units compatible with this type can be found in the component blueprint library.
+      required:
+      - input_key
+      - description
+      - data_shape
+      - quantity_kind
+      - compatible_unit
+      title: ComponentBlueprintInput
+      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

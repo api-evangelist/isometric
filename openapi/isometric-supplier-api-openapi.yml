@@ -55,6 +55,36 @@ paths:
       - Supplier
 components:
   schemas:
+    Location:
+      properties:
+        country_code:
+          title: Country Code
+          type: string
+        country_name:
+          title: Country Name
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        latitude:
+          maximum: 90
+          minimum: -90
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180
+          minimum: -180
+          title: Longitude
+          type: number
+      required:
+      - country_code
+      - country_name
+      - latitude
+      - longitude
+      title: Location
+      type: object
     ValidationError:
       properties:
         ctx:
@@ -110,6 +140,15 @@ components:
       - domain
       title: Organisation
       type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     Supplier:
       properties:
         id:
@@ -144,45 +183,6 @@ components:
       - organisation
       - location
       title: Supplier
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    Location:
-      properties:
-        country_code:
-          title: Country Code
-          type: string
-        country_name:
-          title: Country Name
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        latitude:
-          maximum: 90
-          minimum: -90
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180
-          minimum: -180
-          title: Longitude
-          type: number
-      required:
-      - country_code
-      - country_name
-      - latitude
-      - longitude
-      title: Location
       type: object
   securitySchemes:
     HTTPBearer:

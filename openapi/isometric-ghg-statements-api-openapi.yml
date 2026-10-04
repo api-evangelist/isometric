@@ -214,14 +214,6 @@ paths:
       - Ghg Statements
 components:
   schemas:
-    IsometricIDRequestParam_GhgStatement_:
-      example: ggs_1GDQJ99Z51S0DYW9
-      examples:
-      - ggs_1GDQJ99Z51S0DYW9
-      - ggs_1FWVEQRWSSBXK3NB
-      maxLength: 37
-      minLength: 20
-      type: string
     ValidationError:
       properties:
         ctx:
@@ -248,21 +240,24 @@ components:
       - type
       title: ValidationError
       type: object
-    ResubmitGhgStatementRequest:
+    SubmitGhgStatementRequest:
       properties:
         ghg_statement_report_url:
           description: The URL of the GHG statement report. This should be accessible to the verifier.
           title: Ghg Statement Report Url
           type: string
-        summary_of_changes:
-          description: A high-level summary of what's changed since the previous submission of this GHG statement.
-          title: Summary Of Changes
-          type: string
       required:
       - ghg_statement_report_url
-      - summary_of_changes
-      title: ResubmitGhgStatementRequest
+      title: SubmitGhgStatementRequest
       type: object
+    IsometricIDRequestParam_GhgStatement_:
+      example: ggs_1GDQJ99Z51S0DYW9
+      examples:
+      - ggs_1GDQJ99Z51S0DYW9
+      - ggs_1FWVEQRWSSBXK3NB
+      maxLength: 37
+      minLength: 20
+      type: string
     PageInfo:
       properties:
         end_cursor:
@@ -288,15 +283,17 @@ components:
       - end_cursor
       title: PageInfo
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
+    GhgStatementStatus:
+      enum:
+      - DRAFT
+      - AWAITING_VERIFICATION
+      - VERIFIED
+      - CREDITS_ISSUED
+      - FAILED_VERIFICATION
+      title: GhgStatementStatus
+      type: string
+    IsometricIDPathParam_GhgStatement_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
     CreateGhgStatementRequest:
       properties:
         end_on:
@@ -317,6 +314,48 @@ components:
       - end_on
       - project_id
       title: CreateGhgStatementRequest
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_GhgStatement_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/GhgStatement'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[GhgStatement]
+      type: object
+    ResubmitGhgStatementRequest:
+      properties:
+        ghg_statement_report_url:
+          description: The URL of the GHG statement report. This should be accessible to the verifier.
+          title: Ghg Statement Report Url
+          type: string
+        summary_of_changes:
+          description: A high-level summary of what's changed since the previous submission of this GHG statement.
+          title: Summary Of Changes
+          type: string
+      required:
+      - ghg_statement_report_url
+      - summary_of_changes
+      title: ResubmitGhgStatementRequest
       type: object
     GhgStatement:
       properties:
@@ -404,45 +443,6 @@ components:
       - pending_total_co2e_removed_kg
       title: GhgStatement
       type: object
-    GhgStatementStatus:
-      enum:
-      - DRAFT
-      - AWAITING_VERIFICATION
-      - VERIFIED
-      - CREDITS_ISSUED
-      - FAILED_VERIFICATION
-      title: GhgStatementStatus
-      type: string
-    SubmitGhgStatementRequest:
-      properties:
-        ghg_statement_report_url:
-          description: The URL of the GHG statement report. This should be accessible to the verifier.
-          title: Ghg Statement Report Url
-          type: string
-      required:
-      - ghg_statement_report_url
-      title: SubmitGhgStatementRequest
-      type: object
-    PaginatedListResource_GhgStatement_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/GhgStatement'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[GhgStatement]
-      type: object
-    IsometricIDPathParam_GhgStatement_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgStatement_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT
