@@ -24,6 +24,9 @@ description: >-
   include Google, Microsoft, Shopify, Frontier-aligned buyers, and Anglo
   American, and the registry powers credit lifecycle operations for
   marketplaces, intermediaries, and carbon intelligence platforms.
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
   - Carbon Removal
   - Carbon Registry
