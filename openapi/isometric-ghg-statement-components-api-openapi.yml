@@ -88,31 +88,66 @@ components:
       - datapoint_ids
       title: ComponentListInput
       type: object
-    ValidationError:
+    CreateComponentRequest:
       properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
+        activity_completed_at:
+          description: The date at which the physical activity related to this component started
+          format: date-time
+          title: Activity Completed At
           type: string
-        type:
-          title: Error Type
+        activity_started_at:
+          description: The date by which the physical activity related to this component finished
+          format: date-time
+          title: Activity Started At
+          type: string
+        component_blueprint_key:
+          description: The key of the blueprint which we are deriving this component from.
+          title: Component Blueprint Key
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: An optional description that can be used to add more context to the component
+          title: Description
+        display_name:
+          maxLength: 100
+          minLength: 1
+          title: Display Name
+          type: string
+        inputs:
+          description: A list of component inputs. This must match the list of inputs on the component blueprint. See the component-blueprints endpoint.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CreateComponentListInput'
+            - $ref: '#/components/schemas/CreateComponentScalarInput'
+          title: Inputs
+          type: array
+        project_id:
+          description: The project in which to create the component
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        supplier_reference_id:
+          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+          maxLength: 100
+          minLength: 1
+          title: Supplier Reference Id
           type: string
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - supplier_reference_id
+      - project_id
+      - component_blueprint_key
+      - display_name
+      - activity_completed_at
+      - activity_started_at
+      - inputs
+      title: CreateComponentRequest
       type: object
     ComponentScalarInput:
       properties:
@@ -227,33 +262,14 @@ components:
       - inputs
       title: Component
       type: object
-    CreateComponentScalarInput:
+    HTTPValidationError:
       properties:
-        __typename:
-          const: CreateComponentScalarInput
-          default: CreateComponentScalarInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_id:
-          description: The Isometric ID of the datapoint that will be used to populate the value of this input
-          example: dtp_1DVKHKS101S0Q61Q
-          examples:
-          - dtp_1DVKHKS101S0Q61Q
-          - dtp_1DJN8P57VSBXASFX
-          maxLength: 37
-          minLength: 20
-          title: Datapoint Id
-          type: string
-        input_key:
-          description: Must match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_id
-      title: CreateComponentScalarInput
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
     CreateComponentListInput:
       properties:
@@ -285,6 +301,34 @@ components:
       - datapoint_ids
       title: CreateComponentListInput
       type: object
+    CreateComponentScalarInput:
+      properties:
+        __typename:
+          const: CreateComponentScalarInput
+          default: CreateComponentScalarInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_id:
+          description: The Isometric ID of the datapoint that will be used to populate the value of this input
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_id
+      title: CreateComponentScalarInput
+      type: object
     ComponentScope:
       enum:
       - REMOVAL
@@ -293,6 +337,32 @@ components:
       - NET_NEGATIVITY
       title: ComponentScope
       type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     ProjectComponentAmortizationStrategy:
       description: 'Strategies which control how Project Emissions are automatically amortized and attributed to GHG Statement and Removals
 
@@ -314,6 +384,16 @@ components:
       - ESTIMATED_PROJECT_LIFETIME
       title: ProjectComponentAmortizationStrategy
       type: string
+    ComponentType:
+      enum:
+      - ACTIVITY
+      - REMOVAL_COUNTERFACTUAL
+      - SEQUESTRATION
+      - LOSS
+      - ADJUSTMENT
+      - UNCERTAINTY_DISCOUNT
+      title: ComponentType
+      type: string
     CreateGhgStatementComponentRequest:
       properties:
         component_data:
@@ -333,86 +413,6 @@ components:
       - ghg_statement_id
       - component_data
       title: CreateGhgStatementComponentRequest
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    ComponentType:
-      enum:
-      - ACTIVITY
-      - REMOVAL_COUNTERFACTUAL
-      - SEQUESTRATION
-      - LOSS
-      - ADJUSTMENT
-      - UNCERTAINTY_DISCOUNT
-      title: ComponentType
-      type: string
-    CreateComponentRequest:
-      properties:
-        activity_completed_at:
-          description: The date at which the physical activity related to this component started
-          format: date-time
-          title: Activity Completed At
-          type: string
-        activity_started_at:
-          description: The date by which the physical activity related to this component finished
-          format: date-time
-          title: Activity Started At
-          type: string
-        component_blueprint_key:
-          description: The key of the blueprint which we are deriving this component from.
-          title: Component Blueprint Key
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: An optional description that can be used to add more context to the component
-          title: Description
-        display_name:
-          maxLength: 100
-          minLength: 1
-          title: Display Name
-          type: string
-        inputs:
-          description: A list of component inputs. This must match the list of inputs on the component blueprint. See the component-blueprints endpoint.
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/CreateComponentListInput'
-            - $ref: '#/components/schemas/CreateComponentScalarInput'
-          title: Inputs
-          type: array
-        project_id:
-          description: The project in which to create the component
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        supplier_reference_id:
-          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-          maxLength: 100
-          minLength: 1
-          title: Supplier Reference Id
-          type: string
-      required:
-      - supplier_reference_id
-      - project_id
-      - component_blueprint_key
-      - display_name
-      - activity_completed_at
-      - activity_started_at
-      - inputs
-      title: CreateComponentRequest
       type: object
   securitySchemes:
     HTTPBearer:

@@ -201,67 +201,6 @@ paths:
       - Biochar Applications
 components:
   schemas:
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    IsometricIDRequestParam_BiocharSpreadEvent_:
-      example: bse_1F1FDSGPE1S0374B
-      examples:
-      - bse_1F1FDSGPE1S0374B
-      - bse_1DGG1R6DZSBXACD8
-      maxLength: 37
-      minLength: 20
-      type: string
-    IsometricIDPathParam_BiocharSpreadEvent_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_BiocharSpreadEvent_'
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
     ScalarQuantity:
       properties:
         magnitude:
@@ -281,33 +220,8 @@ components:
       - unit
       title: ScalarQuantity
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    PaginatedListResource_BiocharApplication_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/BiocharApplication'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[BiocharApplication]
-      type: object
+    IsometricIDPathParam_BiocharSpreadEvent_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_BiocharSpreadEvent_'
     BiocharApplication:
       properties:
         application_date:
@@ -382,6 +296,92 @@ components:
       - truck_mass_on_departure
       - average_application_rate
       title: BiocharApplication
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_BiocharApplication_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/BiocharApplication'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[BiocharApplication]
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    IsometricIDRequestParam_BiocharSpreadEvent_:
+      example: bse_1F1FDSGPE1S0374B
+      examples:
+      - bse_1F1FDSGPE1S0374B
+      - bse_1DGG1R6DZSBXACD8
+      maxLength: 37
+      minLength: 20
+      type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
     CreateBiocharApplicationRequest:
       properties:

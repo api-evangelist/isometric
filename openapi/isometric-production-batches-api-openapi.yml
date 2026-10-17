@@ -201,6 +201,173 @@ paths:
       - Production Batches
 components:
   schemas:
+    ScalarQuantity:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Standard Deviation
+        unit:
+          minLength: 1
+          title: Unit
+          type: string
+      required:
+      - magnitude
+      - unit
+      title: ScalarQuantity
+      type: object
+    IsometricIDPathParam_ProductionBatch_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_ProductionBatch_'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_ProductionBatch_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/ProductionBatch'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[ProductionBatch]
+      type: object
+    CreateProductionBatchRequest:
+      properties:
+        display_name:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          description: The display name for this production batch. If not provided, one will be auto-generated from the facility name
+          title: Display Name
+        ended_at:
+          description: The date and time at which production of this production batch was completed
+          format: date-time
+          title: Ended At
+          type: string
+        facility_id:
+          description: The facility where the production batch was created
+          example: fcl_1G8QT5ZAB1S0XSDW
+          examples:
+          - fcl_1G8QT5ZAB1S0XSDW
+          - fcl_1E384BDCGSBXNNZZ
+          maxLength: 37
+          minLength: 20
+          title: Facility Id
+          type: string
+        feedstock_type_ids:
+          description: The kinds of feedstock used to create this production batch
+          items:
+            example: ftt_1D7KZ1P761S0G7BN
+            examples:
+            - ftt_1D7KZ1P761S0G7BN
+            - ftt_1CSRJN4HHSBXZ3TK
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Feedstock Type Ids
+          type: array
+        kind:
+          $ref: '#/components/schemas/ProductionBatchKind'
+          description: The kind of production batch
+        mass:
+          $ref: '#/components/schemas/ScalarQuantity'
+        started_at:
+          description: The date and time at which production of this production batch was started
+          format: date-time
+          title: Started At
+          type: string
+        supplier_reference_id:
+          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+          maxLength: 100
+          minLength: 1
+          title: Supplier Reference Id
+          type: string
+      required:
+      - facility_id
+      - feedstock_type_ids
+      - supplier_reference_id
+      - kind
+      - started_at
+      - ended_at
+      - mass
+      title: CreateProductionBatchRequest
+      type: object
+    ProductionBatchKind:
+      enum:
+      - biochar
+      title: ProductionBatchKind
+      type: string
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     ProductionBatch:
       properties:
         display_name:
@@ -272,32 +439,6 @@ components:
       - mass
       title: ProductionBatch
       type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
     IsometricIDRequestParam_ProductionBatch_:
       example: ptb_1GAFJ4C051S06E0Z
       examples:
@@ -306,147 +447,6 @@ components:
       maxLength: 37
       minLength: 20
       type: string
-    CreateProductionBatchRequest:
-      properties:
-        display_name:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          description: The display name for this production batch. If not provided, one will be auto-generated from the facility name
-          title: Display Name
-        ended_at:
-          description: The date and time at which production of this production batch was completed
-          format: date-time
-          title: Ended At
-          type: string
-        facility_id:
-          description: The facility where the production batch was created
-          example: fcl_1G8QT5ZAB1S0XSDW
-          examples:
-          - fcl_1G8QT5ZAB1S0XSDW
-          - fcl_1E384BDCGSBXNNZZ
-          maxLength: 37
-          minLength: 20
-          title: Facility Id
-          type: string
-        feedstock_type_ids:
-          description: The kinds of feedstock used to create this production batch
-          items:
-            example: ftt_1D7KZ1P761S0G7BN
-            examples:
-            - ftt_1D7KZ1P761S0G7BN
-            - ftt_1CSRJN4HHSBXZ3TK
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Feedstock Type Ids
-          type: array
-        kind:
-          $ref: '#/components/schemas/ProductionBatchKind'
-          description: The kind of production batch
-        mass:
-          $ref: '#/components/schemas/ScalarQuantity'
-        started_at:
-          description: The date and time at which production of this production batch was started
-          format: date-time
-          title: Started At
-          type: string
-        supplier_reference_id:
-          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-          maxLength: 100
-          minLength: 1
-          title: Supplier Reference Id
-          type: string
-      required:
-      - facility_id
-      - feedstock_type_ids
-      - supplier_reference_id
-      - kind
-      - started_at
-      - ended_at
-      - mass
-      title: CreateProductionBatchRequest
-      type: object
-    IsometricIDPathParam_ProductionBatch_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_ProductionBatch_'
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    ScalarQuantity:
-      properties:
-        magnitude:
-          title: Magnitude
-          type: number
-        standard_deviation:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Standard Deviation
-        unit:
-          minLength: 1
-          title: Unit
-          type: string
-      required:
-      - magnitude
-      - unit
-      title: ScalarQuantity
-      type: object
-    ProductionBatchKind:
-      enum:
-      - biochar
-      title: ProductionBatchKind
-      type: string
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    PaginatedListResource_ProductionBatch_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/ProductionBatch'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[ProductionBatch]
-      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

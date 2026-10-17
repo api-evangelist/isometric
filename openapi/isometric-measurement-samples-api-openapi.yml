@@ -88,90 +88,26 @@ paths:
       - Measurement Samples
 components:
   schemas:
-    MeasurementValue:
+    DatapointQuantityInput:
       properties:
-        datapoint_id:
-          example: dtp_1DVKHKS101S0Q61Q
-          examples:
-          - dtp_1DVKHKS101S0Q61Q
-          - dtp_1DJN8P57VSBXASFX
-          maxLength: 37
-          minLength: 20
-          title: Datapoint Id
-          type: string
-        measurement_property:
-          $ref: '#/components/schemas/MeasurementProperty'
-        value:
-          $ref: '#/components/schemas/ScalarQuantity'
-      required:
-      - datapoint_id
-      - value
-      - measurement_property
-      title: MeasurementValue
-      type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    MeasurementProperty:
-      properties:
-        qualifier:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
           anyOf:
-          - $ref: '#/components/schemas/QuantityKindQualifierType'
+          - type: number
           - type: 'null'
-        quantity_kind:
-          $ref: '#/components/schemas/QuantityKindType'
-      required:
-      - quantity_kind
-      - qualifier
-      title: MeasurementProperty
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
+          description: The standard deviation of the datapoint in the same units as the magnitude. Leave null if the datapoint is not to be included in the uncertainty analysis for the removal.
+          title: Standard Deviation
+        unit:
           anyOf:
           - type: string
           - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
+          title: Unit
       required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+      - magnitude
+      - unit
+      title: DatapointQuantityInput
       type: object
     ScalarQuantity:
       properties:
@@ -191,6 +127,33 @@ components:
       - magnitude
       - unit
       title: ScalarQuantity
+      type: object
+    PaginatedListResource_MeasurementSample_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/MeasurementSample'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[MeasurementSample]
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
     QuantityKindQualifierType:
       enum:
@@ -1083,47 +1046,232 @@ components:
       - percentile_97
       title: QuantityKindQualifierType
       type: string
-    CreateMeasurementSampleValueRequest:
+    MeasurementValue:
       properties:
+        datapoint_id:
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
         measurement_property:
           $ref: '#/components/schemas/MeasurementProperty'
         value:
-          $ref: '#/components/schemas/DatapointQuantityInput'
+          $ref: '#/components/schemas/ScalarQuantity'
       required:
+      - datapoint_id
       - value
       - measurement_property
-      title: CreateMeasurementSampleValueRequest
+      title: MeasurementValue
       type: object
-    DatapointQuantityInput:
+    MeasurementProperty:
       properties:
-        magnitude:
-          title: Magnitude
-          type: number
-        standard_deviation:
+        qualifier:
           anyOf:
-          - type: number
+          - $ref: '#/components/schemas/QuantityKindQualifierType'
           - type: 'null'
-          description: The standard deviation of the datapoint in the same units as the magnitude. Leave null if the datapoint is not to be included in the uncertainty analysis for the removal.
-          title: Standard Deviation
-        unit:
+        quantity_kind:
+          $ref: '#/components/schemas/QuantityKindType'
+      required:
+      - quantity_kind
+      - qualifier
+      title: MeasurementProperty
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
           anyOf:
           - type: string
           - type: 'null'
-          title: Unit
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
       required:
-      - magnitude
-      - unit
-      title: DatapointQuantityInput
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
-    HTTPValidationError:
+    MeasurementTypeKey:
+      enum:
+      - biochar_production_batch
+      - biochar_soil
+      - pyrolysis_reactor
+      - ew_soil
+      - ew_porewater
+      - ew_field_biomass
+      - ew_mineral_feedstock
+      - ew_ion_exchange_resin
+      title: MeasurementTypeKey
+      type: string
+    ValidationError:
       properties:
-        detail:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-      title: HTTPValidationError
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
+    MeasurementSample:
+      properties:
+        id:
+          example: mts_1D7HS15KD1S03M0Z
+          examples:
+          - mts_1D7HS15KD1S03M0Z
+          - mts_1FN0MEX2ZSBX40DT
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        measured_at:
+          format: date
+          title: Measured At
+          type: string
+        measurement_location_id:
+          anyOf:
+          - example: mlc_1CCZASA6Q1S0V8T4
+            examples:
+            - mlc_1CCZASA6Q1S0V8T4
+            - mlc_1GF73PG90SBXKEX1
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Measurement Location Id
+        production_batch_id:
+          anyOf:
+          - example: ptb_1GAFJ4C051S06E0Z
+            examples:
+            - ptb_1GAFJ4C051S06E0Z
+            - ptb_1FQVMJYTASBXSZT8
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Production Batch Id
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+        values:
+          items:
+            $ref: '#/components/schemas/MeasurementValue'
+          title: Values
+          type: array
+      required:
+      - id
+      - supplier_reference_id
+      - values
+      - measured_at
+      - measurement_location_id
+      - production_batch_id
+      title: MeasurementSample
+      type: object
+    QuantityKindType:
+      enum:
+      - acidity
+      - activity_concentration
+      - amount_of_substance
+      - amount_of_substance_concentration
+      - amount_of_substance_per_mass
+      - area
+      - area_carbon_emission_factor
+      - buffer_ph
+      - bulk_density
+      - count
+      - currency
+      - currency_carbon_emission_factor
+      - depth
+      - diameter
+      - diameter_at_breast_height
+      - dimensionless
+      - dimensionless_ratio
+      - distance
+      - distance_carbon_emission_factor
+      - dose_equivalent_rate
+      - electric_current
+      - elevation
+      - energy
+      - energy_carbon_emission_factor
+      - energy_density
+      - exchangeable_amount_of_substance_per_mass
+      - fuel_economy
+      - height
+      - ionic_strength
+      - latitude
+      - longitude
+      - mass
+      - mass_carbon
+      - mass_carbon_emission_factor
+      - mass_cdr_potential
+      - mass_concentration
+      - mass_density
+      - mass_distance
+      - mass_distance_carbon_emission_factor
+      - mass_energy_density
+      - mass_flow_rate
+      - mass_fraction
+      - mass_fraction_dry_basis
+      - mass_fraction_wet_basis
+      - mass_per_area
+      - mass_ratio
+      - molality_of_solute
+      - molar_mass
+      - mole_fraction
+      - partial_pressure
+      - particle_diameter
+      - particle_mass_density
+      - power
+      - pressure
+      - specific_surface_area
+      - specific_volume
+      - temperature
+      - time
+      - time_emission_factor
+      - voltage
+      - volume
+      - volume_carbon_emission_factor
+      - volume_distance_carbon_emission_factor
+      - volume_flow_rate
+      - volume_fraction
+      - volume_per_area
+      title: QuantityKindType
+      type: string
     CreateMeasurementSampleRequest:
       properties:
         feedstock_batch_id:
@@ -1209,165 +1357,17 @@ components:
       - storage_location_id
       title: CreateMeasurementSampleRequest
       type: object
-    QuantityKindType:
-      enum:
-      - acidity
-      - activity_concentration
-      - amount_of_substance
-      - amount_of_substance_concentration
-      - amount_of_substance_per_mass
-      - area
-      - area_carbon_emission_factor
-      - buffer_ph
-      - bulk_density
-      - count
-      - currency
-      - currency_carbon_emission_factor
-      - depth
-      - diameter
-      - diameter_at_breast_height
-      - dimensionless
-      - dimensionless_ratio
-      - distance
-      - distance_carbon_emission_factor
-      - dose_equivalent_rate
-      - electric_current
-      - elevation
-      - energy
-      - energy_carbon_emission_factor
-      - energy_density
-      - exchangeable_amount_of_substance_per_mass
-      - fuel_economy
-      - height
-      - ionic_strength
-      - latitude
-      - longitude
-      - mass
-      - mass_carbon
-      - mass_carbon_emission_factor
-      - mass_cdr_potential
-      - mass_concentration
-      - mass_density
-      - mass_distance
-      - mass_distance_carbon_emission_factor
-      - mass_energy_density
-      - mass_flow_rate
-      - mass_fraction
-      - mass_fraction_dry_basis
-      - mass_fraction_wet_basis
-      - mass_per_area
-      - mass_ratio
-      - molality_of_solute
-      - molar_mass
-      - mole_fraction
-      - partial_pressure
-      - particle_diameter
-      - particle_mass_density
-      - power
-      - pressure
-      - specific_surface_area
-      - specific_volume
-      - temperature
-      - time
-      - time_emission_factor
-      - voltage
-      - volume
-      - volume_carbon_emission_factor
-      - volume_distance_carbon_emission_factor
-      - volume_flow_rate
-      - volume_fraction
-      - volume_per_area
-      title: QuantityKindType
-      type: string
-    PaginatedListResource_MeasurementSample_:
+    CreateMeasurementSampleValueRequest:
       properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/MeasurementSample'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
+        measurement_property:
+          $ref: '#/components/schemas/MeasurementProperty'
+        value:
+          $ref: '#/components/schemas/DatapointQuantityInput'
       required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[MeasurementSample]
+      - value
+      - measurement_property
+      title: CreateMeasurementSampleValueRequest
       type: object
-    MeasurementSample:
-      properties:
-        id:
-          example: mts_1D7HS15KD1S03M0Z
-          examples:
-          - mts_1D7HS15KD1S03M0Z
-          - mts_1FN0MEX2ZSBX40DT
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        measured_at:
-          format: date
-          title: Measured At
-          type: string
-        measurement_location_id:
-          anyOf:
-          - example: mlc_1CCZASA6Q1S0V8T4
-            examples:
-            - mlc_1CCZASA6Q1S0V8T4
-            - mlc_1GF73PG90SBXKEX1
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Measurement Location Id
-        production_batch_id:
-          anyOf:
-          - example: ptb_1GAFJ4C051S06E0Z
-            examples:
-            - ptb_1GAFJ4C051S06E0Z
-            - ptb_1FQVMJYTASBXSZT8
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Production Batch Id
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          title: Supplier Reference Id
-        values:
-          items:
-            $ref: '#/components/schemas/MeasurementValue'
-          title: Values
-          type: array
-      required:
-      - id
-      - supplier_reference_id
-      - values
-      - measured_at
-      - measurement_location_id
-      - production_batch_id
-      title: MeasurementSample
-      type: object
-    MeasurementTypeKey:
-      enum:
-      - biochar_production_batch
-      - biochar_soil
-      - pyrolysis_reactor
-      - ew_soil
-      - ew_porewater
-      - ew_field_biomass
-      - ew_mineral_feedstock
-      - ew_ion_exchange_resin
-      title: MeasurementTypeKey
-      type: string
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

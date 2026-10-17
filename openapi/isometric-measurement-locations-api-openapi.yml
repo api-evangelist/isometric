@@ -211,33 +211,14 @@ paths:
       - Measurement Locations
 components:
   schemas:
-    IsometricIDPathParam_MeasurementLocation_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_MeasurementLocation_'
-    ValidationError:
+    HTTPValidationError:
       properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
           type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      title: HTTPValidationError
       type: object
     PaginatedListResource_MeasurementLocation_:
       properties:
@@ -290,6 +271,40 @@ components:
       maxLength: 37
       minLength: 20
       type: string
+    CreateMeasurementLocationRequest:
+      properties:
+        latitude:
+          maximum: 90.0
+          minimum: -90.0
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180.0
+          minimum: -180.0
+          title: Longitude
+          type: number
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        supplier_reference_id:
+          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+          maxLength: 100
+          minLength: 1
+          title: Supplier Reference Id
+          type: string
+      required:
+      - supplier_reference_id
+      - latitude
+      - longitude
+      - project_id
+      title: CreateMeasurementLocationRequest
+      type: object
     MeasurementLocation:
       properties:
         id:
@@ -326,49 +341,34 @@ components:
       - supplier_reference_id
       title: MeasurementLocation
       type: object
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-      title: HTTPValidationError
-      type: object
-    CreateMeasurementLocationRequest:
-      properties:
-        latitude:
-          maximum: 90.0
-          minimum: -90.0
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180.0
-          minimum: -180.0
-          title: Longitude
-          type: number
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
+        msg:
+          title: Message
           type: string
-        supplier_reference_id:
-          description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-          maxLength: 100
-          minLength: 1
-          title: Supplier Reference Id
+        type:
+          title: Error Type
           type: string
       required:
-      - supplier_reference_id
-      - latitude
-      - longitude
-      - project_id
-      title: CreateMeasurementLocationRequest
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
+    IsometricIDPathParam_MeasurementLocation_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_MeasurementLocation_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

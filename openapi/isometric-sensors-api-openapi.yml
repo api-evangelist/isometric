@@ -184,139 +184,24 @@ paths:
       - Sensors
 components:
   schemas:
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    IsometricIDPathParam_Sensor_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Sensor_'
-    MeasurementProperty:
-      properties:
-        qualifier:
-          anyOf:
-          - $ref: '#/components/schemas/QuantityKindQualifierType'
-          - type: 'null'
-        quantity_kind:
-          $ref: '#/components/schemas/QuantityKindType'
-      required:
-      - quantity_kind
-      - qualifier
-      title: MeasurementProperty
-      type: object
-    Sensor:
-      properties:
-        id:
-          example: sns_1GJ82BEMB1S0FBFV
-          examples:
-          - sns_1GJ82BEMB1S0FBFV
-          - sns_1CCYZYWFWSBXYG38
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        manufacturer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Manufacturer
-        measurement_property:
-          $ref: '#/components/schemas/MeasurementProperty'
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        project_id:
-          title: Project Id
-          type: string
-        reference:
-          title: Reference
-          type: string
-        units:
-          title: Units
-          type: string
-      required:
-      - id
-      - project_id
-      - reference
-      - measurement_property
-      - units
-      - manufacturer
-      - model
-      title: Sensor
-      type: object
-    IsometricIDRequestParam_Sensor_:
-      example: sns_1GJ82BEMB1S0FBFV
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
       examples:
-      - sns_1GJ82BEMB1S0FBFV
-      - sns_1CCYZYWFWSBXYG38
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
       maxLength: 37
       minLength: 20
       type: string
-    PaginatedListResource_Sensor_:
+    HTTPValidationError:
       properties:
-        nodes:
+        detail:
           items:
-            $ref: '#/components/schemas/Sensor'
-          title: Nodes
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
           type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Sensor]
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+      title: HTTPValidationError
       type: object
     QuantityKindQualifierType:
       enum:
@@ -1209,14 +1094,43 @@ components:
       - percentile_97
       title: QuantityKindQualifierType
       type: string
-    HTTPValidationError:
+    MeasurementProperty:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
+        qualifier:
+          anyOf:
+          - $ref: '#/components/schemas/QuantityKindQualifierType'
+          - type: 'null'
+        quantity_kind:
+          $ref: '#/components/schemas/QuantityKindType'
+      required:
+      - quantity_kind
+      - qualifier
+      title: MeasurementProperty
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
     CreateSensorRequest:
       properties:
@@ -1274,6 +1188,102 @@ components:
       - units
       title: CreateSensorRequest
       type: object
+    IsometricIDPathParam_Sensor_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Sensor_'
+    Sensor:
+      properties:
+        id:
+          example: sns_1GJ82BEMB1S0FBFV
+          examples:
+          - sns_1GJ82BEMB1S0FBFV
+          - sns_1CCYZYWFWSBXYG38
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        manufacturer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Manufacturer
+        measurement_property:
+          $ref: '#/components/schemas/MeasurementProperty'
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        project_id:
+          title: Project Id
+          type: string
+        reference:
+          title: Reference
+          type: string
+        units:
+          title: Units
+          type: string
+      required:
+      - id
+      - project_id
+      - reference
+      - measurement_property
+      - units
+      - manufacturer
+      - model
+      title: Sensor
+      type: object
+    PaginatedListResource_Sensor_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Sensor'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Sensor]
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    IsometricIDRequestParam_Sensor_:
+      example: sns_1GJ82BEMB1S0FBFV
+      examples:
+      - sns_1GJ82BEMB1S0FBFV
+      - sns_1CCYZYWFWSBXYG38
+      maxLength: 37
+      minLength: 20
+      type: string
     QuantityKindType:
       enum:
       - acidity
@@ -1343,16 +1353,6 @@ components:
       - volume_fraction
       - volume_per_area
       title: QuantityKindType
-      type: string
-    IsometricIDQueryParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
       type: string
   securitySchemes:
     HTTPBearer:
