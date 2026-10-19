@@ -1,0 +1,390 @@
+openapi: 3.2.0
+info:
+  title: Fast Webhooks API
+  version: 0.1.0
+tags:
+- name: Webhooks
+paths:
+  /_webhooks/stripe:
+    post:
+      summary: Handle Stripe Webhook
+      description: This endpoint receives webhook events from Stripe on our own account.
+      operationId: handle_stripe_webhook__webhooks_stripe_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Webhooks
+  /_webhooks/stripe/connect:
+    post:
+      summary: Handle Stripe Connect Webhook
+      description: This endpoint receives webhook events from Stripe Connect, ie. events from connected accounts.
+      operationId: handle_stripe_connect_webhook__webhooks_stripe_connect_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StripeConnectEvent'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Webhooks
+  /_webhooks/tiptap:
+    post:
+      summary: Handle Tiptap Webhook
+      description: 'Receive collaboration webhook events from Tiptap Cloud.
+
+
+        Currently we only act on the first comment in a thread (i.e. a new thread being created)
+
+        and post a Slack notification.'
+      operationId: handle_tiptap_webhook__webhooks_tiptap_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TiptapWebhookEvent'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Webhooks
+  /_webhooks/xero:
+    post:
+      summary: Handle Xero Webhook
+      description: 'Receive webhook events from Xero.
+
+
+        Xero sends an empty `events` list to validate the endpoint ("intent to receive"); a valid
+
+        signature (checked in the route dependency) is enough for that handshake, so we simply
+
+        acknowledge with 200. Real events are handed to a service that publishes a domain event per
+
+        invoice for out-of-band processing.'
+      operationId: handle_xero_webhook__webhooks_xero_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/XeroWebhookPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Webhooks
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TiptapCommentUserData:
+      properties:
+        userName:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Username
+        userAvatar:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Useravatar
+      type: object
+      title: TiptapCommentUserData
+    StripeEventData:
+      properties:
+        object:
+          additionalProperties: true
+          type: object
+          title: Object
+      type: object
+      required:
+      - object
+      title: StripeEventData
+    TiptapWebhookEvent:
+      properties:
+        trigger:
+          type: string
+          title: Trigger
+        name:
+          type: string
+          title: Name
+          default: ''
+        thread:
+          anyOf:
+          - $ref: '#/components/schemas/TiptapThread'
+          - items:
+              $ref: '#/components/schemas/TiptapCommentData'
+            type: array
+          - type: 'null'
+          title: Thread
+        comment:
+          anyOf:
+          - $ref: '#/components/schemas/TiptapCommentData'
+          - type: 'null'
+        appName:
+          type: string
+          title: Appname
+          default: ''
+        user:
+          type: string
+          title: User
+          default: ''
+      type: object
+      required:
+      - trigger
+      title: TiptapWebhookEvent
+    XeroWebhookPayload:
+      properties:
+        events:
+          items:
+            $ref: '#/components/schemas/XeroWebhookEvent'
+          type: array
+          title: Events
+        firstEventSequence:
+          type: integer
+          title: Firsteventsequence
+        lastEventSequence:
+          type: integer
+          title: Lasteventsequence
+      type: object
+      required:
+      - events
+      - firstEventSequence
+      - lastEventSequence
+      title: XeroWebhookPayload
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    XeroWebhookEvent:
+      properties:
+        resourceUrl:
+          type: string
+          title: Resourceurl
+        resourceId:
+          type: string
+          title: Resourceid
+        eventDateUtc:
+          type: string
+          format: date-time
+          title: Eventdateutc
+        eventType:
+          type: string
+          title: Eventtype
+        eventCategory:
+          type: string
+          title: Eventcategory
+        tenantId:
+          type: string
+          title: Tenantid
+        tenantType:
+          type: string
+          title: Tenanttype
+      type: object
+      required:
+      - resourceUrl
+      - resourceId
+      - eventDateUtc
+      - eventType
+      - eventCategory
+      - tenantId
+      - tenantType
+      title: XeroWebhookEvent
+    TiptapCommentData:
+      properties:
+        id:
+          type: string
+          title: Id
+        createdAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Createdat
+        updatedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updatedat
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        data:
+          $ref: '#/components/schemas/TiptapCommentUserData'
+          default: {}
+      type: object
+      required:
+      - id
+      title: TiptapCommentData
+    TiptapThread:
+      properties:
+        id:
+          type: string
+          title: Id
+        comments:
+          items:
+            $ref: '#/components/schemas/TiptapCommentData'
+          type: array
+          title: Comments
+          default: []
+      type: object
+      required:
+      - id
+      title: TiptapThread
+    StripeConnectEvent:
+      properties:
+        id:
+          type: string
+          title: Id
+        type:
+          type: string
+          title: Type
+        data:
+          $ref: '#/components/schemas/StripeEventData'
+        account:
+          type: string
+          title: Account
+      type: object
+      required:
+      - id
+      - type
+      - data
+      - account
+      title: StripeConnectEvent
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
+      scheme: bearer
+      bearerFormat: JWT

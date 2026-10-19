@@ -1,0 +1,86 @@
+openapi: 3.2.0
+info:
+  title: Fast Readiness API
+  version: 0.1.0
+tags:
+- name: Readiness
+paths:
+  /_readiness:
+    get:
+      summary: Readiness Endpoint
+      description: 'The readiness probe is used by Kubernetes to establish whether the container is capable of
+
+        serving requests. It won''t receive traffic unless it successfully responds.'
+      operationId: _readiness_endpoint__readiness_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Readiness
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
+      scheme: bearer
+      bearerFormat: JWT

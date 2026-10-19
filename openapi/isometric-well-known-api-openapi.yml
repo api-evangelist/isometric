@@ -1,0 +1,80 @@
+openapi: 3.2.0
+info:
+  title: Fast .well Known API
+  version: 0.1.0
+tags:
+- name: .well Known
+paths:
+  /.well-known/oauth-protected-resource/mcp:
+    get:
+      summary: Get Public Mcp Protected Resource Metadata
+      description: 'Protected resource metadata for the public MCP server (RFC 9728).
+
+
+        Directs MCP clients to the authorization server that can issue tokens
+
+        for the `/mcp/` resource.'
+      operationId: get_public_mcp_protected_resource_metadata__well_known_oauth_protected_resource_mcp_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - .well Known
+  /.well-known/oauth-protected-resource/internal/mcp:
+    get:
+      summary: Get Internal Mcp Protected Resource Metadata
+      description: 'Protected resource metadata for the internal MCP server (RFC 9728).
+
+
+        Directs MCP clients to the authorization server that can issue tokens
+
+        for the `/internal/mcp/` resource.'
+      operationId: get_internal_mcp_protected_resource_metadata__well_known_oauth_protected_resource_internal_mcp_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - .well Known
+  /.well-known/oauth-authorization-server/oauth/mcp:
+    get:
+      summary: Get Authorization Server Metadata
+      description: 'Authorization server metadata for MCP OAuth (RFC 8414).
+
+
+        Advertises OAuth endpoints and supported features so MCP clients can
+
+        discover how to initiate the authorization flow.'
+      operationId: get_authorization_server_metadata__well_known_oauth_authorization_server_oauth_mcp_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - .well Known
+  /.well-known/openai-apps-challenge:
+    get:
+      summary: Get Openai Apps Challenge
+      operationId: get_openai_apps_challenge__well_known_openai_apps_challenge_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - .well Known
+components:
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
+      scheme: bearer
+      bearerFormat: JWT

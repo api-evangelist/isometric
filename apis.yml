@@ -1133,6 +1133,86 @@ apis:
     url: https://docs.isometric.com/api-reference/certify/api-changelog
   - type: ChangeLog
     url: https://docs.isometric.com/api-reference/certify/api-changelog
+- aid: isometric:isometric-internal-api
+  name: Isometric Internal API
+  description: The Internal API from Isometric — 1 operation(s) for internal.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Internal
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-internal-api-openapi.yml
+- aid: isometric:isometric-liveness-api
+  name: Isometric Liveness API
+  description: The Liveness API from Isometric — 1 operation(s) for liveness.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Liveness
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-liveness-api-openapi.yml
+- aid: isometric:isometric-oauth-api
+  name: Isometric OAuth API
+  description: The Oauth API from Isometric — 2 operation(s) for oauth.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-oauth-api-openapi.yml
+- aid: isometric:isometric-readiness-api
+  name: Isometric Readiness API
+  description: The Readiness API from Isometric — 1 operation(s) for readiness.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Readiness
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-readiness-api-openapi.yml
+- aid: isometric:isometric-startup-api
+  name: Isometric Startup API
+  description: The Startup API from Isometric — 1 operation(s) for startup.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Startup
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-startup-api-openapi.yml
+- aid: isometric:isometric-webhooks-api
+  name: Isometric Webhooks API
+  description: The Webhooks API from Isometric — 4 operation(s) for webhooks.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-webhooks-api-openapi.yml
+- aid: isometric:isometric-well-known-api
+  name: Isometric .well Known API
+  description: The .well Known API from Isometric — 4 operation(s) for .well known.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - .well Known
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-well-known-api-openapi.yml
+- aid: isometric:isometric-graph-ql-api
+  name: Isometric Graph QL API
+  description: The Graph QL API from Isometric — 2 operation(s) for graph ql.
+  humanURL: https://docs.isometric.com/user-guides/ai/mcp-server
+  baseURL: https://api.isometric.com/mcp
+  tags:
+  - Graph QL
+  properties:
+  - type: OpenAPI
+    url: openapi/isometric-graph-ql-api-openapi.yml
 common:
   - type: CapabilityMap
     url: capabilities/isometric-capability-edges.yml

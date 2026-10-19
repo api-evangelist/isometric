@@ -1,0 +1,223 @@
+openapi: 3.2.0
+info:
+  title: Fast OAuth API
+  version: 0.1.0
+tags:
+- name: OAuth
+paths:
+  /oauth/mcp/authorize:
+    get:
+      summary: Authorize
+      description: OAuth 2.1 authorization endpoint for MCP clients.
+      operationId: authorize_oauth_mcp_authorize_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: response_type
+        in: query
+        required: true
+        schema:
+          const: code
+          type: string
+          title: Response Type
+      - name: code_challenge
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Code Challenge
+      - name: code_challenge_method
+        in: query
+        required: true
+        schema:
+          const: S256
+          type: string
+          title: Code Challenge Method
+      - name: client_id
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Client Id
+      - name: redirect_uri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 2083
+          title: Redirect Uri
+      - name: resource
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 2083
+          title: Resource
+      - name: state
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - OAuth
+  /oauth/mcp/token:
+    post:
+      summary: Token
+      description: OAuth 2.1 token endpoint for MCP clients.
+      operationId: token_oauth_mcp_token_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_token_oauth_mcp_token_post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - OAuth
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Body_token_oauth_mcp_token_post:
+      properties:
+        grant_type:
+          type: string
+          enum:
+          - authorization_code
+          - refresh_token
+          title: Grant Type
+        client_id:
+          type: string
+          title: Client Id
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        code_verifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Verifier
+        redirect_uri:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Redirect Uri
+        resource:
+          anyOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+            format: uri
+          - type: 'null'
+          title: Resource
+        refresh_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Refresh Token
+      type: object
+      required:
+      - grant_type
+      - client_id
+      title: Body_token_oauth_mcp_token_post
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
+      scheme: bearer
+      bearerFormat: JWT

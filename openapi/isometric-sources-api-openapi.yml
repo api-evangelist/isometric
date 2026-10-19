@@ -6,7 +6,90 @@ info:
     ## Versioning
 
 
-    This API will be safely versioned using root path versioning, in the format `/v{major}`.'
+    This API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`. ### Compatibility
+
+
+    We won''t make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we''ll release a new major version. We may deprecate APIs that have been replaced by a newer version. When doing so, we will expect
+
+    integrated partners to manage a transition to new resources within the deprecation timeline of old ones. We will make the following sort of changes we do not consider to be breaking:
+
+
+    - Adding new endpoints
+
+    - Adding optional query parameters to API endpoints
+
+    - Adding new properties to existing API responses
+
+    - Reordering properties in existing API responses
+
+
+    It is important that clients are built to be robust to these changes. ## Pagination
+
+
+    Our API is based on the Relay pagination spec. Paginated endpoints
+
+    will return a `PaginatedListResource` which contains:
+
+
+    - `page_info` - Containing information regarding pagination cursors and the total number of entities. - `nodes` - Each node is a paginated entity. - `total_count` - The total size of the list across all pages. ### Pagination Parameters
+
+
+    Paginated endpoints also accepted a standard set of query parameters:
+
+
+    - `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50. - `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page''s `start_cursor` here when paginated backwards. - `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50. - `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page''s `end_cursor` here when paginated forwards. For example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:
+
+
+    ```json
+
+    {
+
+    "page_info": {
+
+    "has_previous_page": false,
+
+    "start_cursor": ...,
+
+    "has_next_page": true,
+
+    "end_cursor": "mpG5kcuoFBYtlH",
+
+    },
+
+    "nodes": [{
+
+    "id": "org_12345iso678",
+
+    "name": "My Org",
+
+    ... }],
+
+    "total_count": 100
+
+    }
+
+    ```
+
+
+    Then querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items. ## Dates
+
+
+    Datetime fields in the APIs conform to the ISO 8601 date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`. ## Country Codes
+
+
+    Countries are identified in the APIs via ISO 3166-1 Alpha-3 codes. For example: `GBR` and `USA`. # Authentication
+
+
+    Most API requests will need to authenticate against the Isometric API in two ways simultaneously:
+
+
+    - By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API. - By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data. ### Client Authentication
+
+
+    Every API call to Isometric must include a **client secret** identifying the client application. This client secret is tied to a particular environment - sandbox or production. The client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`. ### Organization Authentication
+
+
+    In addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization. To authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.'
   title: Isometric Certify Data Ingestion Sources API
   version: v0
 servers:
@@ -363,8 +446,17 @@ paths:
       - Sources
 components:
   schemas:
-    IsometricIDQueryParam_Project_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    IsometricIDPathParam_Source_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Source_'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
     CreateDocumentSourceRequest:
       properties:
         __typename:
@@ -427,14 +519,18 @@ components:
       - project_id
       title: CreateDocumentSourceRequest
       type: object
-    IsometricIDRequestParam_Project_:
-      example: prj_1CTWZQGKE1S0VAXA
-      examples:
-      - prj_1CTWZQGKE1S0VAXA
-      - prj_1E0QTWB22SBX34D1
-      maxLength: 37
-      minLength: 20
-      type: string
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
     ValidationError:
       properties:
         ctx:
@@ -461,14 +557,21 @@ components:
       - type
       title: ValidationError
       type: object
-    HTTPValidationError:
+    SignedUploadUrlRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
+        content_length:
+          description: The size (in bytes) of the file that will be uploaded. The pre-signed URL will only accept a file of this size.
+          maximum: 50000000.0
+          title: Content Length
+          type: integer
+        content_type:
+          description: The content type of the file that will be uploaded. This must also be passed as a 'content-type' header during the upload. The pre-signed URL will only accept a file of this content-type.
+          title: Content Type
+          type: string
+      required:
+      - content_type
+      - content_length
+      title: SignedUploadUrlRequest
       type: object
     SourcePrivateUrlInfo:
       properties:
@@ -486,153 +589,14 @@ components:
       - is_accessible
       title: SourcePrivateUrlInfo
       type: object
-    Undefined:
-      additionalProperties: false
-      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
-      properties:
-        __typename:
-          const: Undefined
-          default: Undefined
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-      title: Undefined
-      type: object
-    PaginatedListResource_Source_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Source'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Source]
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    SignedUploadUrlRequest:
-      properties:
-        content_length:
-          description: The size (in bytes) of the file that will be uploaded. The pre-signed URL will only accept a file of this size.
-          maximum: 50000000.0
-          title: Content Length
-          type: integer
-        content_type:
-          description: The content type of the file that will be uploaded. This must also be passed as a 'content-type' header during the upload. The pre-signed URL will only accept a file of this content-type.
-          title: Content Type
-          type: string
-      required:
-      - content_type
-      - content_length
-      title: SignedUploadUrlRequest
-      type: object
-    PatchSourceRequest:
-      properties:
-        display_name:
-          anyOf:
-          - maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Display Name
-        is_public:
-          anyOf:
-          - type: boolean
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: If the source document should be publicly available on the Registry once credits are issued.
-          title: Is Public
-        published_at:
-          anyOf:
-          - description: Date in ISO format (YYYY-MM-DD)
-            format: date
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Published At
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          title: Supplier Reference Id
-      title: PatchSourceRequest
-      type: object
-    SourcePublicUrlInfo:
-      properties:
-        __typename:
-          const: SourcePublicUrlInfo
-          default: SourcePublicUrlInfo
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        url:
-          title: Url
-          type: string
-      required:
-      - url
-      title: SourcePublicUrlInfo
-      type: object
-    IsometricIDPathParam_Source_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Source_'
-    SourceType:
-      enum:
-      - DOCUMENT
-      - WEBSITE
-      title: SourceType
+    IsometricIDRequestParam_Project_:
+      example: prj_1CTWZQGKE1S0VAXA
+      examples:
+      - prj_1CTWZQGKE1S0VAXA
+      - prj_1E0QTWB22SBX34D1
+      maxLength: 37
+      minLength: 20
       type: string
-    CreateSourceResponse:
-      properties:
-        signed_upload_url:
-          description: A presigned upload URL, which must be used to upload the document associated with this source.
-          title: Signed Upload Url
-          type: string
-        source:
-          $ref: '#/components/schemas/Source'
-      required:
-      - source
-      - signed_upload_url
-      title: CreateSourceResponse
-      type: object
     Source:
       properties:
         display_name:
@@ -711,6 +675,92 @@ components:
       - project_id
       title: Source
       type: object
+    IsometricIDQueryParam_Project_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Project_'
+    PatchSourceRequest:
+      properties:
+        display_name:
+          anyOf:
+          - maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Display Name
+        is_public:
+          anyOf:
+          - type: boolean
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: If the source document should be publicly available on the Registry once credits are issued.
+          title: Is Public
+        published_at:
+          anyOf:
+          - description: Date in ISO format (YYYY-MM-DD)
+            format: date
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Published At
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          title: Supplier Reference Id
+      title: PatchSourceRequest
+      type: object
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
+    SourceType:
+      enum:
+      - DOCUMENT
+      - WEBSITE
+      title: SourceType
+      type: string
+    CreateSourceResponse:
+      properties:
+        signed_upload_url:
+          description: A presigned upload URL, which must be used to upload the document associated with this source.
+          title: Signed Upload Url
+          type: string
+        source:
+          $ref: '#/components/schemas/Source'
+      required:
+      - source
+      - signed_upload_url
+      title: CreateSourceResponse
+      type: object
     IsometricIDRequestParam_Source_:
       example: src_1EBBF4M7X1S06G1Y
       examples:
@@ -719,6 +769,39 @@ components:
       maxLength: 37
       minLength: 20
       type: string
+    PaginatedListResource_Source_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Source'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Source]
+      type: object
+    SourcePublicUrlInfo:
+      properties:
+        __typename:
+          const: SourcePublicUrlInfo
+          default: SourcePublicUrlInfo
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        url:
+          title: Url
+          type: string
+      required:
+      - url
+      title: SourcePublicUrlInfo
+      type: object
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT

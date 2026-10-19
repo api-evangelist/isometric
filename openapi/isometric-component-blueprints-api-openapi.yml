@@ -6,7 +6,90 @@ info:
     ## Versioning
 
 
-    This API will be safely versioned using root path versioning, in the format `/v{major}`.'
+    This API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`. ### Compatibility
+
+
+    We won''t make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we''ll release a new major version. We may deprecate APIs that have been replaced by a newer version. When doing so, we will expect
+
+    integrated partners to manage a transition to new resources within the deprecation timeline of old ones. We will make the following sort of changes we do not consider to be breaking:
+
+
+    - Adding new endpoints
+
+    - Adding optional query parameters to API endpoints
+
+    - Adding new properties to existing API responses
+
+    - Reordering properties in existing API responses
+
+
+    It is important that clients are built to be robust to these changes. ## Pagination
+
+
+    Our API is based on the Relay pagination spec. Paginated endpoints
+
+    will return a `PaginatedListResource` which contains:
+
+
+    - `page_info` - Containing information regarding pagination cursors and the total number of entities. - `nodes` - Each node is a paginated entity. - `total_count` - The total size of the list across all pages. ### Pagination Parameters
+
+
+    Paginated endpoints also accepted a standard set of query parameters:
+
+
+    - `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50. - `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page''s `start_cursor` here when paginated backwards. - `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50. - `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page''s `end_cursor` here when paginated forwards. For example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:
+
+
+    ```json
+
+    {
+
+    "page_info": {
+
+    "has_previous_page": false,
+
+    "start_cursor": ...,
+
+    "has_next_page": true,
+
+    "end_cursor": "mpG5kcuoFBYtlH",
+
+    },
+
+    "nodes": [{
+
+    "id": "org_12345iso678",
+
+    "name": "My Org",
+
+    ... }],
+
+    "total_count": 100
+
+    }
+
+    ```
+
+
+    Then querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items. ## Dates
+
+
+    Datetime fields in the APIs conform to the ISO 8601 date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`. ## Country Codes
+
+
+    Countries are identified in the APIs via ISO 3166-1 Alpha-3 codes. For example: `GBR` and `USA`. # Authentication
+
+
+    Most API requests will need to authenticate against the Isometric API in two ways simultaneously:
+
+
+    - By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API. - By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data. ### Client Authentication
+
+
+    Every API call to Isometric must include a **client secret** identifying the client application. This client secret is tied to a particular environment - sandbox or production. The client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`. ### Organization Authentication
+
+
+    In addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization. To authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.'
   title: Isometric Certify Data Ingestion Component Blueprints API
   version: v0
 servers:
@@ -130,29 +213,6 @@ paths:
       - Component Blueprints
 components:
   schemas:
-    ComponentBlueprintExpressionInput:
-      properties:
-        data_shape:
-          $ref: '#/components/schemas/InputDataShape'
-          description: Whether the input is a list of datapoints or just a single datapoint
-        input_key:
-          description: Input identifier within other resources of the component. Depending on the type, it will match an input datapoint or another expression, unless it represents a fixed 0 tCO₂e value.
-          title: Input Key
-          type: string
-        template_key:
-          description: Input identifier within the template string. It will match a template variable wrapped in `{` & `}`.
-          title: Template Key
-          type: string
-        type:
-          $ref: '#/components/schemas/ComponentBlueprintExpressionInputType'
-          description: Type of resource pointed at by the input.
-      required:
-      - template_key
-      - input_key
-      - type
-      - data_shape
-      title: ComponentBlueprintExpressionInput
-      type: object
     HTTPValidationError:
       properties:
         detail:
@@ -184,36 +244,59 @@ components:
       - inputs
       title: ComponentBlueprintExpression
       type: object
-    InputDataShape:
-      enum:
-      - SCALAR
-      - LIST
-      title: InputDataShape
-      type: string
-    PageInfo:
+    ComponentBlueprintInput:
       properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
+        compatible_unit:
+          description: An example unit for this blueprint input. The unit provided when creating a component from this blueprint can be different, but must be able to be converted to this unit.
+          title: Compatible Unit
+          type: string
+        data_shape:
+          $ref: '#/components/schemas/InputDataShape'
+          description: Whether the input is a list of datapoints
+        description:
+          description: Description of the input variable
+          title: Description
+          type: string
+        input_key:
+          description: When instantiating a component from this blueprint, one of input datapoints must match this key.
+          title: Input Key
+          type: string
+        quantity_kind:
+          $ref: '#/components/schemas/QuantityKindType'
+          description: The type of datapoint value that the input requires. Units compatible with this type can be found in the component blueprint library.
       required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+      - input_key
+      - description
+      - data_shape
+      - quantity_kind
+      - compatible_unit
+      title: ComponentBlueprintInput
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
     ComponentBlueprint:
       properties:
@@ -249,32 +332,23 @@ components:
       - expressions
       title: ComponentBlueprint
       type: object
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
+    ComponentBlueprintExpressionInputType:
+      enum:
+      - DATAPOINT
+      - EXPRESSION_RESULT
+      - ZERO_TCO2E
+      title: ComponentBlueprintExpressionInputType
+      type: string
+    ComponentType:
+      enum:
+      - ACTIVITY
+      - REMOVAL_COUNTERFACTUAL
+      - SEQUESTRATION
+      - LOSS
+      - ADJUSTMENT
+      - UNCERTAINTY_DISCOUNT
+      title: ComponentType
+      type: string
     PaginatedListResource_ComponentBlueprint_:
       properties:
         nodes:
@@ -293,16 +367,31 @@ components:
       - page_info
       title: PaginatedListResource[ComponentBlueprint]
       type: object
-    ComponentType:
-      enum:
-      - ACTIVITY
-      - REMOVAL_COUNTERFACTUAL
-      - SEQUESTRATION
-      - LOSS
-      - ADJUSTMENT
-      - UNCERTAINTY_DISCOUNT
-      title: ComponentType
-      type: string
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
     QuantityKindType:
       enum:
       - acidity
@@ -373,40 +462,34 @@ components:
       - volume_per_area
       title: QuantityKindType
       type: string
-    ComponentBlueprintInput:
+    ComponentBlueprintExpressionInput:
       properties:
-        compatible_unit:
-          description: An example unit for this blueprint input. The unit provided when creating a component from this blueprint can be different, but must be able to be converted to this unit.
-          title: Compatible Unit
-          type: string
         data_shape:
           $ref: '#/components/schemas/InputDataShape'
-          description: Whether the input is a list of datapoints
-        description:
-          description: Description of the input variable
-          title: Description
-          type: string
+          description: Whether the input is a list of datapoints or just a single datapoint
         input_key:
-          description: When instantiating a component from this blueprint, one of input datapoints must match this key.
+          description: Input identifier within other resources of the component. Depending on the type, it will match an input datapoint or another expression, unless it represents a fixed 0 tCO₂e value.
           title: Input Key
           type: string
-        quantity_kind:
-          $ref: '#/components/schemas/QuantityKindType'
-          description: The type of datapoint value that the input requires. Units compatible with this type can be found in the component blueprint library.
+        template_key:
+          description: Input identifier within the template string. It will match a template variable wrapped in `{` & `}`.
+          title: Template Key
+          type: string
+        type:
+          $ref: '#/components/schemas/ComponentBlueprintExpressionInputType'
+          description: Type of resource pointed at by the input.
       required:
+      - template_key
       - input_key
-      - description
+      - type
       - data_shape
-      - quantity_kind
-      - compatible_unit
-      title: ComponentBlueprintInput
+      title: ComponentBlueprintExpressionInput
       type: object
-    ComponentBlueprintExpressionInputType:
+    InputDataShape:
       enum:
-      - DATAPOINT
-      - EXPRESSION_RESULT
-      - ZERO_TCO2E
-      title: ComponentBlueprintExpressionInputType
+      - SCALAR
+      - LIST
+      title: InputDataShape
       type: string
   securitySchemes:
     HTTPBearer:

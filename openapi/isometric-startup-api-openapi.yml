@@ -1,0 +1,89 @@
+openapi: 3.2.0
+info:
+  title: Fast Startup API
+  version: 0.1.0
+tags:
+- name: Startup
+paths:
+  /_startup:
+    get:
+      summary: Startup Endpoint
+      description: 'The startup probe is used by Kubernetes to delay probing liveness and readiness.
+
+
+        Since it is only run in the beginning, we''re building the slightly expensive context in the
+
+        handler. We want to be sure that context works before serving traffic.'
+      operationId: _startup_endpoint__startup_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: x-client-secret
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client secret
+          description: A secret token identifying the client connecting to the API
+          examples:
+          - Syou3EZiO5vuMEgNyBeA8cjEMYOnQDwP
+        description: A secret token identifying the client connecting to the API
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      tags:
+      - Startup
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
+      scheme: bearer
+      bearerFormat: JWT

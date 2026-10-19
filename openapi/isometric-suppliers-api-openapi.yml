@@ -6,7 +6,90 @@ info:
     ## Versioning
 
 
-    This API will be safely versioned using root path versioning, in the format `/v{major}`.'
+    This API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`. ### Compatibility
+
+
+    We won''t make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we''ll release a new major version. We may deprecate APIs that have been replaced by a newer version. When doing so, we will expect
+
+    integrated partners to manage a transition to new resources within the deprecation timeline of old ones. We will make the following sort of changes we do not consider to be breaking:
+
+
+    - Adding new endpoints
+
+    - Adding optional query parameters to API endpoints
+
+    - Adding new properties to existing API responses
+
+    - Reordering properties in existing API responses
+
+
+    It is important that clients are built to be robust to these changes. ## Pagination
+
+
+    Our API is based on the Relay pagination spec. Paginated endpoints
+
+    will return a `PaginatedListResource` which contains:
+
+
+    - `page_info` - Containing information regarding pagination cursors and the total number of entities. - `nodes` - Each node is a paginated entity. - `total_count` - The total size of the list across all pages. ### Pagination Parameters
+
+
+    Paginated endpoints also accepted a standard set of query parameters:
+
+
+    - `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50. - `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page''s `start_cursor` here when paginated backwards. - `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50. - `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page''s `end_cursor` here when paginated forwards. For example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:
+
+
+    ```json
+
+    {
+
+    "page_info": {
+
+    "has_previous_page": false,
+
+    "start_cursor": ...,
+
+    "has_next_page": true,
+
+    "end_cursor": "mpG5kcuoFBYtlH",
+
+    },
+
+    "nodes": [{
+
+    "id": "org_12345iso678",
+
+    "name": "My Org",
+
+    ... }],
+
+    "total_count": 100
+
+    }
+
+    ```
+
+
+    Then querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items. ## Dates
+
+
+    Datetime fields in the APIs conform to the ISO 8601 date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`. ## Country Codes
+
+
+    Countries are identified in the APIs via ISO 3166-1 Alpha-3 codes. For example: `GBR` and `USA`. # Authentication
+
+
+    Most API requests will need to authenticate against the Isometric API in two ways simultaneously:
+
+
+    - By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API. - By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data. ### Client Authentication
+
+
+    Every API call to Isometric must include a **client secret** identifying the client application. This client secret is tied to a particular environment - sandbox or production. The client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`. ### Organization Authentication
+
+
+    In addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization. To authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.'
   title: Isometric Registry Suppliers API
   version: v0
 servers:
@@ -460,90 +543,6 @@ paths:
       - Suppliers
 components:
   schemas:
-    CreditQuantity:
-      properties:
-        credit_kgs:
-          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
-          examples:
-          - 125632
-          title: Credit Kgs
-          type: integer
-        credits:
-          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
-          examples:
-          - 125.632
-          title: Credits
-          type: number
-      required:
-      - credits
-      - credit_kgs
-      title: CreditQuantity
-      type: object
-    Supplier:
-      properties:
-        id:
-          example: spl_1CC712KFS1S0YKPS
-          examples:
-          - spl_1CC712KFS1S0YKPS
-          - spl_1FJBMMGR3SBXKDME
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        location:
-          anyOf:
-          - $ref: '#/components/schemas/Location'
-          - type: 'null'
-        long_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Long Description
-        organisation:
-          $ref: '#/components/schemas/Organisation'
-        short_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Short Description
-      required:
-      - id
-      - short_description
-      - long_description
-      - organisation
-      - location
-      title: Supplier
-      type: object
-    Location:
-      properties:
-        country_code:
-          title: Country Code
-          type: string
-        country_name:
-          title: Country Name
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        latitude:
-          maximum: 90
-          minimum: -90
-          title: Latitude
-          type: number
-        longitude:
-          maximum: 180
-          minimum: -180
-          title: Longitude
-          type: number
-      required:
-      - country_code
-      - country_name
-      - latitude
-      - longitude
-      title: Location
-      type: object
     Issuance:
       properties:
         buffer_pool_credit_batch_size_total:
@@ -598,102 +597,11 @@ components:
       - credit_batch_size_total
       title: Issuance
       type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    Pathway:
-      enum:
-      - biomass_carbon_removal_and_storage
-      - direct_air_capture
-      - enhanced_weathering
-      - carbon_mineralization
-      - reforestation
-      - marine
-      - superpollutants
-      title: Pathway
-      type: string
-    IsometricIDPathParam_Supplier_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_Supplier_'
-    Delivery:
-      properties:
-        credit_batch_size_total:
-          $ref: '#/components/schemas/CreditQuantity'
-        delivered_at:
-          format: date-time
-          title: Delivered At
-          type: string
-        from_supplier:
-          $ref: '#/components/schemas/Supplier'
-        id:
-          example: dlv_1C454ZXA61S03Z9T
-          examples:
-          - dlv_1C454ZXA61S03Z9T
-          - dlv_1FAGG2H2PSBXHGYY
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        notes:
-          anyOf:
-          - maxLength: 256
-            type: string
-          - type: 'null'
-          description: A publicly visible note stored with the credit delivery.
-          examples:
-          - Delivered with care.
-          title: Notes
-        order_id:
-          example: ord_1FAN3S3WV1S0B842
-          examples:
-          - ord_1FAN3S3WV1S0B842
-          - ord_1DBVRQDHBSBXWBWP
-          maxLength: 37
-          minLength: 20
-          title: Order Id
-          type: string
-        to_organisation:
-          $ref: '#/components/schemas/Organisation'
-        url:
-          title: Url
-          type: string
-      required:
-      - id
-      - delivered_at
-      - order_id
-      - from_supplier
-      - to_organisation
-      - credit_batch_size_total
-      - url
-      - notes
-      title: Delivery
-      type: object
-    PaginatedListResource_Issuance_:
+    PaginatedListResource_Order_:
       properties:
         nodes:
           items:
-            $ref: '#/components/schemas/Issuance'
+            $ref: '#/components/schemas/Order'
           title: Nodes
           type: array
         page_info:
@@ -705,34 +613,7 @@ components:
       - nodes
       - total_count
       - page_info
-      title: PaginatedListResource[Issuance]
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    PaginatedListResource_Project_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Project'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Project]
+      title: PaginatedListResource[Order]
       type: object
     Project:
       properties:
@@ -844,18 +725,78 @@ components:
       - location
       title: Project
       type: object
-    OrderStatus:
-      enum:
-      - placed
-      - in_progress
-      - completed
-      title: OrderStatus
-      type: string
-    PaginatedListResource_Supplier_:
+    IsometricIDPathParam_Supplier_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_Supplier_'
+    Supplier:
+      properties:
+        id:
+          example: spl_1CC712KFS1S0YKPS
+          examples:
+          - spl_1CC712KFS1S0YKPS
+          - spl_1FJBMMGR3SBXKDME
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        location:
+          anyOf:
+          - $ref: '#/components/schemas/Location'
+          - type: 'null'
+        long_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Long Description
+        organisation:
+          $ref: '#/components/schemas/Organisation'
+        short_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Short Description
+      required:
+      - id
+      - short_description
+      - long_description
+      - organisation
+      - location
+      title: Supplier
+      type: object
+    Location:
+      properties:
+        country_code:
+          title: Country Code
+          type: string
+        country_name:
+          title: Country Name
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        latitude:
+          maximum: 90
+          minimum: -90
+          title: Latitude
+          type: number
+        longitude:
+          maximum: 180
+          minimum: -180
+          title: Longitude
+          type: number
+      required:
+      - country_code
+      - country_name
+      - latitude
+      - longitude
+      title: Location
+      type: object
+    PaginatedListResource_Project_:
       properties:
         nodes:
           items:
-            $ref: '#/components/schemas/Supplier'
+            $ref: '#/components/schemas/Project'
           title: Nodes
           type: array
         page_info:
@@ -867,7 +808,25 @@ components:
       - nodes
       - total_count
       - page_info
-      title: PaginatedListResource[Supplier]
+      title: PaginatedListResource[Project]
+      type: object
+    PaginatedListResource_Delivery_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Delivery'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Delivery]
       type: object
     Order:
       properties:
@@ -911,6 +870,85 @@ components:
       - credits_delivered
       title: Order
       type: object
+    OrderStatus:
+      enum:
+      - placed
+      - in_progress
+      - completed
+      title: OrderStatus
+      type: string
+    PaginatedListResource_Issuance_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Issuance'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Issuance]
+      type: object
+    CreditQuantity:
+      properties:
+        credit_kgs:
+          description: A representation of the credit quantity as an integer kilogram amount. Where 1 unit represents 0.001 credits and 1 kilogram of CO₂e. This field can handle bigint values.
+          examples:
+          - 125632
+          title: Credit Kgs
+          type: integer
+        credits:
+          description: A representation of the credit quantity as a fractional amount, to 3 decimal places. Where 1 unit represents 1 credit and 1 ton of CO₂e.
+          examples:
+          - 125.632
+          title: Credits
+          type: number
+      required:
+      - credits
+      - credit_kgs
+      title: CreditQuantity
+      type: object
+    IsometricIDRequestParam_Supplier_:
+      example: spl_1CC712KFS1S0YKPS
+      examples:
+      - spl_1CC712KFS1S0YKPS
+      - spl_1FJBMMGR3SBXKDME
+      maxLength: 37
+      minLength: 20
+      type: string
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PaginatedListResource_Supplier_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/Supplier'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Supplier]
+      type: object
     ProjectStatus:
       enum:
       - draft
@@ -921,6 +959,68 @@ components:
       - cancelled
       title: ProjectStatus
       type: string
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    Pathway:
+      enum:
+      - biomass_carbon_removal_and_storage
+      - direct_air_capture
+      - enhanced_weathering
+      - carbon_mineralization
+      - reforestation
+      - marine
+      - superpollutants
+      title: Pathway
+      type: string
+    PageInfo:
+      properties:
+        end_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
+      required:
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
+      type: object
     Organisation:
       properties:
         domain:
@@ -950,75 +1050,58 @@ components:
       - domain
       title: Organisation
       type: object
-    PaginatedListResource_Delivery_:
+    Delivery:
       properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Delivery'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Delivery]
-      type: object
-    IsometricIDRequestParam_Supplier_:
-      example: spl_1CC712KFS1S0YKPS
-      examples:
-      - spl_1CC712KFS1S0YKPS
-      - spl_1FJBMMGR3SBXKDME
-      maxLength: 37
-      minLength: 20
-      type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
+        credit_batch_size_total:
+          $ref: '#/components/schemas/CreditQuantity'
+        delivered_at:
+          format: date-time
+          title: Delivered At
           type: string
-        type:
-          title: Error Type
+        from_supplier:
+          $ref: '#/components/schemas/Supplier'
+        id:
+          example: dlv_1C454ZXA61S03Z9T
+          examples:
+          - dlv_1C454ZXA61S03Z9T
+          - dlv_1FAGG2H2PSBXHGYY
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        notes:
+          anyOf:
+          - maxLength: 256
+            type: string
+          - type: 'null'
+          description: A publicly visible note stored with the credit delivery.
+          examples:
+          - Delivered with care.
+          title: Notes
+        order_id:
+          example: ord_1FAN3S3WV1S0B842
+          examples:
+          - ord_1FAN3S3WV1S0B842
+          - ord_1DBVRQDHBSBXWBWP
+          maxLength: 37
+          minLength: 20
+          title: Order Id
+          type: string
+        to_organisation:
+          $ref: '#/components/schemas/Organisation'
+        url:
+          title: Url
           type: string
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    PaginatedListResource_Order_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Order'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Order]
+      - id
+      - delivered_at
+      - order_id
+      - from_supplier
+      - to_organisation
+      - credit_batch_size_total
+      - url
+      - notes
+      title: Delivery
       type: object
   securitySchemes:
     HTTPBearer:

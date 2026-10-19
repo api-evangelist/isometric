@@ -6,7 +6,90 @@ info:
     ## Versioning
 
 
-    This API will be safely versioned using root path versioning, in the format `/v{major}`.'
+    This API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`. ### Compatibility
+
+
+    We won''t make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we''ll release a new major version. We may deprecate APIs that have been replaced by a newer version. When doing so, we will expect
+
+    integrated partners to manage a transition to new resources within the deprecation timeline of old ones. We will make the following sort of changes we do not consider to be breaking:
+
+
+    - Adding new endpoints
+
+    - Adding optional query parameters to API endpoints
+
+    - Adding new properties to existing API responses
+
+    - Reordering properties in existing API responses
+
+
+    It is important that clients are built to be robust to these changes. ## Pagination
+
+
+    Our API is based on the Relay pagination spec. Paginated endpoints
+
+    will return a `PaginatedListResource` which contains:
+
+
+    - `page_info` - Containing information regarding pagination cursors and the total number of entities. - `nodes` - Each node is a paginated entity. - `total_count` - The total size of the list across all pages. ### Pagination Parameters
+
+
+    Paginated endpoints also accepted a standard set of query parameters:
+
+
+    - `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50. - `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page''s `start_cursor` here when paginated backwards. - `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50. - `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page''s `end_cursor` here when paginated forwards. For example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:
+
+
+    ```json
+
+    {
+
+    "page_info": {
+
+    "has_previous_page": false,
+
+    "start_cursor": ...,
+
+    "has_next_page": true,
+
+    "end_cursor": "mpG5kcuoFBYtlH",
+
+    },
+
+    "nodes": [{
+
+    "id": "org_12345iso678",
+
+    "name": "My Org",
+
+    ... }],
+
+    "total_count": 100
+
+    }
+
+    ```
+
+
+    Then querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items. ## Dates
+
+
+    Datetime fields in the APIs conform to the ISO 8601 date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`. ## Country Codes
+
+
+    Countries are identified in the APIs via ISO 3166-1 Alpha-3 codes. For example: `GBR` and `USA`. # Authentication
+
+
+    Most API requests will need to authenticate against the Isometric API in two ways simultaneously:
+
+
+    - By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API. - By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data. ### Client Authentication
+
+
+    Every API call to Isometric must include a **client secret** identifying the client application. This client secret is tied to a particular environment - sandbox or production. The client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`. ### Organization Authentication
+
+
+    In addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization. To authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.'
   title: Isometric Certify Data Ingestion Measurement Samples API
   version: v0
 servers:
@@ -88,6 +171,266 @@ paths:
       - Measurement Samples
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    CreateMeasurementSampleValueRequest:
+      properties:
+        measurement_property:
+          $ref: '#/components/schemas/MeasurementProperty'
+        value:
+          $ref: '#/components/schemas/DatapointQuantityInput'
+      required:
+      - value
+      - measurement_property
+      title: CreateMeasurementSampleValueRequest
+      type: object
+    CreateMeasurementSampleRequest:
+      properties:
+        feedstock_batch_id:
+          anyOf:
+          - example: ftb_1DYYDB3C91S0ZHPX
+            examples:
+            - ftb_1DYYDB3C91S0ZHPX
+            - ftb_1G59XDK6HSBXCZ9B
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Feedstock Batch Id
+        measured_at:
+          format: date-time
+          title: Measured At
+          type: string
+        measurement_location_id:
+          anyOf:
+          - example: mlc_1CCZASA6Q1S0V8T4
+            examples:
+            - mlc_1CCZASA6Q1S0V8T4
+            - mlc_1GF73PG90SBXKEX1
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Measurement Location Id
+        measurement_type:
+          $ref: '#/components/schemas/MeasurementTypeKey'
+        production_batch_id:
+          anyOf:
+          - example: ptb_1GAFJ4C051S06E0Z
+            examples:
+            - ptb_1GAFJ4C051S06E0Z
+            - ptb_1FQVMJYTASBXSZT8
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Production Batch Id
+        project_id:
+          example: prj_1CTWZQGKE1S0VAXA
+          examples:
+          - prj_1CTWZQGKE1S0VAXA
+          - prj_1E0QTWB22SBX34D1
+          maxLength: 37
+          minLength: 20
+          title: Project Id
+          type: string
+        storage_location_id:
+          anyOf:
+          - example: slc_1F3PMGVC91S0SBK3
+            examples:
+            - slc_1F3PMGVC91S0SBK3
+            - slc_1DCY5K78BSBX3XMZ
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Storage Location Id
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+        values:
+          items:
+            $ref: '#/components/schemas/CreateMeasurementSampleValueRequest'
+          title: Values
+          type: array
+      required:
+      - supplier_reference_id
+      - measured_at
+      - project_id
+      - feedstock_batch_id
+      - measurement_location_id
+      - measurement_type
+      - values
+      - storage_location_id
+      title: CreateMeasurementSampleRequest
+      type: object
+    MeasurementTypeKey:
+      enum:
+      - biochar_production_batch
+      - biochar_soil
+      - pyrolysis_reactor
+      - ew_soil
+      - ew_porewater
+      - ew_field_biomass
+      - ew_mineral_feedstock
+      - ew_ion_exchange_resin
+      title: MeasurementTypeKey
+      type: string
+    MeasurementSample:
+      properties:
+        id:
+          example: mts_1D7HS15KD1S03M0Z
+          examples:
+          - mts_1D7HS15KD1S03M0Z
+          - mts_1FN0MEX2ZSBX40DT
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        measured_at:
+          format: date
+          title: Measured At
+          type: string
+        measurement_location_id:
+          anyOf:
+          - example: mlc_1CCZASA6Q1S0V8T4
+            examples:
+            - mlc_1CCZASA6Q1S0V8T4
+            - mlc_1GF73PG90SBXKEX1
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Measurement Location Id
+        production_batch_id:
+          anyOf:
+          - example: ptb_1GAFJ4C051S06E0Z
+            examples:
+            - ptb_1GAFJ4C051S06E0Z
+            - ptb_1FQVMJYTASBXSZT8
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          title: Production Batch Id
+        supplier_reference_id:
+          anyOf:
+          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
+            maxLength: 100
+            minLength: 1
+            type: string
+          - type: 'null'
+          title: Supplier Reference Id
+        values:
+          items:
+            $ref: '#/components/schemas/MeasurementValue'
+          title: Values
+          type: array
+      required:
+      - id
+      - supplier_reference_id
+      - values
+      - measured_at
+      - measurement_location_id
+      - production_batch_id
+      title: MeasurementSample
+      type: object
+    PaginatedListResource_MeasurementSample_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/MeasurementSample'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[MeasurementSample]
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    MeasurementValue:
+      properties:
+        datapoint_id:
+          example: dtp_1DVKHKS101S0Q61Q
+          examples:
+          - dtp_1DVKHKS101S0Q61Q
+          - dtp_1DJN8P57VSBXASFX
+          maxLength: 37
+          minLength: 20
+          title: Datapoint Id
+          type: string
+        measurement_property:
+          $ref: '#/components/schemas/MeasurementProperty'
+        value:
+          $ref: '#/components/schemas/ScalarQuantity'
+      required:
+      - datapoint_id
+      - value
+      - measurement_property
+      title: MeasurementValue
+      type: object
+    ScalarQuantity:
+      properties:
+        magnitude:
+          title: Magnitude
+          type: number
+        standard_deviation:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Standard Deviation
+        unit:
+          minLength: 1
+          title: Unit
+          type: string
+      required:
+      - magnitude
+      - unit
+      title: ScalarQuantity
+      type: object
     DatapointQuantityInput:
       properties:
         magnitude:
@@ -109,52 +452,101 @@ components:
       - unit
       title: DatapointQuantityInput
       type: object
-    ScalarQuantity:
+    PageInfo:
       properties:
-        magnitude:
-          title: Magnitude
-          type: number
-        standard_deviation:
+        end_cursor:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Standard Deviation
-        unit:
-          minLength: 1
-          title: Unit
-          type: string
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Cursor
       required:
-      - magnitude
-      - unit
-      title: ScalarQuantity
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
-    PaginatedListResource_MeasurementSample_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/MeasurementSample'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[MeasurementSample]
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
+    QuantityKindType:
+      enum:
+      - acidity
+      - activity_concentration
+      - amount_of_substance
+      - amount_of_substance_concentration
+      - amount_of_substance_per_mass
+      - area
+      - area_carbon_emission_factor
+      - buffer_ph
+      - bulk_density
+      - count
+      - currency
+      - currency_carbon_emission_factor
+      - depth
+      - diameter
+      - diameter_at_breast_height
+      - dimensionless
+      - dimensionless_ratio
+      - distance
+      - distance_carbon_emission_factor
+      - dose_equivalent_rate
+      - electric_current
+      - elevation
+      - energy
+      - energy_carbon_emission_factor
+      - energy_density
+      - exchangeable_amount_of_substance_per_mass
+      - fuel_economy
+      - height
+      - ionic_strength
+      - latitude
+      - longitude
+      - mass
+      - mass_carbon
+      - mass_carbon_emission_factor
+      - mass_cdr_potential
+      - mass_concentration
+      - mass_density
+      - mass_distance
+      - mass_distance_carbon_emission_factor
+      - mass_energy_density
+      - mass_flow_rate
+      - mass_fraction
+      - mass_fraction_dry_basis
+      - mass_fraction_wet_basis
+      - mass_per_area
+      - mass_ratio
+      - molality_of_solute
+      - molar_mass
+      - mole_fraction
+      - partial_pressure
+      - particle_diameter
+      - particle_mass_density
+      - power
+      - pressure
+      - specific_surface_area
+      - specific_volume
+      - temperature
+      - time
+      - time_emission_factor
+      - voltage
+      - volume
+      - volume_carbon_emission_factor
+      - volume_distance_carbon_emission_factor
+      - volume_flow_rate
+      - volume_fraction
+      - volume_per_area
+      title: QuantityKindType
+      type: string
     QuantityKindQualifierType:
       enum:
       - base_saturation_ca_2plus
@@ -1046,27 +1438,6 @@ components:
       - percentile_97
       title: QuantityKindQualifierType
       type: string
-    MeasurementValue:
-      properties:
-        datapoint_id:
-          example: dtp_1DVKHKS101S0Q61Q
-          examples:
-          - dtp_1DVKHKS101S0Q61Q
-          - dtp_1DJN8P57VSBXASFX
-          maxLength: 37
-          minLength: 20
-          title: Datapoint Id
-          type: string
-        measurement_property:
-          $ref: '#/components/schemas/MeasurementProperty'
-        value:
-          $ref: '#/components/schemas/ScalarQuantity'
-      required:
-      - datapoint_id
-      - value
-      - measurement_property
-      title: MeasurementValue
-      type: object
     MeasurementProperty:
       properties:
         qualifier:
@@ -1079,294 +1450,6 @@ components:
       - quantity_kind
       - qualifier
       title: MeasurementProperty
-      type: object
-    PageInfo:
-      properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
-      type: object
-    MeasurementTypeKey:
-      enum:
-      - biochar_production_batch
-      - biochar_soil
-      - pyrolysis_reactor
-      - ew_soil
-      - ew_porewater
-      - ew_field_biomass
-      - ew_mineral_feedstock
-      - ew_ion_exchange_resin
-      title: MeasurementTypeKey
-      type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    MeasurementSample:
-      properties:
-        id:
-          example: mts_1D7HS15KD1S03M0Z
-          examples:
-          - mts_1D7HS15KD1S03M0Z
-          - mts_1FN0MEX2ZSBX40DT
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        measured_at:
-          format: date
-          title: Measured At
-          type: string
-        measurement_location_id:
-          anyOf:
-          - example: mlc_1CCZASA6Q1S0V8T4
-            examples:
-            - mlc_1CCZASA6Q1S0V8T4
-            - mlc_1GF73PG90SBXKEX1
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Measurement Location Id
-        production_batch_id:
-          anyOf:
-          - example: ptb_1GAFJ4C051S06E0Z
-            examples:
-            - ptb_1GAFJ4C051S06E0Z
-            - ptb_1FQVMJYTASBXSZT8
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Production Batch Id
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          title: Supplier Reference Id
-        values:
-          items:
-            $ref: '#/components/schemas/MeasurementValue'
-          title: Values
-          type: array
-      required:
-      - id
-      - supplier_reference_id
-      - values
-      - measured_at
-      - measurement_location_id
-      - production_batch_id
-      title: MeasurementSample
-      type: object
-    QuantityKindType:
-      enum:
-      - acidity
-      - activity_concentration
-      - amount_of_substance
-      - amount_of_substance_concentration
-      - amount_of_substance_per_mass
-      - area
-      - area_carbon_emission_factor
-      - buffer_ph
-      - bulk_density
-      - count
-      - currency
-      - currency_carbon_emission_factor
-      - depth
-      - diameter
-      - diameter_at_breast_height
-      - dimensionless
-      - dimensionless_ratio
-      - distance
-      - distance_carbon_emission_factor
-      - dose_equivalent_rate
-      - electric_current
-      - elevation
-      - energy
-      - energy_carbon_emission_factor
-      - energy_density
-      - exchangeable_amount_of_substance_per_mass
-      - fuel_economy
-      - height
-      - ionic_strength
-      - latitude
-      - longitude
-      - mass
-      - mass_carbon
-      - mass_carbon_emission_factor
-      - mass_cdr_potential
-      - mass_concentration
-      - mass_density
-      - mass_distance
-      - mass_distance_carbon_emission_factor
-      - mass_energy_density
-      - mass_flow_rate
-      - mass_fraction
-      - mass_fraction_dry_basis
-      - mass_fraction_wet_basis
-      - mass_per_area
-      - mass_ratio
-      - molality_of_solute
-      - molar_mass
-      - mole_fraction
-      - partial_pressure
-      - particle_diameter
-      - particle_mass_density
-      - power
-      - pressure
-      - specific_surface_area
-      - specific_volume
-      - temperature
-      - time
-      - time_emission_factor
-      - voltage
-      - volume
-      - volume_carbon_emission_factor
-      - volume_distance_carbon_emission_factor
-      - volume_flow_rate
-      - volume_fraction
-      - volume_per_area
-      title: QuantityKindType
-      type: string
-    CreateMeasurementSampleRequest:
-      properties:
-        feedstock_batch_id:
-          anyOf:
-          - example: ftb_1DYYDB3C91S0ZHPX
-            examples:
-            - ftb_1DYYDB3C91S0ZHPX
-            - ftb_1G59XDK6HSBXCZ9B
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Feedstock Batch Id
-        measured_at:
-          format: date-time
-          title: Measured At
-          type: string
-        measurement_location_id:
-          anyOf:
-          - example: mlc_1CCZASA6Q1S0V8T4
-            examples:
-            - mlc_1CCZASA6Q1S0V8T4
-            - mlc_1GF73PG90SBXKEX1
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Measurement Location Id
-        measurement_type:
-          $ref: '#/components/schemas/MeasurementTypeKey'
-        production_batch_id:
-          anyOf:
-          - example: ptb_1GAFJ4C051S06E0Z
-            examples:
-            - ptb_1GAFJ4C051S06E0Z
-            - ptb_1FQVMJYTASBXSZT8
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Production Batch Id
-        project_id:
-          example: prj_1CTWZQGKE1S0VAXA
-          examples:
-          - prj_1CTWZQGKE1S0VAXA
-          - prj_1E0QTWB22SBX34D1
-          maxLength: 37
-          minLength: 20
-          title: Project Id
-          type: string
-        storage_location_id:
-          anyOf:
-          - example: slc_1F3PMGVC91S0SBK3
-            examples:
-            - slc_1F3PMGVC91S0SBK3
-            - slc_1DCY5K78BSBX3XMZ
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          title: Storage Location Id
-        supplier_reference_id:
-          anyOf:
-          - description: A string that must be unique for all resources created by a specific supplier. It can be used by a client to identify the correct objects in their system.
-            maxLength: 100
-            minLength: 1
-            type: string
-          - type: 'null'
-          title: Supplier Reference Id
-        values:
-          items:
-            $ref: '#/components/schemas/CreateMeasurementSampleValueRequest'
-          title: Values
-          type: array
-      required:
-      - supplier_reference_id
-      - measured_at
-      - project_id
-      - feedstock_batch_id
-      - measurement_location_id
-      - measurement_type
-      - values
-      - storage_location_id
-      title: CreateMeasurementSampleRequest
-      type: object
-    CreateMeasurementSampleValueRequest:
-      properties:
-        measurement_property:
-          $ref: '#/components/schemas/MeasurementProperty'
-        value:
-          $ref: '#/components/schemas/DatapointQuantityInput'
-      required:
-      - value
-      - measurement_property
-      title: CreateMeasurementSampleValueRequest
       type: object
   securitySchemes:
     HTTPBearer:

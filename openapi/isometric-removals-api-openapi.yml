@@ -6,7 +6,90 @@ info:
     ## Versioning
 
 
-    This API will be safely versioned using root path versioning, in the format `/v{major}`.'
+    This API will be safely versioned using root path versioning, in the format `/v{major}`. For example, `/registry/v0/supplier`. ### Compatibility
+
+
+    We won''t make breaking changes to existing API services or endpoints for API versions higher than `v0`. If breaking changes are necessary, we''ll release a new major version. We may deprecate APIs that have been replaced by a newer version. When doing so, we will expect
+
+    integrated partners to manage a transition to new resources within the deprecation timeline of old ones. We will make the following sort of changes we do not consider to be breaking:
+
+
+    - Adding new endpoints
+
+    - Adding optional query parameters to API endpoints
+
+    - Adding new properties to existing API responses
+
+    - Reordering properties in existing API responses
+
+
+    It is important that clients are built to be robust to these changes. ## Pagination
+
+
+    Our API is based on the Relay pagination spec. Paginated endpoints
+
+    will return a `PaginatedListResource` which contains:
+
+
+    - `page_info` - Containing information regarding pagination cursors and the total number of entities. - `nodes` - Each node is a paginated entity. - `total_count` - The total size of the list across all pages. ### Pagination Parameters
+
+
+    Paginated endpoints also accepted a standard set of query parameters:
+
+
+    - `last` - An integer number of items to retrieve **before** the item represented by the cursor passed in the `before` parameter. Defaults to 10 with a maximum value of 50. - `before` - An opaque cursor representing the first item in the previously requested page to select items ordered before it. Submit the previously requested page''s `start_cursor` here when paginated backwards. - `first` - An integer number of items to retrieve **after** the item represented by the cursor passed in the `after` parameter. Defaults to 10 with a maximum value of 50. - `after` - An opaque cursor representing the last item in the previously requested page to select items ordered after it. Submit the previously requested page''s `end_cursor` here when paginated forwards. For example, querying `/registry/v0/beneficiaries` will return a `PaginatedListResource` of the first page of 10 items:
+
+
+    ```json
+
+    {
+
+    "page_info": {
+
+    "has_previous_page": false,
+
+    "start_cursor": ...,
+
+    "has_next_page": true,
+
+    "end_cursor": "mpG5kcuoFBYtlH",
+
+    },
+
+    "nodes": [{
+
+    "id": "org_12345iso678",
+
+    "name": "My Org",
+
+    ... }],
+
+    "total_count": 100
+
+    }
+
+    ```
+
+
+    Then querying `/registry/v0/beneficiaries?first=15&after=mpG5kcuoFBYtlH` will return a `PaginatedListResource` of the next 15 items. ## Dates
+
+
+    Datetime fields in the APIs conform to the ISO 8601 date and time format in UTC. For example: `2024-01-22T11:56:48.520641Z`. ## Country Codes
+
+
+    Countries are identified in the APIs via ISO 3166-1 Alpha-3 codes. For example: `GBR` and `USA`. # Authentication
+
+
+    Most API requests will need to authenticate against the Isometric API in two ways simultaneously:
+
+
+    - By passing a **client secret** in the `X-Client-Secret` header to identify the system integrating with the API. - By passing an **access token** in the `Authorization` header to authenticate as a specific organization, in order to gain access to its private data. ### Client Authentication
+
+
+    Every API call to Isometric must include a **client secret** identifying the client application. This client secret is tied to a particular environment - sandbox or production. The client secret should be submitted on every API request via the `X-Client-Secret` header. For example `X-Client-Secret: uPrO...wxAh`. ### Organization Authentication
+
+
+    In addition, a large number of API requests will require an **access token** in order for the caller to identify themselves and act as a specific Organization. To authenticate as an Organization you will need to submit a JWT bearer access token via the `Authorization` header. For example: `Authorization: Bearer eyJh...sw5c`.'
   title: Isometric Certify Data Ingestion Removals API
   version: v0
 servers:
@@ -375,6 +458,375 @@ paths:
       - Removals
 components:
   schemas:
+    PaginatedListResource_ComponentAttribution_:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/ComponentAttribution'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[ComponentAttribution]
+      type: object
+    PatchRemovalComponentAttributionsRequest:
+      properties:
+        components_to_add:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ComponentToAttribute'
+            type: array
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: Components to be attributed to Removal.
+          title: Components To Add
+        components_to_remove:
+          anyOf:
+          - items:
+              example: cmp_1EP2SB7MZ1S036PY
+              examples:
+              - cmp_1EP2SB7MZ1S036PY
+              - cmp_1EHK4R6QJSBXFC5N
+              maxLength: 37
+              minLength: 20
+              type: string
+            type: array
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: Components to be fully removed from Removal.
+          title: Components To Remove
+      title: PatchRemovalComponentAttributionsRequest
+      type: object
+    IsometricIDRequestParam_GhgEntry_:
+      example: rmv_1EEM6NJXX1S0EXKD
+      examples:
+      - rmv_1EEM6NJXX1S0EXKD
+      - rmv_1E3V4J2EWSBX5E82
+      maxLength: 37
+      minLength: 20
+      type: string
+    PatchRemovalRequest:
+      properties:
+        add_components:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AddComponentToRemoval'
+            type: array
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          deprecated: true
+          description: 'Deprecated, please use `PATCH /removal/{id}/component_attributions` instead.
+
+
+            Components to be attributed to the removal.'
+          title: Add Components
+        completed_on:
+          anyOf:
+          - description: Date in ISO format (YYYY-MM-DD)
+            format: date
+            type: string
+          - type: 'null'
+          description: The date by which activities related to this removal finished.
+          title: Completed On
+        delete_component_ids:
+          anyOf:
+          - items:
+              example: cmp_1EP2SB7MZ1S036PY
+              examples:
+              - cmp_1EP2SB7MZ1S036PY
+              - cmp_1EHK4R6QJSBXFC5N
+              maxLength: 37
+              minLength: 20
+              type: string
+            type: array
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          deprecated: true
+          description: 'Deprecated, please use `PATCH /removal/{id}/component_attributions` instead.
+
+
+            IDs for components to delete from the removal.'
+          title: Delete Component Ids
+        feedstock_type_id:
+          anyOf:
+          - example: ftt_1D7KZ1P761S0G7BN
+            examples:
+            - ftt_1D7KZ1P761S0G7BN
+            - ftt_1CSRJN4HHSBXZ3TK
+            maxLength: 37
+            minLength: 20
+            type: string
+          - $ref: '#/components/schemas/Undefined'
+          default:
+            __typename: Undefined
+          description: ID of the feedstock type for the removal.
+          title: Feedstock Type Id
+        started_on:
+          anyOf:
+          - description: Date in ISO format (YYYY-MM-DD)
+            format: date
+            type: string
+          - type: 'null'
+          description: The date at which activities related to this removal started.
+          title: Started On
+      title: PatchRemovalRequest
+      type: object
+    Undefined:
+      additionalProperties: false
+      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
+      properties:
+        __typename:
+          const: Undefined
+          default: Undefined
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+      title: Undefined
+      type: object
+    IsometricIDPathParam_GhgEntry_:
+      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
+    CreateComponentListInput:
+      properties:
+        __typename:
+          const: CreateComponentListInput
+          default: CreateComponentListInput
+          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
+          title: Type name
+          type: string
+        datapoint_ids:
+          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
+          items:
+            example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          title: Datapoint Ids
+          type: array
+        input_key:
+          description: Must match an input key in the component blueprint.
+          maxLength: 100
+          title: Input Key
+          type: string
+      required:
+      - input_key
+      - datapoint_ids
+      title: CreateComponentListInput
+      type: object
+    AddComponentToRemoval:
+      properties:
+        attribution_factor_datapoint_id:
+          anyOf:
+          - example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: A scalar between 0 and 1 for the fraction of the CO2e flux of the component that is to be attributed to this removal. A null input will default to 1.
+          title: Attribution Factor Datapoint Id
+        component_id:
+          description: ID for component to add to Removal.
+          example: cmp_1EP2SB7MZ1S036PY
+          examples:
+          - cmp_1EP2SB7MZ1S036PY
+          - cmp_1EHK4R6QJSBXFC5N
+          maxLength: 37
+          minLength: 20
+          title: Component Id
+          type: string
+        process_step_key:
+          anyOf:
+          - maxLength: 100
+            type: string
+          - type: 'null'
+          deprecated: true
+          description: 'Deprecated, please use removal_template_group_id instead.
+
+
+            Process step key matching the module the component should be added to.'
+          title: Process Step Key
+        removal_template_group_id:
+          anyOf:
+          - example: rtg_1EGQ9DZXZ1S05S28
+            examples:
+            - rtg_1EGQ9DZXZ1S05S28
+            - rtg_1CWEFDQ7GSBX1X5C
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: Which group the component should be added to, based on the removal's template structure.
+          title: Removal Template Group Id
+      required:
+      - component_id
+      - attribution_factor_datapoint_id
+      title: AddComponentToRemoval
+      type: object
+    RemovalTemplateComponentInputs:
+      properties:
+        inputs:
+          description: A list of values for component inputs. Inputs and their keys can be found on the removal template at the `GET /projects/{project_id}/removal_templates` endpoint.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CreateComponentListInput'
+            - $ref: '#/components/schemas/CreateComponentScalarInput'
+          title: Inputs
+          type: array
+        removal_template_component_id:
+          description: The ID of the removal template component to provide
+          example: rtc_1DAA58EDM1S0AMPN
+          examples:
+          - rtc_1DAA58EDM1S0AMPN
+          - rtc_1CQAKRCVQSBXKKTM
+          maxLength: 37
+          minLength: 20
+          title: Removal Template Component Id
+          type: string
+      required:
+      - removal_template_component_id
+      - inputs
+      title: RemovalTemplateComponentInputs
+      type: object
+    ComponentAttribution:
+      properties:
+        attribution_factor:
+          examples:
+          - 1.0
+          - 0.654
+          exclusiveMinimum: 0.0
+          maximum: 1.0
+          title: Attribution Factor
+          type: number
+        component_group_key:
+          title: Component Group Key
+          type: string
+        component_id:
+          example: cmp_1EP2SB7MZ1S036PY
+          examples:
+          - cmp_1EP2SB7MZ1S036PY
+          - cmp_1EHK4R6QJSBXFC5N
+          maxLength: 37
+          minLength: 20
+          title: Component Id
+          type: string
+        id:
+          example: rvc_1EADHFQHM1S0TVMN
+          examples:
+          - rvc_1EADHFQHM1S0TVMN
+          - rvc_1EB9G4FR7SBX795D
+          maxLength: 37
+          minLength: 20
+          title: Id
+          type: string
+        removal_id:
+          example: rmv_1EEM6NJXX1S0EXKD
+          examples:
+          - rmv_1EEM6NJXX1S0EXKD
+          - rmv_1E3V4J2EWSBX5E82
+          maxLength: 37
+          minLength: 20
+          title: Removal Id
+          type: string
+        removal_template_component_id:
+          anyOf:
+          - example: rtc_1DAA58EDM1S0AMPN
+            examples:
+            - rtc_1DAA58EDM1S0AMPN
+            - rtc_1CQAKRCVQSBXKKTM
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: The ID of the removal template component, if this component was created via a template. May be null if the component was created directly, or if the template has been deleted.
+          title: Removal Template Component Id
+      required:
+      - id
+      - removal_id
+      - component_id
+      - component_group_key
+      - removal_template_component_id
+      - attribution_factor
+      title: ComponentAttribution
+      type: object
+    ComponentToAttribute:
+      properties:
+        attribution_factor:
+          default: 1.0
+          description: A float in range of (0, 1] for the fraction of the CO2e flux of the component that is to be attributed to this removal. 1.0 means all of the component should be attributed. If not supplied, defaults to 1.0.
+          exclusiveMinimum: 0.0
+          maximum: 1.0
+          title: Attribution Factor
+          type: number
+        component_group_key:
+          description: 'Key of a component group that this component should be applied to in the removal.
+
+
+            The keys of the component groups are the same as the keys of removal template component groups they have been used to create them and they are consistent between projects using the same protocol.'
+          examples:
+          - bio-oil-storage
+          - energy-use
+          - dac-process
+          title: Component Group Key
+          type: string
+        component_id:
+          description: ID of the component to add to the removal.
+          example: cmp_1EP2SB7MZ1S036PY
+          examples:
+          - cmp_1EP2SB7MZ1S036PY
+          - cmp_1EHK4R6QJSBXFC5N
+          maxLength: 37
+          minLength: 20
+          title: Component Id
+          type: string
+      required:
+      - component_id
+      - component_group_key
+      title: ComponentToAttribute
+      type: object
+    CreateRemovalComponentLink:
+      properties:
+        attribution_factor_datapoint_id:
+          anyOf:
+          - example: dtp_1DVKHKS101S0Q61Q
+            examples:
+            - dtp_1DVKHKS101S0Q61Q
+            - dtp_1DJN8P57VSBXASFX
+            maxLength: 37
+            minLength: 20
+            type: string
+          - type: 'null'
+          description: A scalar between 0 and 1 for the fraction of the CO2e flux of the component that is to be attributed to this removal. A null input will default to 1.
+          title: Attribution Factor Datapoint Id
+        component_id:
+          description: Isometric ID of the component to include within this removal step
+          example: cmp_1EP2SB7MZ1S036PY
+          examples:
+          - cmp_1EP2SB7MZ1S036PY
+          - cmp_1EHK4R6QJSBXFC5N
+          maxLength: 37
+          minLength: 20
+          title: Component Id
+          type: string
+      required:
+      - component_id
+      title: CreateRemovalComponentLink
+      type: object
     Removal:
       properties:
         co2e_net_removed_kg:
@@ -452,58 +904,58 @@ components:
       - feedstock_type_id
       title: Removal
       type: object
-    PageInfo:
+    HTTPValidationError:
       properties:
-        end_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: End Cursor
-        has_next_page:
-          title: Has Next Page
-          type: boolean
-        has_previous_page:
-          title: Has Previous Page
-          type: boolean
-        start_cursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Start Cursor
-      required:
-      - has_previous_page
-      - start_cursor
-      - has_next_page
-      - end_cursor
-      title: PageInfo
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
       type: object
-    CreateRemovalComponentLink:
+    PaginatedListResource_Removal_:
       properties:
-        attribution_factor_datapoint_id:
-          anyOf:
-          - example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          description: A scalar between 0 and 1 for the fraction of the CO2e flux of the component that is to be attributed to this removal. A null input will default to 1.
-          title: Attribution Factor Datapoint Id
-        component_id:
-          description: Isometric ID of the component to include within this removal step
-          example: cmp_1EP2SB7MZ1S036PY
-          examples:
-          - cmp_1EP2SB7MZ1S036PY
-          - cmp_1EHK4R6QJSBXFC5N
-          maxLength: 37
-          minLength: 20
-          title: Component Id
+        nodes:
+          items:
+            $ref: '#/components/schemas/Removal'
+          title: Nodes
+          type: array
+        page_info:
+          $ref: '#/components/schemas/PageInfo'
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - nodes
+      - total_count
+      - page_info
+      title: PaginatedListResource[Removal]
+      type: object
+    ValidationError:
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
           type: string
       required:
-      - component_id
-      title: CreateRemovalComponentLink
+      - loc
+      - msg
+      - type
+      title: ValidationError
       type: object
     CreateComponentScalarInput:
       properties:
@@ -532,70 +984,6 @@ components:
       - input_key
       - datapoint_id
       title: CreateComponentScalarInput
-      type: object
-    RemovalTemplateComponentInputs:
-      properties:
-        inputs:
-          description: A list of values for component inputs. Inputs and their keys can be found on the removal template at the `GET /projects/{project_id}/removal_templates` endpoint.
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/CreateComponentListInput'
-            - $ref: '#/components/schemas/CreateComponentScalarInput'
-          title: Inputs
-          type: array
-        removal_template_component_id:
-          description: The ID of the removal template component to provide
-          example: rtc_1DAA58EDM1S0AMPN
-          examples:
-          - rtc_1DAA58EDM1S0AMPN
-          - rtc_1CQAKRCVQSBXKKTM
-          maxLength: 37
-          minLength: 20
-          title: Removal Template Component Id
-          type: string
-      required:
-      - removal_template_component_id
-      - inputs
-      title: RemovalTemplateComponentInputs
-      type: object
-    PaginatedListResource_Removal_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/Removal'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[Removal]
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-      title: HTTPValidationError
-      type: object
-    Undefined:
-      additionalProperties: false
-      description: An explicit representation of an undefined value in the Isometric REST API. Used, for example, to distinguish between explicit null inputs that clear a property, and not provided inputs which leave the property as is.
-      properties:
-        __typename:
-          const: Undefined
-          default: Undefined
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-      title: Undefined
       type: object
     CreateRemovalRequest:
       description: Input to the POST /removals endpoint that creates a single removal
@@ -688,166 +1076,30 @@ components:
       - project_id
       title: CreateRemovalRequest
       type: object
-    ComponentAttribution:
+    PageInfo:
       properties:
-        attribution_factor:
-          examples:
-          - 1.0
-          - 0.654
-          exclusiveMinimum: 0.0
-          maximum: 1.0
-          title: Attribution Factor
-          type: number
-        component_group_key:
-          title: Component Group Key
-          type: string
-        component_id:
-          example: cmp_1EP2SB7MZ1S036PY
-          examples:
-          - cmp_1EP2SB7MZ1S036PY
-          - cmp_1EHK4R6QJSBXFC5N
-          maxLength: 37
-          minLength: 20
-          title: Component Id
-          type: string
-        id:
-          example: rvc_1EADHFQHM1S0TVMN
-          examples:
-          - rvc_1EADHFQHM1S0TVMN
-          - rvc_1EB9G4FR7SBX795D
-          maxLength: 37
-          minLength: 20
-          title: Id
-          type: string
-        removal_id:
-          example: rmv_1EEM6NJXX1S0EXKD
-          examples:
-          - rmv_1EEM6NJXX1S0EXKD
-          - rmv_1E3V4J2EWSBX5E82
-          maxLength: 37
-          minLength: 20
-          title: Removal Id
-          type: string
-        removal_template_component_id:
+        end_cursor:
           anyOf:
-          - example: rtc_1DAA58EDM1S0AMPN
-            examples:
-            - rtc_1DAA58EDM1S0AMPN
-            - rtc_1CQAKRCVQSBXKKTM
-            maxLength: 37
-            minLength: 20
-            type: string
+          - type: string
           - type: 'null'
-          description: The ID of the removal template component, if this component was created via a template. May be null if the component was created directly, or if the template has been deleted.
-          title: Removal Template Component Id
-      required:
-      - id
-      - removal_id
-      - component_id
-      - component_group_key
-      - removal_template_component_id
-      - attribution_factor
-      title: ComponentAttribution
-      type: object
-    CreateComponentListInput:
-      properties:
-        __typename:
-          const: CreateComponentListInput
-          default: CreateComponentListInput
-          description: Contains the name of the model (formally, OpenAPI Schema Object). Used to determine the type of data, for example when two different types are unioned.
-          title: Type name
-          type: string
-        datapoint_ids:
-          description: The Isometric IDs of the datapoints that will be used to populate the value of this input
-          items:
-            example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
-          title: Datapoint Ids
-          type: array
-        input_key:
-          description: Must match an input key in the component blueprint.
-          maxLength: 100
-          title: Input Key
-          type: string
-      required:
-      - input_key
-      - datapoint_ids
-      title: CreateComponentListInput
-      type: object
-    AddComponentToRemoval:
-      properties:
-        attribution_factor_datapoint_id:
+          title: End Cursor
+        has_next_page:
+          title: Has Next Page
+          type: boolean
+        has_previous_page:
+          title: Has Previous Page
+          type: boolean
+        start_cursor:
           anyOf:
-          - example: dtp_1DVKHKS101S0Q61Q
-            examples:
-            - dtp_1DVKHKS101S0Q61Q
-            - dtp_1DJN8P57VSBXASFX
-            maxLength: 37
-            minLength: 20
-            type: string
+          - type: string
           - type: 'null'
-          description: A scalar between 0 and 1 for the fraction of the CO2e flux of the component that is to be attributed to this removal. A null input will default to 1.
-          title: Attribution Factor Datapoint Id
-        component_id:
-          description: ID for component to add to Removal.
-          example: cmp_1EP2SB7MZ1S036PY
-          examples:
-          - cmp_1EP2SB7MZ1S036PY
-          - cmp_1EHK4R6QJSBXFC5N
-          maxLength: 37
-          minLength: 20
-          title: Component Id
-          type: string
-        process_step_key:
-          anyOf:
-          - maxLength: 100
-            type: string
-          - type: 'null'
-          deprecated: true
-          description: 'Deprecated, please use removal_template_group_id instead.
-
-
-            Process step key matching the module the component should be added to.'
-          title: Process Step Key
-        removal_template_group_id:
-          anyOf:
-          - example: rtg_1EGQ9DZXZ1S05S28
-            examples:
-            - rtg_1EGQ9DZXZ1S05S28
-            - rtg_1CWEFDQ7GSBX1X5C
-            maxLength: 37
-            minLength: 20
-            type: string
-          - type: 'null'
-          description: Which group the component should be added to, based on the removal's template structure.
-          title: Removal Template Group Id
+          title: Start Cursor
       required:
-      - component_id
-      - attribution_factor_datapoint_id
-      title: AddComponentToRemoval
-      type: object
-    PaginatedListResource_ComponentAttribution_:
-      properties:
-        nodes:
-          items:
-            $ref: '#/components/schemas/ComponentAttribution'
-          title: Nodes
-          type: array
-        page_info:
-          $ref: '#/components/schemas/PageInfo'
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - nodes
-      - total_count
-      - page_info
-      title: PaginatedListResource[ComponentAttribution]
+      - has_previous_page
+      - start_cursor
+      - has_next_page
+      - end_cursor
+      title: PageInfo
       type: object
     CreateRemovalStep:
       description: Nested type for the POST /removals endpoint to create a step within a removal
@@ -867,175 +1119,6 @@ components:
       - components
       title: CreateRemovalStep
       type: object
-    ComponentToAttribute:
-      properties:
-        attribution_factor:
-          default: 1.0
-          description: A float in range of (0, 1] for the fraction of the CO2e flux of the component that is to be attributed to this removal. 1.0 means all of the component should be attributed. If not supplied, defaults to 1.0.
-          exclusiveMinimum: 0.0
-          maximum: 1.0
-          title: Attribution Factor
-          type: number
-        component_group_key:
-          description: 'Key of a component group that this component should be applied to in the removal.
-
-
-            The keys of the component groups are the same as the keys of removal template component groups they have been used to create them and they are consistent between projects using the same protocol.'
-          examples:
-          - bio-oil-storage
-          - energy-use
-          - dac-process
-          title: Component Group Key
-          type: string
-        component_id:
-          description: ID of the component to add to the removal.
-          example: cmp_1EP2SB7MZ1S036PY
-          examples:
-          - cmp_1EP2SB7MZ1S036PY
-          - cmp_1EHK4R6QJSBXFC5N
-          maxLength: 37
-          minLength: 20
-          title: Component Id
-          type: string
-      required:
-      - component_id
-      - component_group_key
-      title: ComponentToAttribute
-      type: object
-    PatchRemovalComponentAttributionsRequest:
-      properties:
-        components_to_add:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ComponentToAttribute'
-            type: array
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: Components to be attributed to Removal.
-          title: Components To Add
-        components_to_remove:
-          anyOf:
-          - items:
-              example: cmp_1EP2SB7MZ1S036PY
-              examples:
-              - cmp_1EP2SB7MZ1S036PY
-              - cmp_1EHK4R6QJSBXFC5N
-              maxLength: 37
-              minLength: 20
-              type: string
-            type: array
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: Components to be fully removed from Removal.
-          title: Components To Remove
-      title: PatchRemovalComponentAttributionsRequest
-      type: object
-    PatchRemovalRequest:
-      properties:
-        add_components:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AddComponentToRemoval'
-            type: array
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          deprecated: true
-          description: 'Deprecated, please use `PATCH /removal/{id}/component_attributions` instead.
-
-
-            Components to be attributed to the removal.'
-          title: Add Components
-        completed_on:
-          anyOf:
-          - description: Date in ISO format (YYYY-MM-DD)
-            format: date
-            type: string
-          - type: 'null'
-          description: The date by which activities related to this removal finished.
-          title: Completed On
-        delete_component_ids:
-          anyOf:
-          - items:
-              example: cmp_1EP2SB7MZ1S036PY
-              examples:
-              - cmp_1EP2SB7MZ1S036PY
-              - cmp_1EHK4R6QJSBXFC5N
-              maxLength: 37
-              minLength: 20
-              type: string
-            type: array
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          deprecated: true
-          description: 'Deprecated, please use `PATCH /removal/{id}/component_attributions` instead.
-
-
-            IDs for components to delete from the removal.'
-          title: Delete Component Ids
-        feedstock_type_id:
-          anyOf:
-          - example: ftt_1D7KZ1P761S0G7BN
-            examples:
-            - ftt_1D7KZ1P761S0G7BN
-            - ftt_1CSRJN4HHSBXZ3TK
-            maxLength: 37
-            minLength: 20
-            type: string
-          - $ref: '#/components/schemas/Undefined'
-          default:
-            __typename: Undefined
-          description: ID of the feedstock type for the removal.
-          title: Feedstock Type Id
-        started_on:
-          anyOf:
-          - description: Date in ISO format (YYYY-MM-DD)
-            format: date
-            type: string
-          - type: 'null'
-          description: The date at which activities related to this removal started.
-          title: Started On
-      title: PatchRemovalRequest
-      type: object
-    IsometricIDRequestParam_GhgEntry_:
-      example: rmv_1EEM6NJXX1S0EXKD
-      examples:
-      - rmv_1EEM6NJXX1S0EXKD
-      - rmv_1E3V4J2EWSBX5E82
-      maxLength: 37
-      minLength: 20
-      type: string
-    ValidationError:
-      properties:
-        ctx:
-          title: Context
-          type: object
-        input:
-          title: Input
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    IsometricIDPathParam_GhgEntry_:
-      $ref: '#/components/schemas/IsometricIDRequestParam_GhgEntry_'
   securitySchemes:
     HTTPBearer:
       bearerFormat: JWT
