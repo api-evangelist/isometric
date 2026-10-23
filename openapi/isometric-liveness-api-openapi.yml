@@ -84,3 +84,9 @@ components:
       description: 'A JWT Bearer token header for authentication and authorization, in the format `Authorization: Bearer <token>`'
       scheme: bearer
       bearerFormat: JWT
+x-provenance:
+  method: harvested
+  publisher: Isometric
+  source: https://api.isometric.com/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
